@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238915130433",
+    "project_id": "gugu-2fde5",
+    "storage_bucket": "gugu-2fde5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238915130433:android:8839ec2f3f3093c1e662c0",
+        "android_client_info": {
+          "package_name": "com.oey.gugu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFR3RHkt0YTkS8CySTYdPG7AbRE_ix32s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
