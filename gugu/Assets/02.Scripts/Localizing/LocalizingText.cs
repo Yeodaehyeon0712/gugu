@@ -4,7 +4,8 @@ using TMPro;
 
 public class LocalizingText : MonoBehaviour,IObserver<eLanguage>
 {
-    [SerializeField] int localIndex=0;
+    int index=0;
+    object[] parsingParameters=null;
     TextMeshProUGUI text;
 
     #region UnityMethods
@@ -26,14 +27,18 @@ public class LocalizingText : MonoBehaviour,IObserver<eLanguage>
     #endregion
 
     #region Localizing Method
+    public void Init(int index,params object[]parsingParameters)
+    {
+        this.index = index;
+        this.parsingParameters = parsingParameters;
+        SetLocalizingText();
+    }
     void SetLocalizingText()
     {
-        text.text = LocalizingManager.Instance.GetLocalizing(localIndex);
-    }
-    public void SetLocalizingIndex(int index)
-    {
-        localIndex = index;
-        SetLocalizingText();
+        if (parsingParameters == null)
+            text.text = LocalizingManager.Instance.GetLocalizing(index);
+        else
+            text.text = LocalizingManager.Instance.GetLocalizing(index, parsingParameters);
     }
     #endregion
 
