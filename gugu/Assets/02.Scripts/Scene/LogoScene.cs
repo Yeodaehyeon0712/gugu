@@ -10,6 +10,7 @@ public class LogoScene : BaseScene
 
     private void Awake()
     {
+        _logo.color = new Color(1, 1, 1, 0);
         StartScene();
     }
     public override void StartScene()

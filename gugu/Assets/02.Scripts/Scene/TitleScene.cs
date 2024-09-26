@@ -17,14 +17,12 @@ public class TitleScene : BaseScene
         DontDestroyOnLoad(gameObject);
         button_NextScene = transform.GetComponentInChildren<Button>();
         button_NextScene.onClick.AddListener(() => AsyncSceneChange().Forget());
-        text_Description = transform.Find("Panel_Title/Text_Description").GetComponent<TextMeshProUGUI>();
+        text_Description = transform.Find("TitleUI/Panel_Progress/Text_Progress").GetComponent<TextMeshProUGUI>();
         InitManager().Forget();
     }
     async UniTask InitManager()
     {
         text_Description.text = "Waiting ... ";
-        LocalizingManager.Instance.Initialize();
-        await UniTask.WaitUntil(() => LocalizingManager.Instance.IsLoad);
 
         DataManager.Instance.InitAddressableSystem();
         await UniTask.WaitUntil(() => DataManager.AddressableSystem.IsLoad);
@@ -32,8 +30,11 @@ public class TitleScene : BaseScene
         DataManager.Instance.Initialize();
         await UniTask.WaitUntil(() => DataManager.Instance.IsLoad);
 
-        Debug.Log("Title Scene Manager Init Complete");
-        text_Description.text = "Press Start";
+        LocalizingManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => LocalizingManager.Instance.IsLoad);
+
+        //UIManager.Instance.Initialize();
+        //await UniTask.WaitUntil(() => UIManager.Instance.IsLoad);
     }
 
     private async UniTask AsyncSceneChange()
@@ -41,7 +42,6 @@ public class TitleScene : BaseScene
         try
         {
             await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene").ToUniTask();
-            Debug.Log("Scene changed successfully");
         }
         catch (System.Exception e)
         {

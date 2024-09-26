@@ -30,9 +30,7 @@ public class AddressableSystem
             {
                 FirebaseAddressablesManager.IsFirebaseSetupFinished = true;
                 state = eAddressableState.Initialized;
-                //해당 부분은 고민이 필요함 . Data Manager에게 넘길지 아니면 그냥 처리할지 .
                 LoadAsync().Forget();
-                //DataManager.Instance.RunTask(LoadAsync());
             }
             else
                 UnityEngine.Debug.LogError(System.String.Format(
@@ -107,7 +105,6 @@ public class AddressableSystem
         AsyncOperationHandle<IResourceLocator> locatorHandle = Addressables.InitializeAsync(true);
         await locatorHandle.ToUniTask();
 
-        await LoadModelMemoryAsync();
         await LoadTableMemoryAsync();
 
         state = eAddressableState.Complete;
