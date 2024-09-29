@@ -7,9 +7,11 @@ public class UIManager : TSingletonMono<UIManager>
 {
     Transform _parent;
     GameUI _gameUI;
-    public UMainUI MainUI => _gameUI.Main; 
     public GameUI GameUI => _gameUI;
-    public USettingUI SettingUI => GameUI.Setting;
+    public UMainUI MainUI => _gameUI.Main;
+    public UControllerUI ControllerUI => _gameUI.Controller;
+
+    public USettingUI SettingUI => _gameUI.Setting;
     protected override void OnInitialize()
     {
         _gameUI = Instantiate(Resources.Load<GameUI>("UI/GameUI"), transform);

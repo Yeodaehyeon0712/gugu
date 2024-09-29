@@ -5,15 +5,21 @@ using UnityEngine;
 public class GameUI : MonoBehaviour
 {
     public UMainUI Main;
+    public UControllerUI Controller;
     public USettingUI Setting;
 
     public void Initialize()
     {
-        //Canvas = GetComponent<Canvas>();
         Transform safeArea = transform.Find("USafeArea");
-        Main = safeArea.Find("UMainUI").GetComponent<UMainUI>();
+
+        var groupMainUI = safeArea.Find("Group_MainUI");
+        Main = groupMainUI.Find("UMainUI").GetComponent<UMainUI>();
         Main.Initialize();
-        Setting = safeArea.Find("Group_PopUp/USettingUI").GetComponent<USettingUI>();
+        Controller = groupMainUI.Find("UControllerUI").GetComponent<UControllerUI>();
+        Controller.Initialize();
+
+        var groupPopUp = safeArea.Find("Group_PopUp");
+        Setting = groupPopUp.Find("USettingUI").GetComponent<USettingUI>();
         Setting.Initialize();
     }    
 }
