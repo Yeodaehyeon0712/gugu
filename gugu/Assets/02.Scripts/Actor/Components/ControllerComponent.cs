@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class ControllerComponent :BaseComponent,IObserver<Vector2>
 {
     #region Fields
-    Vector2 controlValue;
+    [SerializeField]Vector2 controlValue;
     //½ºÅÝ ÄÄÆ÷³ÍÆ®¿¡¼­ ¹ÞÀÚ .
-    float speed;
+    float speed=3;
     Rigidbody2D rigidBody;
     #endregion
 
@@ -25,7 +25,7 @@ public class ControllerComponent :BaseComponent,IObserver<Vector2>
     void MoveActor(float fixedDeltaTime)
     {
         Vector2 nextPos = controlValue * speed * fixedDeltaTime;
-        owner.transform.Translate(nextPos);
+        //owner.transform.Translate(nextPos);
         rigidBody.MovePosition(rigidBody.position + nextPos);
     }
     #endregion

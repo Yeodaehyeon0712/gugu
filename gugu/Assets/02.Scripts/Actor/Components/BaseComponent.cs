@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[SerializeField]
-public class BaseComponent : MonoBehaviour
+public class BaseComponent 
 {
     #region Fields
     [SerializeField] protected eComponent componentType;
