@@ -37,16 +37,21 @@ public class GameUI : MonoBehaviour
         safeAreaUI.Initialize();
     }
     public void OpenUIByFlag(eUI flaggedEnum)
-    {
-        foreach(var uiEnum in uiDic.Keys)
+    {       
+        foreach (var uiEnum in uiDic.Keys)
         {
-            if(uiDic.TryGetValue(uiEnum,out var ui))
-            {
-                if ((uiEnum & flaggedEnum) != 0)
-                    ui.Enable();
-                else
-                    ui.Disable();
-            }
+            if ((uiEnum & flaggedEnum) == 0) continue;
+
+            uiDic[uiEnum].Enable();
+        }
+    }
+    public void CloseUIByFlag(eUI flaggedEnum)
+    {
+        foreach (var uiEnum in uiDic.Keys)
+        {
+            if ((uiEnum & flaggedEnum) == 0) continue;
+
+            uiDic[uiEnum].Disable();
         }
     }
 }
