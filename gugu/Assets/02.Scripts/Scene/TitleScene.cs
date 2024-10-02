@@ -16,7 +16,8 @@ public class TitleScene : BaseScene
     {
         DontDestroyOnLoad(gameObject);
         button_NextScene = transform.GetComponentInChildren<Button>();
-        button_NextScene.onClick.AddListener(() => AsyncSceneChange().Forget());
+        button_NextScene.onClick.AddListener(() => AsyncSceneChange<MainScene>().Forget());
+        button_NextScene.gameObject.SetActive(false);
         text_Description = transform.Find("TitleUI/Panel_Progress/Text_Progress").GetComponent<TextMeshProUGUI>();
         InitManager().Forget();
     }
@@ -33,24 +34,9 @@ public class TitleScene : BaseScene
         LocalizingManager.Instance.Initialize();
         await UniTask.WaitUntil(() => LocalizingManager.Instance.IsLoad);
 
-        //UIManager.Instance.Initialize();
-        //await UniTask.WaitUntil(() => UIManager.Instance.IsLoad);
-    }
-
-    private async UniTask AsyncSceneChange()
-    {
-        try
-        {
-            await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("MainScene").ToUniTask();
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Failed to load scene: {e.Message}");
-        }
-        finally
-        {
-            GameObject.Find("MainScene").GetComponent<MainScene>().StartScene();
-            DestroyImmediate(gameObject);
-        }
+        UIManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => UIManager.Instance.IsLoad);
+        text_Description.text = "Complete";
+        button_NextScene.gameObject.SetActive(true);
     }
 }

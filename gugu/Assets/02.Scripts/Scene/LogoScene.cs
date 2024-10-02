@@ -16,23 +16,6 @@ public class LogoScene : BaseScene
     public override void StartScene()
     {
         DontDestroyOnLoad(gameObject);
-        _logo.DOFade(1f, 2f).SetEase(_fadeCurve).OnComplete(() => AsyncSceneChange().Forget()); 
-    }
-
-    private async UniTask AsyncSceneChange()
-    {
-        try
-        {
-            await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("TitleScene").ToUniTask();
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Failed to load scene: {e.Message}");
-        }
-        finally
-        {
-            GameObject.Find("TitleScene").GetComponent<TitleScene>().StartScene();
-            DestroyImmediate(gameObject);
-        }
+        _logo.DOFade(1f, 2f).SetEase(_fadeCurve).OnComplete(() => AsyncSceneChange<TitleScene>().Forget());
     }
 }

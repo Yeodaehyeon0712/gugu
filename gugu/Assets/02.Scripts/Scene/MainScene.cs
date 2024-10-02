@@ -7,13 +7,10 @@ public class MainScene : BaseScene
 {
     public override void StartScene()
     {
-        InitManager().Forget();
+        UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.Main);
+        var a = GameObject.Find("Actor").GetComponent<Actor>();
+        a.Initialize();
     }
 
-    async UniTask InitManager()
-    {       
-        UIManager.Instance.Initialize();
-        await UniTask.WaitUntil(() => UIManager.Instance.IsLoad);
-        Debug.Log("Main Scene Manager Init Complete");
-    }
+
 }
