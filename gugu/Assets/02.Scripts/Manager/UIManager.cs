@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class UIManager : TSingletonMono<UIManager>
 {
-    Transform _parent;
     GameUI _gameUI;
     public GameUI GameUI => _gameUI;
     public UMainUI MainUI => _gameUI.Main;
@@ -14,13 +13,12 @@ public class UIManager : TSingletonMono<UIManager>
     public USettingUI SettingUI => _gameUI.Setting;
     protected override void OnInitialize()
     {
+        //To do : Addressable ·Î º¯°æ
         _gameUI = Instantiate(Resources.Load<GameUI>("UI/GameUI"), transform);
         _gameUI.Initialize();        
-        _parent = _gameUI.GetComponentInChildren<USafeArea>().transform;
         CanvasInit(_gameUI);
         IsLoad = true;
     }
-
     void CanvasInit(Component root)
     {
         Canvas canvas = root.GetComponent<Canvas>();
@@ -34,6 +32,4 @@ public class UIManager : TSingletonMono<UIManager>
             scaler.matchWidthOrHeight = 1F;
         }
     }
-
-
 }

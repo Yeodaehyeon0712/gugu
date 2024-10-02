@@ -7,6 +7,7 @@ public abstract class UBaseUI : MonoBehaviour
     public UBaseUI Initialize()
     {
         InitReference();
+        Disable();
         return this;
     }
     protected abstract void InitReference();
