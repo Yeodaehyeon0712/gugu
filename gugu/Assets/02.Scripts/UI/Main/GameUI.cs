@@ -11,6 +11,7 @@ public class GameUI : MonoBehaviour
     public void Initialize()
     {
         Transform safeArea = transform.Find("USafeArea");
+        InitializeSafeArea(safeArea);
 
         var groupMainUI = safeArea.Find("Group_MainUI");
         Main = groupMainUI.Find("UMainUI").GetComponent<UMainUI>();
@@ -22,4 +23,16 @@ public class GameUI : MonoBehaviour
         Setting = groupPopUp.Find("USettingUI").GetComponent<USettingUI>();
         Setting.Initialize();
     }    
+    void InitializeSafeArea(Transform safeArea)
+    {
+        USafeArea safeAreaUI = safeArea.GetComponent<USafeArea>();
+
+        ULetterBox letterBox_Top= transform.Find("LetterBox_Top").GetComponent<ULetterBox>();
+        letterBox_Top.Initialize(safeAreaUI);
+
+        ULetterBox letterBox_Bottom = transform.Find("LetterBox_Bottom").GetComponent<ULetterBox>();
+        letterBox_Bottom.Initialize(safeAreaUI);
+
+        safeAreaUI.Initialize();
+    }
 }
