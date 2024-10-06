@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class BackgroundBlock : MonoBehaviour
+public class BackgroundBlock : RepositionObject
 {
     #region Fields
     Tilemap tilemap;
@@ -39,25 +39,18 @@ public class BackgroundBlock : MonoBehaviour
     }
     #endregion
 
-    #region Move Method
-    private void OnTriggerExit2D(Collider2D collision)
+    #region Reposition Method
+    protected override void Reposition()
     {
-        if (collision.CompareTag("Area") == false) return;
-
-        Move();
-    }
-    void Move()
-    {
-        Vector2 playerPos = Vector2.zero;// player.position; // Assuming player is a Transform reference
+        Vector2 playerPos = target.position; 
         Vector2 myPos = transform.position;
         Vector2 diff = playerPos - myPos;
 
+        bool isHorizontal = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
+        Vector2 movementDirection = isHorizontal ? Vector2.right : Vector2.up;
+        float movementValue = halfSize* 4 * Mathf.Sign(isHorizontal ? diff.x : diff.y);
 
-        bool isHorizontalDominant = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
-        var movementDirection = isHorizontalDominant ? Vector3.right : Vector3.up; 
-        var movementDifference = Mathf.Sign(isHorizontalDominant ? diff.x : diff.y); 
-
-        transform.Translate(movementDirection * movementDifference *40 * Time.deltaTime); // Move the transform
+        transform.position += (Vector3)(movementDirection * movementValue);
     }
     #endregion
 }
