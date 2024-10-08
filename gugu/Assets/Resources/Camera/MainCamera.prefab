@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3383379635075730713}
   - component: {fileID: 2828298945550988447}
   - component: {fileID: 2201971811917405101}
-  - component: {fileID: 1541282092011539803}
+  - component: {fileID: 6438805743258941293}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
   field of view: 60
   orthographic: 1
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1541282092011539803
+--- !u!114 &6438805743258941293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ComponentVersion: 1
   m_AssetsPPU: 18
-  m_RefResolutionX: 270
-  m_RefResolutionY: 480
+  m_RefResolutionX: 1080
+  m_RefResolutionY: 1920
   m_CropFrame: 0
   m_GridSnapping: 0
   m_UpscaleRT: 0
