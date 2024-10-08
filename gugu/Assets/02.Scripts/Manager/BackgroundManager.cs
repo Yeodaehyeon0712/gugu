@@ -10,7 +10,7 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
     Dictionary<int, RuleTile> backgroundTiles = new Dictionary<int, RuleTile>();
     BackgroundBlock[] backgroundBlocks;
     GameObject grid;
-    int blockSize=20;
+    int blockSize=30;
     #endregion
 
     #region Backgrounds Method

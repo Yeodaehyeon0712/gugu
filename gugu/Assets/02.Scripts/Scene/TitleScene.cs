@@ -24,6 +24,8 @@ public class TitleScene : BaseScene
     async UniTask InitManager()
     {
         text_Description.text = "Waiting ... ";
+        CameraManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => CameraManager.Instance.IsLoad);
 
         DataManager.Instance.InitAddressableSystem();
         await UniTask.WaitUntil(() => DataManager.AddressableSystem.IsLoad);

@@ -14,7 +14,9 @@ public class ControllerComponent :BaseComponent,IObserver<Vector2>
     #region Component Method
     public ControllerComponent(Actor owner):base(owner,eComponent.ControllerComponent)
     {
+        //등록 했으면 해제도 해야지 ..
         UIManager.Instance.ControllerUI.AddObserver(this);
+        CameraManager.Instance.RegisterFollowTarget(owner.transform);
         rigidBody = owner.GetComponent<Rigidbody2D>();
     }
     protected override void OnComponentFixedUpdate(float fixedDeltaTime)
@@ -27,6 +29,11 @@ public class ControllerComponent :BaseComponent,IObserver<Vector2>
         Vector2 nextPos = controlValue * speed * fixedDeltaTime;
         //owner.transform.Translate(nextPos);
         rigidBody.MovePosition(rigidBody.position + nextPos);
+    }
+    protected override void OnComponentReset()
+    {
+        UIManager.Instance.ControllerUI.RemoveObserver(this);
+        CameraManager.Instance.RegisterFollowTarget(null);
     }
     #endregion
 

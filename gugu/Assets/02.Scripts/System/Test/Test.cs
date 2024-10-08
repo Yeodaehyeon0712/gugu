@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.Experimental.Rendering.Universal;
+using Cinemachine;
 
 public class Test : MonoBehaviour
 {
-    #region Fields
-    [SerializeField]int a;
-    #endregion
+    public int targetWidth = 1080;
+    public int targetHeight = 1920;
+    public float idealOrthoSize = 15.0f;
 
-    private void Start()
+    void Start()
     {
-        BackgroundManager.Instance.Initialize();
+        AdjustCameraForResolution();
     }
 
-    public void Push()
+    void AdjustCameraForResolution()
     {
-        BackgroundManager.Instance.ShowBackgroundByStage(a);
-
+        var a = Resources.Load<Camera>("Camera/MainCamera");
+        Instantiate(a);
+        var b = Resources.Load<CinemachineVirtualCamera>("Camera/VirtualCamera");
+        Instantiate(b);
     }
-
-    
 }
