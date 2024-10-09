@@ -187,14 +187,3 @@ public class AddressableSystem
     #endregion
 
 }
-enum eAddressableState
-{
-    None,
-    Initialized,
-    FindPatch,
-    Downloading,
-    LoadMemory,
-    ModelMemory,
-    TableMemory,
-    Complete,
-}

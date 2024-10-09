@@ -26,9 +26,4 @@ public class DataManager : TSingletonMono<DataManager>
         return t;
     }
 }
-[System.Flags]
-public enum eTableName
-{
-    LocalizingTable = 1 << 1,
-    All = ~0,
-}
+

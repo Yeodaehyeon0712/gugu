@@ -5,12 +5,6 @@ using UnityEngine;
 public class ULetterBox : MonoBehaviour,IObserver<(Vector2,Vector2)>
 {
     #region Fields
-    enum LetterBoxDirection
-    {
-        Top,
-        Bottom,  
-    }
-
     RectTransform _panel;
     [SerializeField]  LetterBoxDirection _direction = LetterBoxDirection.Top;
     #endregion

@@ -48,8 +48,4 @@ public class BaseComponent
     protected virtual void OnComponentDestroy() { }
     #endregion
 }
-public enum eComponent
-{
-    ControllerComponent,
-    FSMComponent,
-}
+

@@ -7,7 +7,7 @@ using DG.Tweening;
 public abstract class UMovableUI : UBaseUI
 {
     #region Variables
-    [SerializeField]eUIDir dir;
+    [SerializeField]eMovableUIDir dir;
     RectTransform rectTransform;
     Vector2 canvasSize;
     CanvasGroup canvasGroup;
@@ -42,10 +42,10 @@ public abstract class UMovableUI : UBaseUI
     {
         rectTransform.localPosition = dir switch
         {
-            eUIDir.LeftToRight => new Vector2(-canvasSize.x, 0),
-            eUIDir.RightToLeft => new Vector2(canvasSize.x, 0),
-            eUIDir.TopToBottom => new Vector2(0, canvasSize.y),
-            eUIDir.BottomToTop => new Vector2(0, -canvasSize.y),
+            eMovableUIDir.LeftToRight => new Vector2(-canvasSize.x, 0),
+            eMovableUIDir.RightToLeft => new Vector2(canvasSize.x, 0),
+            eMovableUIDir.TopToBottom => new Vector2(0, canvasSize.y),
+            eMovableUIDir.BottomToTop => new Vector2(0, -canvasSize.y),
             _ => Vector2.zero
         };
     }
@@ -54,12 +54,12 @@ public abstract class UMovableUI : UBaseUI
         Enable();
         switch (dir)
         {
-            case eUIDir.LeftToRight:
-            case eUIDir.RightToLeft:
+            case eMovableUIDir.LeftToRight:
+            case eMovableUIDir.RightToLeft:
                 rectTransform.DOLocalMoveX(0, duration).OnComplete(() => canvasGroup.interactable = true);
                 break;
-            case eUIDir.TopToBottom:
-            case eUIDir.BottomToTop:
+            case eMovableUIDir.TopToBottom:
+            case eMovableUIDir.BottomToTop:
                 rectTransform.DOLocalMoveY(0, duration).OnComplete(() => canvasGroup.interactable = true);
                 break;
             default:return;
@@ -70,16 +70,16 @@ public abstract class UMovableUI : UBaseUI
         canvasGroup.interactable = false;
         switch (dir)
         {
-            case eUIDir.LeftToRight:
+            case eMovableUIDir.LeftToRight:
                 rectTransform.DOLocalMoveX(-canvasSize.x, duration).onComplete=Disable;
                 break;
-            case eUIDir.RightToLeft:
+            case eMovableUIDir.RightToLeft:
                 rectTransform.DOLocalMoveX(canvasSize.x, duration).onComplete=Disable;
                 break;
-            case eUIDir.TopToBottom:
+            case eMovableUIDir.TopToBottom:
                 rectTransform.DOLocalMoveY(canvasSize.y, duration).onComplete = Disable;
                 break;
-            case eUIDir.BottomToTop:
+            case eMovableUIDir.BottomToTop:
                 rectTransform.DOLocalMoveY(-canvasSize.y, duration).onComplete = Disable;
                 break;
             default: return;
@@ -87,11 +87,4 @@ public abstract class UMovableUI : UBaseUI
     }
     #endregion
 }
-enum eUIDir
-{
-    None,
-    LeftToRight,
-    RightToLeft,
-    TopToBottom,
-    BottomToTop
-}
+

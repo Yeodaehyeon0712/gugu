@@ -97,9 +97,3 @@ public class LocalizingManager : TSingletonMono<LocalizingManager>,ISubject<eLan
     }
     #endregion
 }
-public enum eLanguage
-{
-    English,
-    Korean,
-    End
-}

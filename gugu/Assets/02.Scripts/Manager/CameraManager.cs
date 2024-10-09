@@ -27,8 +27,4 @@ public class CameraManager : TSingletonMono<CameraManager>
         mainCam.RegisterFollowTarget(target);
     }
 }
-public enum eCameraType
-{
-    MainCamera,
-    VirtualCamera,
-}
+
