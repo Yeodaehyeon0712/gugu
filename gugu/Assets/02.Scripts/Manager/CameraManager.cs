@@ -6,8 +6,7 @@ using Cinemachine;
 public class CameraManager : TSingletonMono<CameraManager>
 {
     Dictionary<eCameraType, BaseCamera> cameraDic;
-    Vector2 targetResolution = new Vector2(1080, 1920);
-    public float defaultOrthoSize = 15.0f;
+    
     protected override void OnInitialize()
     {
         cameraDic = new Dictionary<eCameraType,BaseCamera>();
@@ -18,7 +17,7 @@ public class CameraManager : TSingletonMono<CameraManager>
     {
         var prefab = Resources.Load<BaseCamera>("Camera/" + type.ToString());
         BaseCamera cam = Instantiate(prefab, transform);
-        cam.Initialize(targetResolution, defaultOrthoSize);
+        cam.Initialize(GameConst.targetResolution, GameConst.defaultOrthoSize);
         return cam;
     }  
     public void RegisterFollowTarget(Transform target)

@@ -5,7 +5,14 @@ using UnityEngine;
 
 public class GameConst
 {
-    public static float mapSize=30f;
+    #region Background
+    public static int BgBlockSideSize=30;
+    #endregion
+
+    #region Camera
+    public static Vector2 targetResolution = new Vector2(1080, 1920);
+    public static float defaultOrthoSize = 15.0f;
+    #endregion
 
     #region Enum Converter
     //public static Dictionary<string, eStatusType> StringToStatusType;

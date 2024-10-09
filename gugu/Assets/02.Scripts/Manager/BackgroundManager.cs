@@ -10,7 +10,7 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
     Dictionary<int, RuleTile> backgroundTiles = new Dictionary<int, RuleTile>();
     BackgroundBlock[] backgroundBlocks;
     GameObject grid;
-    int blockSize=30;
+    int blockSideSize;
     #endregion
 
     #region Backgrounds Method
@@ -19,9 +19,10 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
         var clonedObject = Instantiate(Resources.Load<GameObject>("Background/Grid"), transform);
         grid = clonedObject;
         backgroundBlocks = grid.transform.GetComponentsInChildren<BackgroundBlock>();
+        blockSideSize = GameConst.BgBlockSideSize;
 
         foreach (var block in backgroundBlocks)
-            block.Initialize(blockSize/2);
+            block.Initialize(blockSideSize/2);
 
         LoadBackgroundTile();
         IsLoad = true;
