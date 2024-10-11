@@ -3,7 +3,14 @@
 public enum eComponent
 {
     ControllerComponent,
-    FSMComponent,
+    SkinComponent,
+}
+public enum eCharacterAnimState
+{
+    Idle ,
+    Move ,
+    Hit ,
+    Death ,
 }
 #endregion
 

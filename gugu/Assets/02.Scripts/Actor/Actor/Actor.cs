@@ -7,7 +7,10 @@ public class Actor : MonoBehaviour
     #region Fields
     protected Dictionary<eComponent, BaseComponent> componentDictionary = new Dictionary<eComponent, BaseComponent>();
 
+    [SerializeField] protected SkinComponent skinComponent;
     [SerializeField] protected ControllerComponent controllerComponent;
+
+    public SkinComponent Skin => skinComponent;
     public ControllerComponent Controller => controllerComponent;
     #endregion
 
@@ -30,6 +33,8 @@ public class Actor : MonoBehaviour
     #region Actor Method
     public virtual void Initialize()
     {
+        // Init Order is Important . Dont Change
+        skinComponent = new SkinComponent(this);
         controllerComponent = new ControllerComponent(this);
     }
     #endregion
