@@ -7,10 +7,13 @@ public class DataManager : TSingletonMono<DataManager>
 {
     public static AddressableSystem AddressableSystem;
     public static LocalizingTable LocalizingTable;
+    public static CharacterTable CharacterTable;
     protected override void OnInitialize()
     {
         LocalizingTable = LoadTable<LocalizingTable>(eTableName.LocalizingTable);
         LocalizingTable.Reload();
+        CharacterTable = LoadTable<CharacterTable>(eTableName.CharacterTable);
+        CharacterTable.Reload();
         IsLoad = true;      
     }
     public void InitAddressableSystem()

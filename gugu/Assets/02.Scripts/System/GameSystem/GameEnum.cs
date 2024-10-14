@@ -18,7 +18,8 @@ public enum eCharacterAnimState
 [System.Flags]
 public enum eTableName
 {
-    LocalizingTable = 1 << 1,
+    LocalizingTable = 1 << 0,
+    CharacterTable = 1 << 1,
     All = ~0,
 }
 
