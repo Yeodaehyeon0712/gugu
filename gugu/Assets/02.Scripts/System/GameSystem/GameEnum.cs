@@ -2,8 +2,9 @@
 #region Actor
 public enum eComponent
 {
-    ControllerComponent,
     SkinComponent,
+    ControllerComponent,
+    StatComponent,
 }
 public enum eCharacterAnimState
 {
@@ -28,10 +29,10 @@ enum eAddressableState
     None,
     Initialized,
     FindPatch,
-    Downloading,
+    DownloadDependencies,
     LoadMemory,
-    ModelMemory,
     TableMemory,
+    AnimationMemory,
     Complete,
 }
 #endregion

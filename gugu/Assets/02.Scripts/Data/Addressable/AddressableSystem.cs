@@ -12,10 +12,12 @@ using System;
 
 public class AddressableSystem
 {
+    #region Fields
     eAddressableState state;
     public bool IsLoad;
-    Dictionary<string, GameObject> _modelContainer = new Dictionary<string, GameObject>();
-    Dictionary<string, TextAsset> _tableContainer = new Dictionary<string, TextAsset>();
+    Dictionary<string, TextAsset> tableContainer = new Dictionary<string, TextAsset>();
+    Dictionary<string, Animator> animatorContainer = new Dictionary<string, Animator>();
+    #endregion
 
     public void Initialize()
     {
@@ -93,7 +95,7 @@ public class AddressableSystem
     async UniTask DownloadAssetAsync()
     {
         AsyncOperationHandle operationHandle = Addressables.DownloadDependenciesAsync("default");
-        state = eAddressableState.Downloading;
+        state = eAddressableState.DownloadDependencies;
         await operationHandle.ToUniTask();
         AssetBundle.UnloadAllAssetBundles(true);
         Addressables.Release(operationHandle);
@@ -105,54 +107,35 @@ public class AddressableSystem
         AsyncOperationHandle<IResourceLocator> locatorHandle = Addressables.InitializeAsync(true);
         await locatorHandle.ToUniTask();
 
-        await LoadTableMemoryAsync();
+        await LoadAssetAsync(eAddressableState.TableMemory,tableContainer);
+        await LoadAssetAsync(eAddressableState.AnimationMemory, animatorContainer);
 
         state = eAddressableState.Complete;
     }
-    async UniTask LoadModelMemoryAsync()
+    
+    async UniTask LoadAssetAsync<T>(eAddressableState state, Dictionary<string, T> container)
     {
-        state = eAddressableState.ModelMemory;
-
-        AsyncOperationHandle<IList<IResourceLocation>> locationListHandle = Addressables.LoadResourceLocationsAsync("Model", null);
-        await locationListHandle.ToUniTask();
-
-        List<UniTask> loadingTasks = new List<UniTask>();
-        foreach (var location in locationListHandle.Result)
+        if (state <= eAddressableState.LoadMemory||state>=eAddressableState.Complete)
         {
-            if (location.ResourceType != typeof(GameObject))
-            {
-                continue;
-            }
-
-            var loadTask = Addressables.LoadAssetAsync<GameObject>(location.PrimaryKey).ToUniTask().ContinueWith(task =>
-            {
-                  _modelContainer.Add(location.PrimaryKey, task);
-             });
-
-            loadingTasks.Add(loadTask);
+            Debug.LogError($"This state: {state} is not a valid load asset state. Check again.");
+            return;
         }
-
-        await UniTask.WhenAll(loadingTasks);
-        Addressables.Release(locationListHandle);
-    }
-    async UniTask LoadTableMemoryAsync()
-    {
-        state = eAddressableState.TableMemory;
-
-        AsyncOperationHandle<IList<IResourceLocation>> locationListHandle = Addressables.LoadResourceLocationsAsync("Table", null);
+        this.state = state;
+        string key = state.ToString().Replace("Memory", string.Empty).Trim();
+        AsyncOperationHandle<IList<IResourceLocation>> locationListHandle = Addressables.LoadResourceLocationsAsync(key, null);
         await locationListHandle.ToUniTask();
 
         List<UniTask> loadingTasks = new List<UniTask>();
         foreach (var location in locationListHandle.Result)
         {
-            if (location.ResourceType != typeof(TextAsset))
+            if (location.ResourceType != typeof(T))
             {
                 continue;
             }
 
-            var loadTask = Addressables.LoadAssetAsync<TextAsset>(location.PrimaryKey).ToUniTask().ContinueWith(task =>
+            var loadTask = Addressables.LoadAssetAsync<T>(location.PrimaryKey).ToUniTask().ContinueWith(task =>
             {
-                _tableContainer.Add(location.PrimaryKey, task);
+                container.Add(location.PrimaryKey, task);
             });
 
             loadingTasks.Add(loadTask);
@@ -164,24 +147,24 @@ public class AddressableSystem
     #endregion
 
     #region Get
-    public static GameObject GetModel(string key)
-    {
-        if (DataManager.AddressableSystem._modelContainer.TryGetValue(key, out var model))
-        {
-            return model;
-        }
-
-        Debug.LogError($"Model with resource path {key} not found in the model container.");
-        return null;    
-    }
     public static TextAsset GetTable(string key)
     {
-        if (DataManager.AddressableSystem._tableContainer.TryGetValue(key, out var database))
+        if (DataManager.AddressableSystem.tableContainer.TryGetValue(key, out var database))
         {
             return database;
         }
 
         Debug.LogError($"Database with resource path {key} not found in the database container.");
+        return null;
+    }
+    public static Animator GetAnimator(string key)
+    {
+        if (DataManager.AddressableSystem.animatorContainer.TryGetValue(key, out var animator))
+        {
+            return animator;
+        }
+
+        Debug.LogError($"Animator with resource path {key} not found in the animator container.");
         return null;
     }
     #endregion
