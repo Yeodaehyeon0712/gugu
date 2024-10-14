@@ -14,7 +14,7 @@ public class SkinComponent : BaseComponent
     int deathHash;
 
     Dictionary<eCharacterAnimState, int> animatorHashDic = new Dictionary<eCharacterAnimState, int>();
-    eCharacterAnimState currentState;
+    eCharacterAnimState currentAnim;
     #endregion
 
     #region Component Method
@@ -35,22 +35,22 @@ public class SkinComponent : BaseComponent
         animatorHashDic.Add(eCharacterAnimState.Death, deathHash);
     }
     //처음 초기화 할때 셋 .
-    public void SetSkin()
+    public void SetSkin(int index)
     {
-        //animator =;
+        animator = AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath);
     }
     public void SetAnimationTrigger(eCharacterAnimState state)
     {
-        currentState = state;
-        animator.SetTrigger(animatorHashDic[currentState]);
+        currentAnim = state;
+        animator.SetTrigger(animatorHashDic[currentAnim]);
     }
     public void SetAnimationFloat(float value)
     {
         var nextState = (value == 0) ? eCharacterAnimState.Idle : eCharacterAnimState.Move;
-        if (nextState == currentState) return;
+        if (nextState == currentAnim) return;
 
-        currentState = nextState;
-        animator.SetFloat(animatorHashDic[currentState], value);
+        currentAnim = nextState;
+        animator.SetFloat(animatorHashDic[currentAnim], value);
     }
     #endregion
 }
