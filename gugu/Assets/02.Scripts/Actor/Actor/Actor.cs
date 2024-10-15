@@ -6,12 +6,8 @@ public class Actor : MonoBehaviour
 {
     #region Fields
     protected Dictionary<eComponent, BaseComponent> componentDictionary = new Dictionary<eComponent, BaseComponent>();
-
     [SerializeField] protected SkinComponent skinComponent;
-    [SerializeField] protected ControllerComponent controllerComponent;
-
-    public SkinComponent Skin => skinComponent;
-    public ControllerComponent Controller => controllerComponent;
+    public SkinComponent Skin => skinComponent;    
     #endregion
 
     #region Unity Method
@@ -19,23 +15,12 @@ public class Actor : MonoBehaviour
     {
         OnUpdateComponent(Time.deltaTime);
     }
-    protected virtual void FixedUpdate()
-    {
-        if (controllerComponent == null) return; 
-            controllerComponent.FixedComponentUpdate(Time.fixedDeltaTime);
-    }
-    protected virtual void LateUpdate()
-    {
-
-    }
     #endregion
 
     #region Actor Method
     public virtual void Initialize()
     {
-        // Init Order is Important . Dont Change
-        skinComponent = new SkinComponent(this);
-        controllerComponent = new ControllerComponent(this);
+        skinComponent = new SkinComponent(this,false);       
     }
     #endregion
 

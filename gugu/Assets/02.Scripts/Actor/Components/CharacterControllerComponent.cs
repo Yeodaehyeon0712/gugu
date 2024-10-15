@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public class ControllerComponent :BaseComponent,IObserver<Vector2>
+public class CharacterControllerComponent :BaseComponent,IObserver<Vector2>
 {
     #region Fields
     [SerializeField]Vector2 controlValue;
@@ -13,7 +13,7 @@ public class ControllerComponent :BaseComponent,IObserver<Vector2>
     #endregion
 
     #region Component Method
-    public ControllerComponent(Actor owner):base(owner,eComponent.ControllerComponent)
+    public CharacterControllerComponent(Actor owner):base(owner,eComponent.ControllerComponent)
     {
         //등록 했으면 해제도 해야지 ..
         UIManager.Instance.ControllerUI.AddObserver(this);

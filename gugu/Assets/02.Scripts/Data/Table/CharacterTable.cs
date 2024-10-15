@@ -11,6 +11,7 @@ namespace Data
         public float MoveSpeed;
         public int DefaultSkillKey;
         public string AnimatorPath;
+        public int PathHash;
         public string IconPath;
 
         public CharacterData(long index,Dictionary<string,string>dataPair)
@@ -21,6 +22,7 @@ namespace Data
             MoveSpeed = float.Parse(dataPair["MoveSpeed"]);
             DefaultSkillKey = int.Parse(dataPair["DefaultSkillKey"]);
             AnimatorPath=dataPair["AnimatorPath"];
+            PathHash = AnimatorPath.GetHashCode();
             IconPath = dataPair["IconPath"];
         }
     }

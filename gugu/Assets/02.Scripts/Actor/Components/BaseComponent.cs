@@ -13,9 +13,9 @@ public class BaseComponent
     #endregion
 
     #region Component Method
-    protected BaseComponent(Actor owner, eComponent componentType)
+    protected BaseComponent(Actor owner, eComponent componentType,bool active=true)
     {
-        isActive = true;
+        isActive = active;
         this.owner = owner;
         this.componentType = componentType;
         owner.AddComponent(this);

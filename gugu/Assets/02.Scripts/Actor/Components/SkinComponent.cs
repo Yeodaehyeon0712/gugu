@@ -18,7 +18,7 @@ public class SkinComponent : BaseComponent
     #endregion
 
     #region Component Method
-    public SkinComponent(Actor owner) : base(owner, eComponent.SkinComponent)
+    public SkinComponent(Actor owner, bool active) : base(owner, eComponent.SkinComponent,active)
     {
         var skin = owner.transform.Find("Skin");
         renderer = skin.GetComponent<SpriteRenderer>();
