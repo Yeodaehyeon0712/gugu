@@ -10,7 +10,7 @@ public class MainScene : BaseScene
         UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.Main);
         var a = GameObject.Find("Actor").GetComponent<Actor>();
         BackgroundManager.Instance.ShowBackgroundByStage(2);
-        a.Initialize();
+        //a.Initialize();
 
     }
 

@@ -1,14 +1,19 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Actor : MonoBehaviour
 {
     #region Fields
-    protected Dictionary<eComponent, BaseComponent> componentDictionary = new Dictionary<eComponent, BaseComponent>();
+    //Component Fields
+    protected Dictionary<eComponent, BaseComponent> updateComponentDictionary = new Dictionary<eComponent, BaseComponent>();
     [SerializeField] protected SkinComponent skinComponent;
+    [SerializeField] protected ControllerComponent controllerComponent;
     public SkinComponent Skin => skinComponent;
-    public int SpawnHashCode;
+    public ControllerComponent Controller=> controllerComponent;
+
+    //Fields
+    protected eActorType type;
+    protected int spawnHashCode;
     #endregion
 
     #region Unity Method
@@ -16,13 +21,21 @@ public class Actor : MonoBehaviour
     {
         OnUpdateComponent(Time.deltaTime);
     }
+    protected virtual void LateUpdate()
+    {
+        if (controllerComponent == null) return;
+        controllerComponent.FixedComponentUpdate(Time.fixedDeltaTime);
+    }
     #endregion
 
     #region Actor Method
-    public virtual void Initialize()
+    public virtual void Initialize(eActorType type,int spawnHashCode)
     {
-        skinComponent = new SkinComponent(this,false);       
+        this.spawnHashCode = spawnHashCode;
+        this.type = type;
+        InitializeComponent(type);
     }
+
     public void Spawn(Vector2 position)
     {
 
@@ -38,18 +51,29 @@ public class Actor : MonoBehaviour
     #endregion
 
     #region Component Method
+    void InitializeComponent(eActorType type)
+    {
+        skinComponent = new SkinComponent(this);
+
+        controllerComponent = type switch
+        {
+            eActorType.Character => new CharacterControllerComponent(this),
+            eActorType.Enemy => new CharacterControllerComponent(this),
+            _ => null
+        };
+    }
     public void AddComponent(BaseComponent component)
     {
-        if(componentDictionary.ContainsKey(component.ComponentType))
+        if(updateComponentDictionary.ContainsKey(component.ComponentType))
         {
-            componentDictionary[component.ComponentType].DestroyComponent();
-            componentDictionary.Remove(component.ComponentType);
+            updateComponentDictionary[component.ComponentType].DestroyComponent();
+            updateComponentDictionary.Remove(component.ComponentType);
         }
-        componentDictionary.Add(component.ComponentType, component);
+        updateComponentDictionary.Add(component.ComponentType, component);
     }
     protected void OnUpdateComponent(float deltaTime)
     {
-        foreach (var component in componentDictionary)
+        foreach (var component in updateComponentDictionary)
             component.Value.ComponentUpdate(deltaTime);
     }
     #endregion

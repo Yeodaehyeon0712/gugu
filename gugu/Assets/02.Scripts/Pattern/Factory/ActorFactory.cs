@@ -10,7 +10,6 @@ public class ActorFactory
     Dictionary<uint, Actor> spawnedActorDic=new Dictionary<uint, Actor>();
     Transform instanceRoot;
     uint currentActorID;
-
     #endregion
 
     #region Factory Method
@@ -35,18 +34,19 @@ public class ActorFactory
         {
             T originAsset = await DataManager.AddressableSystem.LoadAssetAsync<T>(resourceTuple.prefabPath);
             spawnedActor = Object.Instantiate(originAsset, instanceRoot);
-            spawnedActor.Initialize();
-            //clonedAsset.SpawnHashCode = pathHash;
-            spawnedActor.Skin.SetSkin(GetSkin(type, index));
+            spawnedActor.Initialize(type,resourceTuple.pathHash);
         }
 
+        RefreshActor(spawnedActor, type, index, position);
         spawnedActor.Spawn(position);
-        spawnedActorDic.Add(currentActorID, spawnedActor);
         return spawnedActor as T;
     }
+    #endregion
+
+    #region Spawn Support Method
     (string prefabPath, string animatorPath, int pathHash) GetResourcePath(eActorType type, long index)
     {
-        string prefabPath = null;
+        string resourcePath = null;
         string animatorPath = null;
         int pathHash = 0;
 
@@ -54,35 +54,68 @@ public class ActorFactory
         {
             case eActorType.Character:
                 {
-                    prefabPath = "Actor/Prefab";//클라이언트 콘스트에서 가져오자 ..
-                    animatorPath = DataManager.CharacterTable[index].AnimatorPath;
-                    pathHash = DataManager.CharacterTable[index].PathHash;
+                    var table = DataManager.CharacterTable[index];
+                    resourcePath = table.ResourcePath;
+                    animatorPath = table.AnimatorPath;
+                    pathHash = table.PathHash;
                     break;
                 }
             case eActorType.Enemy:
                 {
-                    prefabPath = "Actor/Prefab";//클라이언트 콘스트에서 가져오자 ..
                     break;
                 }
         }
 
-        if (pooledActorPool[type].TryGetValue(pathHash, out var memoryPool)==false)
+        if (pooledActorPool[type].TryGetValue(pathHash, out var memoryPool) == false)
         {
             memoryPool = new MemoryPool<Actor>(20);
-            pooledActorPool[type][pathHash] = memoryPool; 
+            pooledActorPool[type][pathHash] = memoryPool;
         }
-        return (prefabPath, animatorPath, pathHash);
-    }  
-    Animator GetSkin(eActorType type, long index)
+        return (resourcePath, animatorPath, pathHash);
+    }
+    void RefreshActor(Actor actor, eActorType type, long index, Vector2 position)
+    {
+        SetActorSkin(actor, type, index);
+        SetActorStat(actor, type, index);
+        spawnedActorDic.Add(currentActorID, actor);
+    }
+    void SetActorSkin(Actor actor, eActorType type, long index)
     {
         Animator animator = type switch
         {
-            eActorType.Character =>AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
-            eActorType.Enemy=>AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
-            _ =>null
+            eActorType.Character => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
+            eActorType.Enemy => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
+            _ => null
+        };
+        actor.Skin.SetSkin(animator);
+    }
+    void SetActorStat(Actor actor, eActorType type, long index)
+    {
+        switch (type)
+        {
+            case eActorType.Character:
+                {
+                    var target = actor as Character;
+                    target.Stat.SetStat(index);
+                    break;
+                }
+            case eActorType.Enemy:
+                {
+                    //이때는 .. 스크립터블 오브젝트를 전달하자 .. 
+                    break;
+                }
+        }
+    }
+
+    Data.CharacterData GetData(eActorType type, long index)
+    {
+        Data.CharacterData animator = type switch
+        {
+            eActorType.Character => DataManager.CharacterTable[index],
+            eActorType.Enemy => DataManager.CharacterTable[index],
+            _ => null
         };
         return animator;
     }
     #endregion
-
 }

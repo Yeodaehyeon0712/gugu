@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class ControllerComponent : BaseComponent
+{
+    #region Fields
+    protected Rigidbody2D rigidBody;
+    protected float speed=3;
+    #endregion
+
+    #region Component Method
+    public ControllerComponent(Actor owner) : base(owner, eComponent.ControllerComponent)
+    {
+        rigidBody = owner.GetComponent<Rigidbody2D>();
+    }
+    protected override void OnComponentFixedUpdate(float fixedDeltaTime)
+    {
+       MoveActor(fixedDeltaTime);
+    }
+    protected abstract void MoveActor(float fixedDeltaTime);
+    #endregion
+}
