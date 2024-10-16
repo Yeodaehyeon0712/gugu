@@ -1,5 +1,12 @@
 
 #region Actor
+public enum eActorType
+{
+    None,
+    Character,
+    Enemy,
+    End
+}
 public enum eComponent
 {
     SkinComponent,

@@ -35,9 +35,9 @@ public class SkinComponent : BaseComponent
         animatorHashDic.Add(eCharacterAnimState.Death, deathHash);
     }
     //처음 초기화 할때 셋 .
-    public void SetSkin(int index)
+    public void SetSkin(Animator animator)
     {
-        animator = AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath);
+        this.animator = animator;
     }
     public void SetAnimationTrigger(eCharacterAnimState state)
     {

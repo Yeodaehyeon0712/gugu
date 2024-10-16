@@ -7,7 +7,8 @@ public class Actor : MonoBehaviour
     #region Fields
     protected Dictionary<eComponent, BaseComponent> componentDictionary = new Dictionary<eComponent, BaseComponent>();
     [SerializeField] protected SkinComponent skinComponent;
-    public SkinComponent Skin => skinComponent;    
+    public SkinComponent Skin => skinComponent;
+    public int SpawnHashCode;
     #endregion
 
     #region Unity Method
@@ -21,6 +22,18 @@ public class Actor : MonoBehaviour
     public virtual void Initialize()
     {
         skinComponent = new SkinComponent(this,false);       
+    }
+    public void Spawn(Vector2 position)
+    {
+
+    }
+    public void Death()
+    {
+
+    }
+    public void Hit()
+    {
+
     }
     #endregion
 

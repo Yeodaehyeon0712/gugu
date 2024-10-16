@@ -8,13 +8,14 @@ using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
 using Cysharp.Threading.Tasks;
-using System;
+
 
 public class AddressableSystem
 {
     #region Fields
     eAddressableState state;
     public bool IsLoad;
+    Dictionary<string, GameObject> assetResourceContainer = new Dictionary<string, GameObject>();
     Dictionary<string, TextAsset> tableContainer = new Dictionary<string, TextAsset>();
     Dictionary<string, Animator> animatorContainer = new Dictionary<string, Animator>();
     #endregion
@@ -64,7 +65,7 @@ public class AddressableSystem
             state = eAddressableState.Complete;
             IsLoad = true;
         }
-        catch(Exception ex)
+        catch(System.Exception ex)
         {
             Debug.LogError($"An error occurred during the LoadAsync: {ex.Message}");
         }
@@ -86,7 +87,7 @@ public class AddressableSystem
             else
                 state = eAddressableState.LoadMemory;
         }
-        catch(Exception ex)
+        catch(System.Exception ex)
         {
             Debug.LogError($"An error occurred during the catalog check: {ex.Message}");
         }   
@@ -166,6 +167,40 @@ public class AddressableSystem
 
         Debug.LogError($"Animator with resource path {key} not found in the animator container.");
         return null;
+    }
+    #endregion
+
+    #region Load Asset Async Method
+    public async UniTask<T> LoadAssetAsync<T>(string path) where T : Object
+    {
+        try
+        {
+            if (assetResourceContainer.TryGetValue(path, out var cachedAsset))
+            {
+                return cachedAsset.GetComponent<T>();
+            }
+
+            var asyncHandle = Addressables.LoadAssetAsync<GameObject>(path);
+            await asyncHandle.ToUniTask();
+
+            if (asyncHandle.Status == AsyncOperationStatus.Succeeded)
+            {
+                var loadedAsset = asyncHandle.Result;
+                assetResourceContainer[path] = loadedAsset;
+                return loadedAsset.GetComponent<T>();
+            }
+            else
+            {
+                throw new System.Exception($"Failed to load asset at path: {path}. Status: {asyncHandle.Status}");
+            }
+
+        }
+        catch  (System.Exception ex)
+        {
+            Debug.LogError($"Error while loading asset at path: {path}. Exception: {ex.Message}");
+            return null; 
+        }
+    
     }
     #endregion
 
