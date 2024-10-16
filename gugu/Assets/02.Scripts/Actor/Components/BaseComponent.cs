@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class BaseComponent 
+public abstract class BaseComponent 
 {
     #region Fields
     [SerializeField] protected eComponent componentType;
@@ -13,12 +13,13 @@ public class BaseComponent
     #endregion
 
     #region Component Method
-    protected BaseComponent(Actor owner, eComponent componentType,bool active=true)
+    protected BaseComponent(Actor owner, eComponent componentType,bool useUpdate=true)
     {
-        isActive = active;
+        isActive = true;
         this.owner = owner;
         this.componentType = componentType;
-        owner.AddComponent(this);
+        if(useUpdate)
+            owner.AddComponent(this);
     }
     public void ComponentUpdate(float deltaTime)
     {
