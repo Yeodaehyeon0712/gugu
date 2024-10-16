@@ -5,10 +5,8 @@ using UnityEngine;
 public class Character : Actor
 {
     #region Fields
-    [SerializeField] protected CharacterControllerComponent controllerComponent;
-    [SerializeField] protected StatComponent statComponent;
 
-    public CharacterControllerComponent Controller => controllerComponent;
+    [SerializeField] protected StatComponent statComponent;
     public StatComponent Stat => statComponent;
     #endregion
 
@@ -17,10 +15,10 @@ public class Character : Actor
         if (controllerComponent == null) return;
         controllerComponent.FixedComponentUpdate(Time.fixedDeltaTime);
     }
-    public override void Initialize(int spawnHashCode)
-    {
-        base.Initialize(spawnHashCode);
-        controllerComponent = new CharacterControllerComponent(this);
-        statComponent = new StatComponent(this);
-    }
+    //public override void Initialize(int spawnHashCode)
+    //{
+    //    base.Initialize(spawnHashCode);
+    //    controllerComponent = new CharacterControllerComponent(this);
+    //    statComponent = new StatComponent(this);
+    //}
 }

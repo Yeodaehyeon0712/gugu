@@ -21,6 +21,7 @@ public class CharacterControllerComponent :ControllerComponent,IObserver<Vector2
     protected override void MoveActor(float fixedDeltaTime)
     {
         if (controlValue == Vector2.zero) return;
+
         Vector2 nextPos = controlValue * speed * fixedDeltaTime;
         rigidBody.MovePosition(rigidBody.position + nextPos);
         //owner.transform.Translate(nextPos);

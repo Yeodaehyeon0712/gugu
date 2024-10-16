@@ -58,7 +58,7 @@ public class Actor : MonoBehaviour
         controllerComponent = type switch
         {
             eActorType.Character => new CharacterControllerComponent(this),
-            eActorType.Enemy => new CharacterControllerComponent(this),
+            eActorType.Enemy => new EnemyControllerComponent(this),
             _ => null
         };
     }
