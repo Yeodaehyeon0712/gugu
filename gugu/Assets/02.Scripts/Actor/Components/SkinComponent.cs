@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class SkinComponent : BaseComponent
 {
     #region Fields
@@ -35,9 +35,9 @@ public class SkinComponent : BaseComponent
         animatorHashDic.Add(eCharacterAnimState.Death, deathHash);
     }
     //처음 초기화 할때 셋 .
-    public void SetSkin(Animator animator)
+    public void SetSkin(RuntimeAnimatorController animator)
     {
-        this.animator = animator;
+        this.animator.runtimeAnimatorController = animator;
     }
     public void SetAnimationTrigger(eCharacterAnimState state)
     {

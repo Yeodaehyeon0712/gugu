@@ -17,7 +17,7 @@ public class AddressableSystem
     public bool IsLoad;
     Dictionary<string, GameObject> assetResourceContainer = new Dictionary<string, GameObject>();
     Dictionary<string, TextAsset> tableContainer = new Dictionary<string, TextAsset>();
-    Dictionary<string, Animator> animatorContainer = new Dictionary<string, Animator>();
+    Dictionary<string, AnimatorContainer> animatorContainer = new Dictionary<string, AnimatorContainer>();
     #endregion
 
     public void Initialize()
@@ -109,7 +109,7 @@ public class AddressableSystem
         await locatorHandle.ToUniTask();
 
         await LoadAssetAsync(eAddressableState.TableMemory,tableContainer);
-        await LoadAssetAsync(eAddressableState.AnimationMemory, animatorContainer);
+        await LoadAssetAsync(eAddressableState.AnimatorMemory, animatorContainer);
 
         state = eAddressableState.Complete;
     }
@@ -158,11 +158,11 @@ public class AddressableSystem
         Debug.LogError($"Database with resource path {key} not found in the database container.");
         return null;
     }
-    public static Animator GetAnimator(string key)
+    public static RuntimeAnimatorController GetAnimator(string key)
     {
-        if (DataManager.AddressableSystem.animatorContainer.TryGetValue(key, out var animator))
+        if (DataManager.AddressableSystem.animatorContainer.TryGetValue(key, out var animatorContainer))
         {
-            return animator;
+            return animatorContainer.Animator;
         }
 
         Debug.LogError($"Animator with resource path {key} not found in the animator container.");

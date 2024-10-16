@@ -76,12 +76,12 @@ public class ActorFactory
     void RefreshActor(Actor actor, eActorType type, long index, Vector2 position)
     {
         SetActorSkin(actor, type, index);
-        SetActorStat(actor, type, index);
+        //SetActorStat(actor, type, index);
         spawnedActorDic.Add(currentActorID, actor);
     }
     void SetActorSkin(Actor actor, eActorType type, long index)
     {
-        Animator animator = type switch
+        RuntimeAnimatorController animator = type switch
         {
             eActorType.Character => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
             eActorType.Enemy => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
@@ -105,17 +105,6 @@ public class ActorFactory
                     break;
                 }
         }
-    }
-
-    Data.CharacterData GetData(eActorType type, long index)
-    {
-        Data.CharacterData animator = type switch
-        {
-            eActorType.Character => DataManager.CharacterTable[index],
-            eActorType.Enemy => DataManager.CharacterTable[index],
-            _ => null
-        };
-        return animator;
     }
     #endregion
 }

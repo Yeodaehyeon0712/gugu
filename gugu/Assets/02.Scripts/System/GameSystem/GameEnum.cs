@@ -39,7 +39,7 @@ enum eAddressableState
     DownloadDependencies,
     LoadMemory,
     TableMemory,
-    AnimationMemory,
+    AnimatorMemory,
     Complete,
 }
 #endregion
