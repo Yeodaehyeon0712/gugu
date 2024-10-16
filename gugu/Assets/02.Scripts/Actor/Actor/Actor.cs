@@ -53,6 +53,7 @@ public class Actor : MonoBehaviour
     #region Component Method
     void InitializeComponent(eActorType type)
     {
+        // Init Order is Important . Skin -> Controller
         skinComponent = new SkinComponent(this);
 
         controllerComponent = type switch
