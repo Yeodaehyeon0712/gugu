@@ -10,15 +10,9 @@ public class Character : Actor
     public StatComponent Stat => statComponent;
     #endregion
 
-    protected void FixedUpdate()
+    public override void Initialize(eActorType type,long index,int spawnHashCode)
     {
-        if (controllerComponent == null) return;
-        controllerComponent.FixedComponentUpdate(Time.fixedDeltaTime);
+        base.Initialize(type,index,spawnHashCode);
+        statComponent = new StatComponent(this);
     }
-    //public override void Initialize(int spawnHashCode)
-    //{
-    //    base.Initialize(spawnHashCode);
-    //    controllerComponent = new CharacterControllerComponent(this);
-    //    statComponent = new StatComponent(this);
-    //}
 }

@@ -14,6 +14,7 @@ public class Actor : MonoBehaviour
     //Fields
     protected eActorType type;
     protected int spawnHashCode;
+    protected long index;
     #endregion
 
     #region Unity Method
@@ -21,7 +22,7 @@ public class Actor : MonoBehaviour
     {
         OnUpdateComponent(Time.deltaTime);
     }
-    protected virtual void LateUpdate()
+    protected virtual void FixedUpdate()
     {
         if (controllerComponent == null) return;
         controllerComponent.FixedComponentUpdate(Time.fixedDeltaTime);
@@ -29,10 +30,11 @@ public class Actor : MonoBehaviour
     #endregion
 
     #region Actor Method
-    public virtual void Initialize(eActorType type,int spawnHashCode)
+    public virtual void Initialize(eActorType type,long index,int spawnHashCode)
     {
-        this.spawnHashCode = spawnHashCode;
         this.type = type;
+        this.index = index;
+        this.spawnHashCode = spawnHashCode;
         InitializeComponent(type);
     }
 

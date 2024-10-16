@@ -34,7 +34,7 @@ public class ActorFactory
         {
             T originAsset = await DataManager.AddressableSystem.LoadAssetAsync<T>(resourceTuple.prefabPath);
             spawnedActor = Object.Instantiate(originAsset, instanceRoot);
-            spawnedActor.Initialize(type,resourceTuple.pathHash);
+            spawnedActor.Initialize(type,index,resourceTuple.pathHash);
         }
 
         RefreshActor(spawnedActor, type, index, position);
