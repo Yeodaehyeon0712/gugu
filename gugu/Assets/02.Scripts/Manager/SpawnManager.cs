@@ -12,8 +12,8 @@ public class SpawnManager : TSingletonMono<SpawnManager>
     #endregion
     protected override void OnInitialize()
     {
-        IsLoad = true;
         actorFactory = new ActorFactory(transform);
+        IsLoad = true;
     }
 
     #region Spawn Method
