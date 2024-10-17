@@ -62,6 +62,10 @@ public class ActorFactory
                 }
             case eActorType.Enemy:
                 {
+                    var table = DataManager.EnemyTable[index];
+                    resourcePath = table.ResourcePath;
+                    animatorPath = table.AnimatorPath;
+                    pathHash = table.PathHash;
                     break;
                 }
         }
@@ -84,7 +88,7 @@ public class ActorFactory
         RuntimeAnimatorController animator = type switch
         {
             eActorType.Character => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
-            eActorType.Enemy => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
+            eActorType.Enemy => AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath),
             _ => null
         };
         actor.Skin.SetSkin(animator);
