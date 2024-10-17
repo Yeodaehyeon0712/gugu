@@ -96,7 +96,7 @@ public class ActorFactory
             case eActorType.Character:
                 {
                     var target = actor as Character;
-                    target.Stat.SetStat(index);
+                    target.Stat.SetStat(DataManager.CharacterTable[index]);
                     break;
                 }
             case eActorType.Enemy:

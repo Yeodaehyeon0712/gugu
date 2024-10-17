@@ -5,6 +5,9 @@ using UnityEngine;
 public class StatComponent : BaseComponent
 {
     #region Fields
+    Data.CharacterData characterData;
+    float moveSpeed;
+    float maxHP;
     #endregion
 
     #region Component Method
@@ -13,9 +16,11 @@ public class StatComponent : BaseComponent
 
     }
     #endregion
-    public void SetStat(long index)
+    public void SetStat(Data.CharacterData characterData)
     {
-
+        this.characterData = characterData;
+        moveSpeed = characterData.MoveSpeed;
+        maxHP = characterData.HP;
     }
     //각종 버프 , 아이템으로 인한 수치의 최종값을 전달 .
     //버프
