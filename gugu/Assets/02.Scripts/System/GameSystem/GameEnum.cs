@@ -28,6 +28,7 @@ public enum eTableName
 {
     LocalizingTable = 1 << 0,
     CharacterTable = 1 << 1,
+    EnemyTable  =   1 << 2,
     All = ~0,
 }
 

@@ -1,0 +1,6 @@
+Index,Name,NameKey,HP,MoveSpeed,AttackDamage,AttackSpeed,ResourcePath,AnimatorPath,IsRanged,IsBoss
+1,Enemy1,101,50,1,1,1,Actor/Enemy.prefab,Animator/Enemy/Enemy1.asset,FALSE,FALSE
+2,Enemy2,102,50,1,1,1,Actor/Enemy.prefab,Animator/Enemy/Enemy2.asset,FALSE,FALSE
+3,Enemy3,103,50,1,1,1,Actor/Enemy.prefab,Animator/Enemy/Enemy3.asset,FALSE,FALSE
+4,Enemy4,104,50,1,1,1,Actor/Enemy.prefab,Animator/Enemy/Enemy4.asset,FALSE,FALSE
+5,Enemy5,105,50,1,1,1,Actor/Enemy.prefab,Animator/Enemy/Enemy5.asset,FALSE,FALSE

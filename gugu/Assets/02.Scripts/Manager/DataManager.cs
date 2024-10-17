@@ -8,12 +8,16 @@ public class DataManager : TSingletonMono<DataManager>
     public static AddressableSystem AddressableSystem;
     public static LocalizingTable LocalizingTable;
     public static CharacterTable CharacterTable;
+    public static EnemyTable EnemyTable;
+
     protected override void OnInitialize()
     {
         LocalizingTable = LoadTable<LocalizingTable>(eTableName.LocalizingTable);
         LocalizingTable.Reload();
         CharacterTable = LoadTable<CharacterTable>(eTableName.CharacterTable);
         CharacterTable.Reload();
+        EnemyTable = LoadTable<EnemyTable>(eTableName.EnemyTable);
+        EnemyTable.Reload();
         IsLoad = true;      
     }
     public void InitAddressableSystem()
