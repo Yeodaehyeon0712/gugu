@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyControllerComponent :ControllerComponent
 {
+    Rigidbody2D target;
     #region Component Method
     public EnemyControllerComponent(Actor owner) : base(owner)
     {
@@ -13,18 +14,12 @@ public class EnemyControllerComponent :ControllerComponent
 
     protected override void MoveActor(float fixedDeltaTime)
     {
-        throw new System.NotImplementedException();
+        Vector2 dirVector = target.position - rigidBody.position;
+        if (dirVector.sqrMagnitude <= Mathf.Epsilon) return; 
+
+        Vector2 nextVector = dirVector * (speed * fixedDeltaTime / dirVector.magnitude);
+        rigidBody.MovePosition(rigidBody.position + nextVector);
+        rigidBody.velocity = Vector2.zero;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
