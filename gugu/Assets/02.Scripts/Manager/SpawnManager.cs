@@ -19,6 +19,6 @@ public class SpawnManager : TSingletonMono<SpawnManager>
     #region Spawn Method
     public async UniTask<T> SpawnCharacter<T>(long index, Vector3 position) where T : Actor => await actorFactory.SpawnActorAsync<T>(eActorType.Character, index, position);
     public async UniTask<T> SpawnEnemy<T>(long index, Vector3 position) where T : Actor => await actorFactory.SpawnActorAsync<T>(eActorType.Enemy, index, position);
-
+    public void RegisterActorPool(uint worldID) => actorFactory.RegisterActorPool(worldID);
     #endregion
 }

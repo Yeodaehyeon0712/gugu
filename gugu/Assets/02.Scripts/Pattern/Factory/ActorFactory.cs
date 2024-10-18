@@ -20,6 +20,15 @@ public class ActorFactory
         for (eActorType i = eActorType.None; i < eActorType.End; ++i)
             pooledActorPool[i] = new Dictionary<int, MemoryPool<Actor>>();
     }
+    public void RegisterActorPool(uint currentActorID)
+    {
+        if (!spawnedActorDic.ContainsKey(currentActorID))
+            return;
+
+        Actor pooledActor = spawnedActorDic[currentActorID];
+        spawnedActorDic.Remove(currentActorID);
+        pooledActorPool[pooledActor.ActorType][pooledActor.SpawnHashCode].Register(pooledActor);
+    }
     #endregion
 
     #region Spawn Method
