@@ -9,6 +9,7 @@ public class DataManager : TSingletonMono<DataManager>
     public static LocalizingTable LocalizingTable;
     public static CharacterTable CharacterTable;
     public static EnemyTable EnemyTable;
+    public static EnemyStatContainer EnemyStats;
 
     protected override void OnInitialize()
     {
@@ -18,6 +19,7 @@ public class DataManager : TSingletonMono<DataManager>
         CharacterTable.Reload();
         EnemyTable = LoadTable<EnemyTable>(eTableName.EnemyTable);
         EnemyTable.Reload();
+        EnemyStats = new EnemyStatContainer(EnemyTable.GetDataDic);
         IsLoad = true;      
     }
     public void InitAddressableSystem()

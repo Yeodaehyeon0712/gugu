@@ -17,7 +17,7 @@ public class AddressableSystem
     public bool IsLoad;
     Dictionary<string, GameObject> assetResourceContainer = new Dictionary<string, GameObject>();
     Dictionary<string, TextAsset> tableContainer = new Dictionary<string, TextAsset>();
-    Dictionary<string, AnimatorContainer> animatorContainer = new Dictionary<string, AnimatorContainer>();
+    Dictionary<string, SOAnimatorController> animatorContainer = new Dictionary<string, SOAnimatorController>();
     #endregion
 
     public void Initialize()

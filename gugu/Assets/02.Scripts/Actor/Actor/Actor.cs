@@ -13,8 +13,11 @@ public class Actor : MonoBehaviour
 
     //Fields
     protected eActorType type;
+    public eActorType ActorType => type;
+    public int SpawnHashCode => spawnHashCode;
     protected int spawnHashCode;
     protected long index;
+    protected int currentActorID;
     #endregion
 
     #region Unity Method
@@ -40,11 +43,11 @@ public class Actor : MonoBehaviour
 
     public void Spawn(Vector2 position)
     {
-
+        gameObject.SetActive(true);
     }
     public void Death()
     {
-
+        gameObject.SetActive(false);
     }
     public void Hit()
     {
