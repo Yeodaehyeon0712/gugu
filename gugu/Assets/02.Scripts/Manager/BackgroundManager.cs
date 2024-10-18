@@ -9,6 +9,7 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
     //나중에 int는 Stage 타입으로 변경 
     Dictionary<int, RuleTile> backgroundTiles = new Dictionary<int, RuleTile>();
     BackgroundBlock[] backgroundBlocks;
+    RepositionArea repositionArea;
     GameObject grid;
     int blockSideSize;
     #endregion
@@ -25,6 +26,7 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
             block.Initialize(blockSideSize/2);
 
         LoadBackgroundTile();
+        CreateRepositionArea();
         IsLoad = true;
     }
     void LoadBackgroundTile()
@@ -56,6 +58,11 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
         {
             block.ResetBackground();
         }
+    }
+    void CreateRepositionArea()
+    {
+        repositionArea = Instantiate(Resources.Load<RepositionArea>("Background/RepositionArea"),transform);
+        repositionArea.Initialize(blockSideSize);
     }
     #endregion
 }

@@ -7,7 +7,7 @@ public abstract class RepositionObject : MonoBehaviour
     #region Fields
     //추후 변경 예정 - 플레이어의 위치
     [SerializeField]protected Transform target;
-    [SerializeField]LayerMask targetLayers;
+    [SerializeField]LayerMask targetLayers=LayerMask.GetMask("RepositionArea");
     #endregion
 
     #region Reposition Method
