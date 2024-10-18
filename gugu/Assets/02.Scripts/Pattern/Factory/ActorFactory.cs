@@ -27,6 +27,7 @@ public class ActorFactory
     {
         ++currentActorID;
         var resourceTuple = GetResourcePath(type, index);
+        CheckActorPool(type,resourceTuple.pathHash);
 
         Actor spawnedActor = pooledActorPool[type][resourceTuple.pathHash].GetItem();
 
@@ -38,7 +39,6 @@ public class ActorFactory
         }
 
         RefreshActor(spawnedActor, type, index, position);
-        spawnedActor.Spawn(position);
         return spawnedActor as T;
     }
     #endregion
@@ -69,21 +69,31 @@ public class ActorFactory
                     break;
                 }
         }
-
+        return (resourcePath, animatorPath, pathHash);
+    }
+    void CheckActorPool(eActorType type,int pathHash)
+    {
         if (pooledActorPool[type].TryGetValue(pathHash, out var memoryPool) == false)
         {
-            memoryPool = new MemoryPool<Actor>(20);
+            int capacity = type switch
+            {
+                eActorType.Character => 5,
+                eActorType.Enemy=>100,
+                _ => 0,
+            };
+            memoryPool = new MemoryPool<Actor>(capacity);
             pooledActorPool[type][pathHash] = memoryPool;
         }
-        return (resourcePath, animatorPath, pathHash);
     }
     void RefreshActor(Actor actor, eActorType type, long index, Vector2 position)
     {
-        SetActorSkin(actor, type, index);
-        //SetActorStat(actor, type, index);
+        RefreshActorSkin(actor, type, index);
+        RefreshActorStat(actor, type, index);
+
         spawnedActorDic.Add(currentActorID, actor);
+        actor.Spawn(position);
     }
-    void SetActorSkin(Actor actor, eActorType type, long index)
+    void RefreshActorSkin(Actor actor, eActorType type, long index)
     {
         RuntimeAnimatorController animator = type switch
         {
@@ -93,7 +103,7 @@ public class ActorFactory
         };
         actor.Skin.SetSkin(animator);
     }
-    void SetActorStat(Actor actor, eActorType type, long index)
+    void RefreshActorStat(Actor actor, eActorType type, long index)
     {
         switch (type)
         {
