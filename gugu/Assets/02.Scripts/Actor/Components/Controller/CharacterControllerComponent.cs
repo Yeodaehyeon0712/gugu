@@ -16,6 +16,7 @@ public class CharacterControllerComponent :ControllerComponent,IObserver<Vector2
         //등록 했으면 해제도 해야지 ..
         UIManager.Instance.ControllerUI.AddObserver(this);
         CameraManager.Instance.RegisterFollowTarget(owner.transform);
+        BackgroundManager.Instance.RegisterFollowTarget(owner.transform);
         skinComponet = owner.Skin;
     }
     protected override void MoveActor(float fixedDeltaTime)
@@ -30,6 +31,7 @@ public class CharacterControllerComponent :ControllerComponent,IObserver<Vector2
     {
         UIManager.Instance.ControllerUI.RemoveObserver(this);
         CameraManager.Instance.RegisterFollowTarget(null);
+        BackgroundManager.Instance.RegisterFollowTarget(null);
     }
     void SetSkinComponentAnim(Vector2 value)
     {

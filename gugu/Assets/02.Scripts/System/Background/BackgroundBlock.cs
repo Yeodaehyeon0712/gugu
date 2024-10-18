@@ -12,8 +12,9 @@ public class BackgroundBlock : RepositionObject
     #endregion
 
     #region Background Method
-    public void Initialize(int apothem)
+    public void InitializeBlock(Transform target,int apothem)
     {
+        base.Initialize(target);
         firstPosition = transform.position;
         tilemap = GetComponent<Tilemap>();
         this.apothem = apothem;
@@ -42,7 +43,7 @@ public class BackgroundBlock : RepositionObject
     #region Reposition Method
     protected override void Reposition()
     {
-        Vector2 playerPos = target.position; 
+        Vector2 playerPos = repositionArea.position; 
         Vector2 myPos = transform.position;
         Vector2 diff = playerPos - myPos;
 

@@ -5,20 +5,19 @@ using UnityEngine;
 public abstract class RepositionObject : MonoBehaviour
 {
     #region Fields
-    //추후 변경 예정 - 플레이어의 위치
-    [SerializeField]protected Transform target;
-    [SerializeField]LayerMask targetLayers=LayerMask.GetMask("RepositionArea");
+    [SerializeField]protected Transform repositionArea;
+    [SerializeField] LayerMask targetLayers;
     #endregion
 
     #region Reposition Method
-    public void Initialize()
+    public virtual void Initialize(Transform target)
     {
-
+        this.repositionArea = target;
+        targetLayers = LayerMask.GetMask(LayerMask.LayerToName(target.gameObject.layer));
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        int collisionLayerMask = 1 << collision.gameObject.layer;
-        if ((targetLayers.value & collisionLayerMask) == 0) return; 
+        if ((targetLayers & (1 << collision.gameObject.layer)) == 0) return;
 
         Reposition();
     }

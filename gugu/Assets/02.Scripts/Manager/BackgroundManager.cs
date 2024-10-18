@@ -22,11 +22,12 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
         backgroundBlocks = grid.transform.GetComponentsInChildren<BackgroundBlock>();
         blockSideSize = GameConst.BgBlockSideSize;
 
-        foreach (var block in backgroundBlocks)
-            block.Initialize(blockSideSize/2);
-
-        LoadBackgroundTile();
         CreateRepositionArea();
+        LoadBackgroundTile();
+
+        foreach (var block in backgroundBlocks)
+            block.InitializeBlock(repositionArea.transform,blockSideSize / 2);
+
         IsLoad = true;
     }
     void LoadBackgroundTile()
@@ -59,10 +60,22 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
             block.ResetBackground();
         }
     }
+
+    #endregion
+
+    #region Reposition Area Method
     void CreateRepositionArea()
     {
-        repositionArea = Instantiate(Resources.Load<RepositionArea>("Background/RepositionArea"),transform);
+        repositionArea = Instantiate(Resources.Load<RepositionArea>("Background/RepositionArea"), transform);
         repositionArea.Initialize(blockSideSize);
+    }
+    public void RegisterFollowTarget(Transform target)
+    {
+        repositionArea.RegisterParent(target==null?transform:target);
+    }
+    public void UnRegisterFollowTarget()
+    {
+        repositionArea.RegisterParent(transform);
     }
     #endregion
 }
