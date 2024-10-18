@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27f9fec01027de345890cd4b8e4f8012, type: 3}
   m_Name: Character2
   m_EditorClassIdentifier: 
-  Animator: {fileID: 9100000, guid: 83c7ba87c7c89b34180016ab09ff15a9, type: 2}
+  Animator: {fileID: 22100000, guid: add198ec02e78e44a81fc53e9ac454a0, type: 2}

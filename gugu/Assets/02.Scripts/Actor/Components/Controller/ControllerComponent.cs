@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
-public abstract class ControllerComponent : BaseComponent
+public class ControllerComponent : BaseComponent
 {
     #region Fields
     protected Rigidbody2D rigidBody;
@@ -18,6 +18,6 @@ public abstract class ControllerComponent : BaseComponent
     {
        MoveActor(fixedDeltaTime);
     }
-    protected abstract void MoveActor(float fixedDeltaTime);
+    protected virtual void MoveActor(float fixedDeltaTime) { }
     #endregion
 }
