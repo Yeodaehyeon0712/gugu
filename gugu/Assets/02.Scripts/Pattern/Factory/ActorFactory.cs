@@ -124,7 +124,8 @@ public class ActorFactory
                 }
             case eActorType.Enemy:
                 {
-                    //이때는 .. 스크립터블 오브젝트를 전달하자 .. 
+                    var target = actor as Enemy;
+                    target.Stat = DataManager.EnemyStats[index];
                     break;
                 }
         }

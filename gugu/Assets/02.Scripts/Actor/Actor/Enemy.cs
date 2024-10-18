@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enemy : Actor
 {
     #region Fields
+    [SerializeField]SOEnemyStat stat;
+    public SOEnemyStat Stat { get=>stat; set=>stat=value; }
     #endregion
 
     #region EnemyMethod
