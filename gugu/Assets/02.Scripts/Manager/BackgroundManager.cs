@@ -9,24 +9,20 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
     //나중에 int는 Stage 타입으로 변경 
     Dictionary<int, RuleTile> backgroundTiles = new Dictionary<int, RuleTile>();
     BackgroundBlock[] backgroundBlocks;
-    RepositionArea repositionArea;
     GameObject grid;
-    int blockSideSize;
     #endregion
 
-    #region Backgrounds Method
+    #region Initialize Method
     protected override void OnInitialize()
     {
+        LoadBackgroundTile();
+
         var clonedObject = Instantiate(Resources.Load<GameObject>("Background/Grid"), transform);
         grid = clonedObject;
         backgroundBlocks = grid.transform.GetComponentsInChildren<BackgroundBlock>();
-        blockSideSize = GameConst.BgBlockSideSize;
-
-        CreateRepositionArea();
-        LoadBackgroundTile();
 
         foreach (var block in backgroundBlocks)
-            block.InitializeBlock(repositionArea.transform,blockSideSize / 2);
+            block.Initialize(SpawnManager.Instance.SpawnArea.transform);
 
         IsLoad = true;
     }
@@ -38,9 +34,12 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
             backgroundTiles.Add(i,Resources.Load<RuleTile>($"Background/BackgroundTile{i}"));
         }
     }
+    #endregion
+
+    #region Background Method
     public void ShowBackgroundByStage(int stageIndex)
     {
-        if(backgroundTiles.TryGetValue(stageIndex,out RuleTile value)==false)
+        if (backgroundTiles.TryGetValue(stageIndex, out RuleTile value) == false)
         {
             Debug.LogWarning($"Wrong BackgroundIndex {stageIndex}");
             return;
@@ -48,8 +47,8 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
         grid.SetActive(true);
         foreach (var block in backgroundBlocks)
         {
-            block.ShowBackground(value);
-            value.m_TilingRules[0].m_PerlinScale= Random.Range(1,10)*0.1f;
+            block.SetBackground(value);
+            value.m_TilingRules[0].m_PerlinScale = Random.Range(1, 10) * 0.1f;
         }
     }
     public void HideBackground()
@@ -59,23 +58,6 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
         {
             block.ResetBackground();
         }
-    }
-
-    #endregion
-
-    #region Reposition Area Method
-    void CreateRepositionArea()
-    {
-        repositionArea = Instantiate(Resources.Load<RepositionArea>("Background/RepositionArea"), transform);
-        repositionArea.Initialize(blockSideSize);
-    }
-    public void RegisterFollowTarget(Transform target)
-    {
-        repositionArea.RegisterParent(target==null?transform:target);
-    }
-    public void UnRegisterFollowTarget()
-    {
-        repositionArea.RegisterParent(transform);
     }
     #endregion
 }

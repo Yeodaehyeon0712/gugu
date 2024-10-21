@@ -12,24 +12,14 @@ public class BackgroundBlock : RepositionObject
     #endregion
 
     #region Background Method
-    public void InitializeBlock(Transform target,int apothem)
+    public override void Initialize(Transform spawnArea)
     {
-        base.Initialize(target);
+        base.Initialize(spawnArea);
         firstPosition = transform.position;
         tilemap = GetComponent<Tilemap>();
-        this.apothem = apothem;
+        this.apothem = GameConst.BgBlockSideSize/2;
     }
-    public void ShowBackground(RuleTile tile)
-    {
-        SetBackground(tile);
-        gameObject.SetActive(true);
-    }
-    public void ResetBackground()
-    {
-        transform.position = firstPosition;
-        //하위 아이템들 삭제두 있겠지 ..
-    }
-    void SetBackground(RuleTile tile)
+    public void SetBackground(RuleTile tile)
     {
         for (int y = -apothem; y < apothem; y++)
         {
@@ -38,14 +28,20 @@ public class BackgroundBlock : RepositionObject
         }
         tilemap.RefreshAllTiles();
     }
+    public void ResetBackground()
+    {
+        transform.position = firstPosition;
+        //하위 아이템들 삭제두 있겠지 ..
+    }
+    
     #endregion
 
     #region Reposition Method
     protected override void Reposition()
     {
-        Vector2 playerPos = repositionArea.position; 
+        Vector2 spawnAreaPos = spawnArea.position; 
         Vector2 myPos = transform.position;
-        Vector2 diff = playerPos - myPos;
+        Vector2 diff = spawnAreaPos - myPos;
 
         bool isHorizontal = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
         Vector2 movementDirection = isHorizontal ? Vector2.right : Vector2.up;

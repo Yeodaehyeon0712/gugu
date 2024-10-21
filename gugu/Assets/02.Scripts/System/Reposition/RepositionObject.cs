@@ -5,15 +5,15 @@ using UnityEngine;
 public abstract class RepositionObject : MonoBehaviour
 {
     #region Fields
-    [SerializeField]protected Transform repositionArea;
+    [SerializeField]protected Transform spawnArea;
     [SerializeField] LayerMask targetLayers;
     #endregion
 
     #region Reposition Method
-    public virtual void Initialize(Transform target)
+    public virtual void Initialize(Transform spawnArea)
     {
-        this.repositionArea = target;
-        targetLayers = LayerMask.GetMask(LayerMask.LayerToName(target.gameObject.layer));
+        this.spawnArea = spawnArea;
+        targetLayers = LayerMask.GetMask(LayerMask.LayerToName(spawnArea.gameObject.layer));
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
