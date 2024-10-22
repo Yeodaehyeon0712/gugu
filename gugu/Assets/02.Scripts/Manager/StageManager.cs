@@ -7,6 +7,7 @@ using System.Threading;
 public class StageManager : TSingletonMono<StageManager>
 {
     #region Fields
+    Dictionary<eStageType, StageFramework> stageFrameworkDic;
     [SerializeField] eStageType _prevStage;
     [SerializeField] eStageType _currStage;
     bool isChanging;
@@ -17,6 +18,10 @@ public class StageManager : TSingletonMono<StageManager>
     #region Init Method
     protected override void OnInitialize()
     {
+        stageFrameworkDic = new Dictionary<eStageType, StageFramework>((int)eStageType.End)
+        {
+            { eStageType.Normal,new NormalStageFramework()},
+        };
         IsLoad = true;
     }
     #endregion
@@ -61,6 +66,7 @@ public class StageManager : TSingletonMono<StageManager>
     async UniTask SetupFrameworkAsync(long index)
     {
         await UniTask.Delay(System.TimeSpan.FromSeconds(1), ignoreTimeScale: false);
+        await stageFrameworkDic[_currStage].SetupStageAsync(index);
         //FadeOn
         //해당 프레임 워크의 준비와 Clean을 실행한다 .
         //모든게 끝나면 FadeOut
@@ -70,6 +76,14 @@ public class StageManager : TSingletonMono<StageManager>
         await UniTask.Delay(System.TimeSpan.FromSeconds(1), ignoreTimeScale: false);
         //해당 프레임 워크를 실행해준다 .
         //시간을 흐르게 하고 .. 각종 것들 리스타트..
+        stageFrameworkDic[_currStage].StartStageAsync(index).Forget();
+    }
+    #endregion
+
+    #region Framework Method
+    public T GetFramework<T>(eStageType type)where T:StageFramework
+    {
+        return stageFrameworkDic[type] as T;
     }
     #endregion
 }

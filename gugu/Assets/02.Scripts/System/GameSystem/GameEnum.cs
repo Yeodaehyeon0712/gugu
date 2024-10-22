@@ -66,7 +66,6 @@ public enum eLanguage
 #region Stage
 public enum eStageType
 {
-    None,
     Normal,
     End
 }
