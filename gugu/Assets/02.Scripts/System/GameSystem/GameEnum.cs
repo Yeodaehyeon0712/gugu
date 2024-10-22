@@ -91,7 +91,7 @@ public enum eCameraType
 [System.Flags]
 public enum eUI
 {
-    Main = 1 << 0,
+    BattleState = 1 << 0,
     Controller = 1 << 1,
     Setting = 1 << 2,
 }

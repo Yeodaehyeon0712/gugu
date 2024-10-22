@@ -7,7 +7,7 @@ public class UIManager : TSingletonMono<UIManager>
 {
     GameUI _gameUI;
     public GameUI GameUI => _gameUI;
-    public UMainUI MainUI => _gameUI.Main;
+    public UBattleStateUI MainUI => _gameUI.Main;
     public UControllerUI ControllerUI => _gameUI.Controller;
 
     public USettingUI SettingUI => _gameUI.Setting;

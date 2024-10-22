@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    public UMainUI Main;
+    public UBattleStateUI Main;
     public UControllerUI Controller;
     public USettingUI Setting;
     Dictionary<eUI, UBaseUI> uiDic = new Dictionary<eUI,UBaseUI>();
@@ -14,10 +14,10 @@ public class GameUI : MonoBehaviour
         Transform safeArea = transform.Find("USafeArea");
         InitializeSafeArea(safeArea);
 
-        var groupMainUI = safeArea.Find("Group_MainUI");
-        Main = groupMainUI.Find("UMainUI").GetComponent<UMainUI>();
-        uiDic.Add(eUI.Main,Main.Initialize());
-        Controller = groupMainUI.Find("UControllerUI").GetComponent<UControllerUI>();
+        var groupBattleSceneUI = safeArea.Find("Group_BattleSceneUI");
+        Main = groupBattleSceneUI.Find("UBattleStateUI").GetComponent<UBattleStateUI>();
+        uiDic.Add(eUI.BattleState,Main.Initialize());
+        Controller = groupBattleSceneUI.Find("UControllerUI").GetComponent<UControllerUI>();
         uiDic.Add(eUI.Controller, Controller.Initialize());
 
         var groupPopUp = safeArea.Find("Group_PopUp");

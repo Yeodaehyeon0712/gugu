@@ -7,7 +7,7 @@ public class MainScene : BaseScene
 {
     public override void StartScene()
     {
-        UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.Main);
+        UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.BattleState);
        // var a = GameObject.Find("Actor").GetComponent<Actor>();
         BackgroundManager.Instance.ShowBackgroundByStage(2);
         //a.Initialize();
