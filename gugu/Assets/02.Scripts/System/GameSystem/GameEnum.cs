@@ -63,6 +63,15 @@ public enum eLanguage
 #region Scene
 #endregion
 
+#region Stage
+public enum eStageType
+{
+    None,
+    Normal,
+    End
+}
+#endregion
+
 #region System
 #region Background
 #endregion
