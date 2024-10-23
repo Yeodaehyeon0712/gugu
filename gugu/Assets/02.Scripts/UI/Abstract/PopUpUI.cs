@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UPopUpUI :UBaseUI
+public abstract class PopUpUI :BaseUI
 {
     GameObject popUpBG;
     protected override void InitReference()

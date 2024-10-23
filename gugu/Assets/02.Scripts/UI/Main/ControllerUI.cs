@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 
-public class UControllerUI : UBaseUI,IPointerDownHandler, IPointerUpHandler, IDragHandler, ISubject<Vector2>
+public class ControllerUI : BaseUI,IPointerDownHandler, IPointerUpHandler, IDragHandler, ISubject<Vector2>
 {
     #region Fields
     //ISubject Fields

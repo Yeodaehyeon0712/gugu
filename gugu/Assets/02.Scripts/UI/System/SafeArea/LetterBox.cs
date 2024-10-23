@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ULetterBox : MonoBehaviour,IObserver<(Vector2,Vector2)>
+public class LetterBox : MonoBehaviour,IObserver<(Vector2,Vector2)>
 {
     #region Fields
     RectTransform _panel;
@@ -10,7 +10,7 @@ public class ULetterBox : MonoBehaviour,IObserver<(Vector2,Vector2)>
     #endregion
 
     #region Letter Box Method
-    public void Initialize(USafeArea safeArea)
+    public void Initialize(SafeArea safeArea)
     {
         _panel = (RectTransform)transform;
         safeArea.AddObserver(this);

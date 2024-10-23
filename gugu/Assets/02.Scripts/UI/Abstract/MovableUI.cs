@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 [RequireComponent(typeof(CanvasGroup))]
-public abstract class UMovableUI : UBaseUI
+public abstract class MovableUI : BaseUI
 {
     #region Variables
     [SerializeField]eMovableUIDir dir;

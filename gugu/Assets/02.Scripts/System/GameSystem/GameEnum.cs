@@ -91,9 +91,9 @@ public enum eCameraType
 [System.Flags]
 public enum eUI
 {
-    BattleState = 1 << 0,
-    Controller = 1 << 1,
-    Setting = 1 << 2,
+    Controller = 1 << 0,
+    BattleState = 1 << 1,
+    BattlePause = 1 << 2,
 }
 public enum eMovableUIDir
 {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class USafeArea : MonoBehaviour,ISubject<(Vector2,Vector2)>
+public class SafeArea : MonoBehaviour,ISubject<(Vector2,Vector2)>
 {
     #region Fields
     ScreenOrientation lastOrientation;

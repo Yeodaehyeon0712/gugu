@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
-public class USettingUI : UPopUpUI,IObserver<eLanguage>
+public class SettingUI : PopUpUI, IObserver<eLanguage>
 {
     #region Variable
     Button btn_Exit;

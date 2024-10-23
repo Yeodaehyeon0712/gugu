@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class UBaseUI : MonoBehaviour
+public abstract class BaseUI : MonoBehaviour
 {
-    public UBaseUI Initialize()
+    public BaseUI Initialize()
     {
         InitReference();
         Disable();

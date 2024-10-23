@@ -4,34 +4,42 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    public UBattleStateUI Main;
-    public UControllerUI Controller;
-    public USettingUI Setting;
-    Dictionary<eUI, UBaseUI> uiDic = new Dictionary<eUI,UBaseUI>();
+    #region Fields
+    Dictionary<eUI, BaseUI> uiDic = new Dictionary<eUI,BaseUI>();
+
+    //Battle Scene UI
+    public ControllerUI Controller;
+    public BattleStateUI BattleState;
+
+    //PopUp UI
+    public PausePopUpUI PausePopUp;
+    #endregion
 
     public void Initialize()
     {
-        Transform safeArea = transform.Find("USafeArea");
+        Transform safeArea = transform.Find("SafeArea");
         InitializeSafeArea(safeArea);
 
+        //Battle Scene UI
         var groupBattleSceneUI = safeArea.Find("Group_BattleSceneUI");
-        Main = groupBattleSceneUI.Find("UBattleStateUI").GetComponent<UBattleStateUI>();
-        uiDic.Add(eUI.BattleState,Main.Initialize());
-        Controller = groupBattleSceneUI.Find("UControllerUI").GetComponent<UControllerUI>();
+        Controller = groupBattleSceneUI.Find("ControllerUI").GetComponent<ControllerUI>();
         uiDic.Add(eUI.Controller, Controller.Initialize());
+        BattleState = groupBattleSceneUI.Find("BattleStateUI").GetComponent<BattleStateUI>();
+        uiDic.Add(eUI.BattleState,BattleState.Initialize());
 
+        //PopUp UI
         var groupPopUp = safeArea.Find("Group_PopUp");
-        Setting = groupPopUp.Find("USettingUI").GetComponent<USettingUI>();
-        uiDic.Add(eUI.Setting,Setting.Initialize());
+        PausePopUp = groupPopUp.Find("PausePopUpUI").GetComponent<PausePopUpUI>();
+        uiDic.Add(eUI.BattlePause,PausePopUp.Initialize());
     }    
     void InitializeSafeArea(Transform safeArea)
     {
-        USafeArea safeAreaUI = safeArea.GetComponent<USafeArea>();
+        SafeArea safeAreaUI = safeArea.GetComponent<SafeArea>();
 
-        ULetterBox letterBox_Top= transform.Find("LetterBox_Top").GetComponent<ULetterBox>();
+        LetterBox letterBox_Top= transform.Find("LetterBox_Top").GetComponent<LetterBox>();
         letterBox_Top.Initialize(safeAreaUI);
 
-        ULetterBox letterBox_Bottom = transform.Find("LetterBox_Bottom").GetComponent<ULetterBox>();
+        LetterBox letterBox_Bottom = transform.Find("LetterBox_Bottom").GetComponent<LetterBox>();
         letterBox_Bottom.Initialize(safeAreaUI);
 
         safeAreaUI.Initialize();

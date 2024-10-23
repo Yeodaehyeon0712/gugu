@@ -5,21 +5,27 @@ using UnityEngine.UI;
 
 public class UIManager : TSingletonMono<UIManager>
 {
+    #region Fields
     GameUI _gameUI;
     public GameUI GameUI => _gameUI;
-    public UBattleStateUI MainUI => _gameUI.Main;
-    public UControllerUI ControllerUI => _gameUI.Controller;
 
-    public USettingUI SettingUI => _gameUI.Setting;
+    //Battle Scene UI
+    public ControllerUI ControllerUI => _gameUI.Controller;
+    public BattleStateUI BattleStateUI => _gameUI.BattleState;
+
+    //PopUp UI
+    public PausePopUpUI PausePopUpUI => _gameUI.PausePopUp;
+    #endregion
+
     protected override void OnInitialize()
     {
         //To do : Addressable ·Î º¯°æ
         _gameUI = Instantiate(Resources.Load<GameUI>("UI/GameUI"), transform);
         _gameUI.Initialize();        
-        CanvasInit(_gameUI);
+        InitCanvas(_gameUI);
         IsLoad = true;
     }
-    void CanvasInit(Component root)
+    void InitCanvas(Component root)
     {
         Canvas canvas = root.GetComponent<Canvas>();
         CanvasScaler scaler = root.GetComponent<CanvasScaler>();        
