@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 842540443581890124}
   - component: {fileID: 2460434187865434819}
   m_Layer: 5
-  m_Name: Btn_Exit
+  m_Name: Btn_Refuse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -381,6 +381,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4197516543985785662}
+  - component: {fileID: 3761404052644841433}
   m_Layer: 5
   m_Name: AlramPopUpUI
   m_TagString: Untagged
@@ -410,6 +411,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3761404052644841433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5705068022248375072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5671614e6b0cdd44399758f2547e266f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6887979482276326993
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,7 +512,7 @@ GameObject:
   - component: {fileID: 2756386445509340388}
   - component: {fileID: 2795736076205168141}
   m_Layer: 5
-  m_Name: Btn_Continue
+  m_Name: Btn_Confirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

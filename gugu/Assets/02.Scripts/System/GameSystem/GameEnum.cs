@@ -88,12 +88,13 @@ public enum eCameraType
 #endregion
 
 #region UI
-[System.Flags]
+[System.Flags]//31 is Maximum Value
 public enum eUI
 {
     Controller = 1 << 0,
     BattleState = 1 << 1,
-    BattlePause = 1 << 2,
+    BattlePausePopUp = 1 << 2,
+    AlramPopUp = 1 << 3,
 }
 public enum eMovableUIDir
 {

@@ -2238,6 +2238,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AlramPopUpUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5705068022248375072, guid: 0bc2092d943447449aa7e156e83dcbf6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bc2092d943447449aa7e156e83dcbf6, type: 3}
 --- !u!224 &6340801497994710115 stripped

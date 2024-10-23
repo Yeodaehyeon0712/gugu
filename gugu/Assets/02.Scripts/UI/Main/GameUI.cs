@@ -13,6 +13,7 @@ public class GameUI : MonoBehaviour
 
     //PopUp UI
     public PausePopUpUI PausePopUp;
+    public AlramPopUpUI AlramPopUp;
     #endregion
 
     public void Initialize()
@@ -30,7 +31,9 @@ public class GameUI : MonoBehaviour
         //PopUp UI
         var groupPopUp = safeArea.Find("Group_PopUp");
         PausePopUp = groupPopUp.Find("PausePopUpUI").GetComponent<PausePopUpUI>();
-        uiDic.Add(eUI.BattlePause,PausePopUp.Initialize());
+        uiDic.Add(eUI.BattlePausePopUp,PausePopUp.Initialize());
+        AlramPopUp= groupPopUp.Find("AlramPopUpUI").GetComponent<AlramPopUpUI>();
+        uiDic.Add(eUI.AlramPopUp, AlramPopUp.Initialize());
     }    
     void InitializeSafeArea(Transform safeArea)
     {

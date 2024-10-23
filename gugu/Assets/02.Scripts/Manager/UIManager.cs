@@ -15,6 +15,7 @@ public class UIManager : TSingletonMono<UIManager>
 
     //PopUp UI
     public PausePopUpUI PausePopUpUI => _gameUI.PausePopUp;
+    public AlramPopUpUI AlramPopUpUI => _gameUI.AlramPopUp;
     #endregion
 
     protected override void OnInitialize()

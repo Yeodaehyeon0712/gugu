@@ -19,13 +19,14 @@ public class BattleStateUI : BaseUI
     #region Init Method
     protected override void InitReference()
     {
-        btn_Pause = transform.Find("Panel_Top/Btn_Pause").GetComponent<Button>();
+        var panel = transform.Find("Panel_BattleState");
+        btn_Pause = panel.Find("Panel_Top/Btn_Pause").GetComponent<Button>();
         btn_Pause.onClick.AddListener(OpenPausePopUp);
-        text_Timer = transform.Find("Panel_Top/Text_Time").GetComponent<TextMeshProUGUI>();
-        text_CoinCount = transform.Find("Panel_Right/Panel_Coin/Text_CoinCount").GetComponent<TextMeshProUGUI>();
-        text_KillCount = transform.Find("Panel_Right/Panel_Kill/Text_KillCount").GetComponent<TextMeshProUGUI>();
-        slider_Exp = transform.Find("Panel_Bottom/Slider_Exp").GetComponent<Slider>();
-        text_Level = transform.Find("Panel_Bottom/Panel_Level/Text_Level").GetComponent<TextMeshProUGUI>();
+        text_Timer = panel.Find("Panel_Top/Text_Timer").GetComponent<TextMeshProUGUI>();
+        text_CoinCount = panel.Find("Panel_Top/Panel_Right/Panel_Coin/Text_CoinCount").GetComponent<TextMeshProUGUI>();
+        text_KillCount = panel.Find("Panel_Top/Panel_Right/Panel_Kill/Text_KillCount").GetComponent<TextMeshProUGUI>();
+        slider_Exp = panel.Find("Panel_Bottom/Slider_Exp").GetComponent<Slider>();
+        text_Level = panel.Find("Panel_Bottom/Panel_Level/Text_Level").GetComponent<TextMeshProUGUI>();
     }
 
     protected override void OnRefresh()
