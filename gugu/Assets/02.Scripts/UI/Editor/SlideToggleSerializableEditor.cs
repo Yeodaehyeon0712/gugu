@@ -16,7 +16,7 @@ public class SlideToggleSerializableEditor : UnityEditor.UI.ButtonEditor
     {
         base.OnEnable();
 
-        serializedProperty = serializedObject.FindProperty("_sliderImgArr");
+        serializedProperty = serializedObject.FindProperty("sliderColorArr");
     }
 
     public override void OnInspectorGUI()

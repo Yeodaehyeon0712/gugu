@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class SlideToggle : Button
 {
     bool _isOn = true;
-    [SerializeField] protected Sprite[] _sliderImgArr;
+    [SerializeField] protected Color[] sliderColorArr = new Color[] { Color.white, Color.gray };
     Image _sliderImg;
     Image _handleImg;
     TextMeshProUGUI _stateText;
@@ -30,7 +30,7 @@ public class SlideToggle : Button
     public void IsOn(bool isOn)
     {
         _isOn = isOn;
-        _sliderImg.sprite = _isOn ? _sliderImgArr[1] : _sliderImgArr[0];
+        _sliderImg.color = _isOn ? sliderColorArr[0] : sliderColorArr[1];
         _targetHandlePosition = _isOn ? _handleOffset : -_handleOffset;
 
         _stateText.text = _isOn ? "On" : "Off";
