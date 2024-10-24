@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class SettingUI : PopUpUI, IObserver<eLanguage>
+public class SettingPopUpUI : PopUpUI, IObserver<eLanguage>
 {
     #region Variable
     Button btn_Exit;

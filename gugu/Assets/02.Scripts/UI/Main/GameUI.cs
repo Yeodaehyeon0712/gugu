@@ -13,6 +13,9 @@ public class GameUI : MonoBehaviour
 
     //PopUp UI
     public PausePopUpUI PausePopUp;
+
+    //OverPopUp UI
+    public SettingPopUpUI SettingPopUp;
     public AlramPopUpUI AlramPopUp;
     #endregion
 
@@ -32,9 +35,14 @@ public class GameUI : MonoBehaviour
         var groupPopUp = safeArea.Find("Group_PopUp");
         PausePopUp = groupPopUp.Find("PausePopUpUI").GetComponent<PausePopUpUI>();
         uiDic.Add(eUI.BattlePausePopUp,PausePopUp.Initialize());
-        AlramPopUp= groupPopUp.Find("AlramPopUpUI").GetComponent<AlramPopUpUI>();
+
+        //OverPopUp UI
+        var groupOverPopUp = safeArea.Find("Group_OverPopUp");
+        SettingPopUp = groupOverPopUp.Find("SettingPopUpUI").GetComponent<SettingPopUpUI>();
+        uiDic.Add(eUI.SettingPopUp, SettingPopUp.Initialize());
+        AlramPopUp= groupOverPopUp.Find("AlramPopUpUI").GetComponent<AlramPopUpUI>();
         uiDic.Add(eUI.AlramPopUp, AlramPopUp.Initialize());
-    }    
+    }
     void InitializeSafeArea(Transform safeArea)
     {
         SafeArea safeAreaUI = safeArea.GetComponent<SafeArea>();

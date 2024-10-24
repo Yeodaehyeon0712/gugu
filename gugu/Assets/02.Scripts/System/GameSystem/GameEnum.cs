@@ -95,6 +95,7 @@ public enum eUI
     BattleState = 1 << 1,
     BattlePausePopUp = 1 << 2,
     AlramPopUp = 1 << 3,
+    SettingPopUp=1<<4,
 }
 public enum eMovableUIDir
 {
