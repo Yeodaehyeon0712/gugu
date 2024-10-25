@@ -81,6 +81,7 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
             case ePreference.Alram:
                 break;
             case ePreference.JoyStick:
+                UIManager.Instance.ControllerUI.SetControllerAlpha(Preference.JoyStick ? 1 : 0);
                 break;
             case ePreference.Vibration:
                 break;

@@ -6278,42 +6278,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[0].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[0].b
-      value: 0.20784315
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[0].g
-      value: 0.6784314
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[0].r
-      value: 0.87843144
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[1].a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[1].b
-      value: 0.4245283
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[1].g
-      value: 0.4245283
-      objectReference: {fileID: 0}
-    - target: {fileID: 5136866325111011878, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
-      propertyPath: sliderColorArr.Array.data[1].r
-      value: 0.4245283
-      objectReference: {fileID: 0}
     - target: {fileID: 5627453653159905412, guid: c41bcafc32f261a48b57236a2bc4958f, type: 3}
       propertyPath: m_Name
       value: SlideToggle

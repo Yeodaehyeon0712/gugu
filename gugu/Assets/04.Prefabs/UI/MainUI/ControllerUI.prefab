@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 3037601160665125312}
   - component: {fileID: 8611838037070474064}
   - component: {fileID: 8434246583286939937}
+  - component: {fileID: 3534460717455617183}
   m_Layer: 5
   m_Name: Img_Controller
   m_TagString: Untagged
@@ -244,3 +245,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3534460717455617183
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9175889392159929801}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

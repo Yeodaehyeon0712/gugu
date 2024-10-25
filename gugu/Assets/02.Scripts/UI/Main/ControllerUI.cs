@@ -14,6 +14,7 @@ public class ControllerUI : BaseUI,IPointerDownHandler, IPointerUpHandler, IDrag
     RectTransform controlAreaRect;
     RectTransform controllerRect;
     RectTransform joyStickRect;
+    CanvasGroup canvasGroup;
     
     //Controller Fields
     [SerializeField]
@@ -29,9 +30,11 @@ public class ControllerUI : BaseUI,IPointerDownHandler, IPointerUpHandler, IDrag
         controlAreaRect = transform as RectTransform;
         controllerRect = transform.Find("Img_Controller").GetComponent<RectTransform>();
         joyStickRect = transform.Find("Img_Controller/Img_JoyStick").GetComponent<RectTransform>();
+        canvasGroup = controllerRect.GetComponent<CanvasGroup>();
 
         controllerStartPos = controllerRect.anchoredPosition;
         joyStickStartPos = joyStickRect.anchoredPosition;
+        SetControllerAlpha(RuntimePreference.Preference.JoyStick ? 1 : 0);
     }
 
     protected override void OnRefresh()
@@ -79,6 +82,10 @@ public class ControllerUI : BaseUI,IPointerDownHandler, IPointerUpHandler, IDrag
     {
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(controlAreaRect, position, null, out Vector2 localPoint))
             controllerRect.anchoredPosition = localPoint;
+    }
+    public void SetControllerAlpha(float alpha)
+    {
+        canvasGroup.alpha = alpha;
     }
     #endregion
 
