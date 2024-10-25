@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using System;
 
 public class SlideToggle : Button
 {
@@ -18,7 +19,7 @@ public class SlideToggle : Button
 
 
     Vector2 _targetHandlePosition;
-    public void Initialize()
+    public SlideToggle Initialize(UnityEngine.Events.UnityAction action)
     {
         _sliderImg = GetComponent<Image>();
 
@@ -26,6 +27,8 @@ public class SlideToggle : Button
         _handleOffset = _handleImg.rectTransform.anchoredPosition;
         _stateText = transform.Find("Text_State").GetComponent<TextMeshProUGUI>();
         _textOffset = _stateText.rectTransform.anchoredPosition;
+        onClick.AddListener(action);
+        return this;
     }
     public void IsOn(bool isOn)
     {

@@ -525,7 +525,7 @@ GameObject:
   - component: {fileID: 1628362558987539428}
   - component: {fileID: 1867744217063103303}
   m_Layer: 5
-  m_Name: Panel_GameSetting
+  m_Name: Panel_Prefrence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2021,7 +2021,7 @@ GameObject:
   - component: {fileID: 5131931299864822609}
   - component: {fileID: 5851557226033209868}
   m_Layer: 5
-  m_Name: Panel_Setting
+  m_Name: Panel_SettingPopUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6024,7 +6024,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1119374661892594719}
   m_Layer: 5
-  m_Name: Panel_EffectSound
+  m_Name: Panel_SFXSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
