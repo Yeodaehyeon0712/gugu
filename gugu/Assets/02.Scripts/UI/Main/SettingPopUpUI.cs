@@ -26,6 +26,38 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     Button btn_Coupon;
     Button btn_Support;
     Button btn_Policy;
+    #region Sub UI
+    public enum eSubUI
+    {
+        None,
+        Account,
+        Language,
+        Coupon,
+    }
+    Dictionary<eSubUI, PopUpUI> subUIDic;
+    public PopUpUI GetSubUI(eSubUI uiType) => subUIDic[uiType];
+    eSubUI currentSubUI = eSubUI.None;
+    public eSubUI SubUI
+    {
+        get => currentSubUI;
+        set
+        {
+            if (currentSubUI == value) return;
+
+            if (currentSubUI != eSubUI.None || value == eSubUI.None)
+            {
+                subUIDic[currentSubUI].Disable();
+            }
+
+            if (value != eSubUI.None)
+            {
+                subUIDic[value].Enable();
+            }
+
+            currentSubUI = value;
+        }
+    }
+    #endregion//추후 상속에 대해 고민해보자
 
     //UUID
     Button btn_CopyUserID;
@@ -110,16 +142,15 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     #region Account Method
     void InitAccount()
     {
-        btn_Exit=transform.Find("Panel_SettingPopUp/Panel_Title/Btn_Exit").GetComponent<Button>();
-        btn_Exit.onClick.AddListener(() => Disable());
+        InitSubUI();
 
         Transform panel_Account = transform.Find("Panel_SettingPopUp/Panel_Setting/Panel_Account");
         btn_Account= panel_Account.Find("Btn_Account").GetComponent<Button>();
-        //btn_Account.onClick.AddListener(() => UIManager.Instance.AlramPopUpUI.Enable());
+        btn_Account.onClick.AddListener(() =>SubUI=eSubUI.Account);
         btn_Language = panel_Account.Find("Btn_Language").GetComponent<Button>();
-        //btn_Language.onClick.AddListener(() => UIManager.Instance.AlramPopUpUI.Enable());
+        btn_Language.onClick.AddListener(() => SubUI=eSubUI.Language);
         btn_Coupon = panel_Account.Find("Btn_Copon").GetComponent<Button>();
-        //btn_Coupon.onClick.AddListener(() => UIManager.Instance.AlramPopUpUI.Enable());
+        btn_Coupon.onClick.AddListener(() => SubUI = eSubUI.Coupon);
         btn_Support = panel_Account.Find("Btn_Support").GetComponent<Button>();
         btn_Support.onClick.AddListener(OnSupportButtonClicked);
         btn_Policy = panel_Account.Find("Btn_Policy").GetComponent<Button>();
@@ -139,6 +170,23 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     {
         //Application.OpenURL("https://www.nugemstudio.com/contact-8");
     }
+
+    #region Sub UI Method
+    void InitSubUI()
+    {
+        btn_Exit = transform.Find("Panel_SettingPopUp/Panel_Title/Btn_Exit").GetComponent<Button>();
+        btn_Exit.onClick.AddListener(() => Disable());
+
+        Transform subUI = transform.Find("SubUI");
+        subUIDic = new Dictionary<eSubUI, PopUpUI>()
+        {
+            { eSubUI.Account, subUI.Find("AccountSubUI").GetComponent<AccountUI>().Initialize() as PopUpUI },
+            { eSubUI.Coupon, subUI.Find("LanguageSubUI").GetComponent<LanguageUI>().Initialize() as PopUpUI },
+            { eSubUI.Language, subUI.Find("CouponSubUI").GetComponent<CouponUI>().Initialize() as PopUpUI },
+        };
+    }
+    #endregion
+
     #endregion
 
     #region User ID Method

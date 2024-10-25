@@ -605,6 +605,7 @@ MonoBehaviour:
   Controller: {fileID: 0}
   BattleState: {fileID: 0}
   PausePopUp: {fileID: 0}
+  SettingPopUp: {fileID: 0}
   AlramPopUp: {fileID: 0}
 --- !u!1 &2103921508899873669
 GameObject:
