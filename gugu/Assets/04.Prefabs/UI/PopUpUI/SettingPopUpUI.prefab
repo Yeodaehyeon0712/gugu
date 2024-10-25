@@ -670,7 +670,7 @@ GameObject:
   - component: {fileID: 1062544634468557118}
   - component: {fileID: 7773647541937087354}
   m_Layer: 5
-  m_Name: Btn_CopyUUID
+  m_Name: Btn_CopyUserID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1137,7 +1137,7 @@ GameObject:
   - component: {fileID: 7199166097120237720}
   - component: {fileID: 9069500634961040749}
   m_Layer: 5
-  m_Name: Text_UUID
+  m_Name: Text_UserID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5584,7 +5584,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3709677650632263633}
   m_Layer: 5
-  m_Name: Panel_UUID
+  m_Name: Panel_UserID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5626,7 +5626,7 @@ GameObject:
   - component: {fileID: 1034829822570855954}
   - component: {fileID: 6546323223919255648}
   m_Layer: 5
-  m_Name: Panel_AccountSetting
+  m_Name: Panel_Account
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

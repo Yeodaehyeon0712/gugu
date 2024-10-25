@@ -8,8 +8,10 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
 {
     
     #region Fields
-    //Toggles
+    //Preference
     Dictionary<ePreference, SlideToggle> preferenceToggleDic=new Dictionary<ePreference, SlideToggle>();
+    Preference Preference => RuntimePreference.Preference;
+    bool isDirty;
     SlideToggle bgmToggle;
     SlideToggle sfxToggle;
     SlideToggle alramToggle;
@@ -17,15 +19,27 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     SlideToggle vibrationToggle;
     SlideToggle effectToggle;
 
-    Preference Preference => RuntimePreference.Preference;
-    bool isDirty;
+    //Account 
+    Button btn_Exit;
+    Button btn_Account;
+    Button btn_Language;
+    Button btn_Coupon;
+    Button btn_Support;
+    Button btn_Policy;
+
+    //UUID
+    Button btn_CopyUserID;
+    TextMeshProUGUI text_UserID;
+    TextMeshProUGUI text_Version;
     #endregion
 
-    #region Setting Mehtod
+    #region Init Mehtod
     protected override void InitReference()
     {
         base.InitReference();      
-        InitToggle();
+        InitPreference();
+        InitAccount();
+        InitUserID();
     }
     public override void Enable()
     {
@@ -41,17 +55,11 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
         }
         base.Disable();
     }
-    void SetPreference()
-    {
-        foreach (var toggle in preferenceToggleDic)
-        {
-            toggle.Value.IsOn(RuntimePreference.Instance.GetPreference(toggle.Key));
-        }
-    }
+
     #endregion
 
-    #region Toggle Method
-    void InitToggle()
+    #region Preference Method
+    void InitPreference()
     {
         Transform panel_preference = transform.Find("Panel_SettingPopUp/Panel_Setting/Panel_Prefrence");
 
@@ -68,6 +76,7 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
         effectToggle = panel_preference.Find("Panel_Effect/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.Effect, effectToggle.Initialize(() => ToggleAction(ePreference.Effect)));
     }
+
     void ToggleAction(ePreference preference)
     {
         isDirty = true;
@@ -89,9 +98,63 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
                 break;
         }
     }
+    void SetPreference()
+    {
+        foreach (var toggle in preferenceToggleDic)
+        {
+            toggle.Value.IsOn(RuntimePreference.Instance.GetPreference(toggle.Key));
+        }
+    }
     #endregion
 
+    #region Account Method
+    void InitAccount()
+    {
+        btn_Exit=transform.Find("Panel_SettingPopUp/Panel_Title/Btn_Exit").GetComponent<Button>();
+        btn_Exit.onClick.AddListener(() => Disable());
 
+        Transform panel_Account = transform.Find("Panel_SettingPopUp/Panel_Setting/Panel_Account");
+        btn_Account= panel_Account.Find("Btn_Account").GetComponent<Button>();
+        //btn_Account.onClick.AddListener(() => UIManager.Instance.AlramPopUpUI.Enable());
+        btn_Language = panel_Account.Find("Btn_Language").GetComponent<Button>();
+        //btn_Language.onClick.AddListener(() => UIManager.Instance.AlramPopUpUI.Enable());
+        btn_Coupon = panel_Account.Find("Btn_Copon").GetComponent<Button>();
+        //btn_Coupon.onClick.AddListener(() => UIManager.Instance.AlramPopUpUI.Enable());
+        btn_Support = panel_Account.Find("Btn_Support").GetComponent<Button>();
+        btn_Support.onClick.AddListener(OnSupportButtonClicked);
+        btn_Policy = panel_Account.Find("Btn_Policy").GetComponent<Button>();
+        btn_Policy.onClick.AddListener(OnPolicyButtonClicked);
+    }
+
+    void OnSupportButtonClicked()
+    {
+        //string address = LocalizingManager.Instance.GetLocalizing(100001);
+        //string title = LocalizingManager.Instance.GetLocalizing(100002);
+        //string body = LocalizingManager.Instance.GetLocalizing(100003) + LocalizingManager.Instance.GetLocalizing(100004);
+        //string signProvider = NetworkManager.Instance.SignProvider.ToString();
+
+        //Utility.SendToMail(address, title, body, NetworkManager.Instance.UserID, signProvider);      
+    }
+    void OnPolicyButtonClicked()
+    {
+        //Application.OpenURL("https://www.nugemstudio.com/contact-8");
+    }
+    #endregion
+
+    #region User ID Method
+    void InitUserID()
+    {
+        Transform panel_UserID = transform.Find("Panel_SettingPopUp/Panel_Setting/Panel_UserID");
+        btn_CopyUserID=panel_UserID.Find("Btn_CopyUserID").GetComponent<Button>();
+        text_UserID=panel_UserID.Find("Text_UserID").GetComponent<TextMeshProUGUI>();
+        text_Version= panel_UserID.Find("Text_Version").GetComponent<TextMeshProUGUI>();
+        //텍스트 초기화까지 진행 ..
+    }
+    void OnCopyButtonClicked()
+    {
+        
+    }
+    #endregion
 }
 //#region Variable
 //Button btn_Exit;
