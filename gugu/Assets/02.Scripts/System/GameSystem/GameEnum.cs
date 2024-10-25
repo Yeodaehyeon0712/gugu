@@ -85,6 +85,18 @@ public enum eCameraType
 
 #region Reposition
 #endregion
+
+#region Preference
+public enum ePreference
+{
+    BGM,
+    SFX,
+    Alram,
+    JoyStick,
+    Vibration,
+    Effect
+}
+#endregion
 #endregion
 
 #region UI

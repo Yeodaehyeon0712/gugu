@@ -14,6 +14,16 @@ public class GameConst
     public static float defaultOrthoSize = 15.0f;
     #endregion
 
+    #region Path
+#if UNITY_EDITOR
+    public static readonly string CacheDirectoryPath = "Cache/";
+    public static readonly string LogDirectoryPath = CacheDirectoryPath + "/Log/";
+#else
+    public static readonly string CacheDirectoryPath = UnityEngine.Application.persistentDataPath + "/Cache/";
+    public static readonly string LogDirectoryPath = CacheDirectoryPath + "/Log/";
+#endif
+    #endregion
+
     #region Enum Converter
     //public static Dictionary<string, eStatusType> StringToStatusType;
 
