@@ -8,8 +8,10 @@ public class SwitchButton : Button
     public event System.Action OnPointerDownEvent;
     public event System.Action OnPointerUpEvent;
     public event System.Action OnPointerExitEvent;
-    [SerializeField] protected Sprite _onImage;
-    [SerializeField] protected Sprite _offImage;
+    //[SerializeField] protected Sprite _onImage;
+    //[SerializeField] protected Sprite _offImage;
+    [SerializeField] protected Color _onColor=Color.white;
+    [SerializeField] protected Color _offColor = Color.black;
     [SerializeField] protected Image _targetGraphic;
     bool _isOn;
     public bool IsOn => _isOn;
@@ -28,7 +30,7 @@ public class SwitchButton : Button
         if (isOn != _isOn)
             _isOn = isOn;
 
-        _targetGraphic.sprite = _isOn ? _onImage : _offImage;
+        _targetGraphic.color = _isOn ? _onColor : _offColor;
     }
     
     public override void OnPointerDown(PointerEventData eventData)

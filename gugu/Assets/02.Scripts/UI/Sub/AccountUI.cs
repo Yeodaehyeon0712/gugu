@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class AccountUI : PopUpUI
 {
+    protected override void InitReference()
+    {
+       
+    }
+
+    protected override void OnRefresh()
+    {
+        
+    }
+
     // Start is called before the first frame update
     void Start()
     {

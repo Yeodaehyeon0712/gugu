@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseUI : MonoBehaviour
 {
-    public BaseUI Initialize()
+    public virtual BaseUI Initialize()
     {
         InitReference();
         Disable();

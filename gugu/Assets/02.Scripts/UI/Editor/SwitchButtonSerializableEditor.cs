@@ -11,8 +11,10 @@ public class SwitchButtonSerializableEditor : UnityEditor.UI.ButtonEditor
 {
     SwitchButton _switchButton;
 
-    SerializedProperty _onImgProperty;
-    SerializedProperty _offImgProperty;
+    //SerializedProperty _onImgProperty;
+    //SerializedProperty _offImgProperty;
+    SerializedProperty _onColorProperty;
+    SerializedProperty _offColorProperty;
     SerializedProperty _targetGraphicProperty;
     SerializedProperty _onSoundProperty;
     SerializedProperty _offSoundProperty;
@@ -20,8 +22,10 @@ public class SwitchButtonSerializableEditor : UnityEditor.UI.ButtonEditor
     {
         base.OnEnable();
 
-        _onImgProperty = serializedObject.FindProperty("_onImage");
-        _offImgProperty = serializedObject.FindProperty("_offImage");
+        //_onImgProperty = serializedObject.FindProperty("_onImage");
+        //_offImgProperty = serializedObject.FindProperty("_offImage");
+        _onColorProperty = serializedObject.FindProperty("_onColor");
+        _offColorProperty = serializedObject.FindProperty("_offColor");
         _onSoundProperty = serializedObject.FindProperty("_onClickSoundKey");
         _offSoundProperty = serializedObject.FindProperty("_offClickSoundKey");
         _targetGraphicProperty = serializedObject.FindProperty("_targetGraphic");
@@ -41,9 +45,11 @@ public class SwitchButtonSerializableEditor : UnityEditor.UI.ButtonEditor
 
         EditorGUI.BeginChangeCheck();
         EditorGUILayout.BeginVertical();
-        EditorGUILayout.PropertyField(_onImgProperty, true);
+        //EditorGUILayout.PropertyField(_onImgProperty, true);
+        EditorGUILayout.PropertyField(_onColorProperty, true);
         EditorGUILayout.PropertyField(_onSoundProperty, true);
-        EditorGUILayout.PropertyField(_offImgProperty, true);
+        //EditorGUILayout.PropertyField(_offImgProperty, true);
+        EditorGUILayout.PropertyField(_offColorProperty, true);
         EditorGUILayout.PropertyField(_offSoundProperty, true);
         EditorGUILayout.PropertyField(_targetGraphicProperty, true);
         EditorGUILayout.EndVertical();

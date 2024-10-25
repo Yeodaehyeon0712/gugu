@@ -19,7 +19,6 @@ public class PausePopUpUI : PopUpUI
     #region Init Method
     protected override void InitReference()
     {
-        base.InitReference();
         btn_Setting= transform.Find("Panel_Top/Btn_Setting").GetComponent<Button>();
         btn_Setting.onClick.AddListener(() => UIManager.Instance.SettingPopUpUI.Enable());
         btn_Chart = transform.Find("Panel_Top/Btn_Chart").GetComponent<Button>();
@@ -28,6 +27,11 @@ public class PausePopUpUI : PopUpUI
         btn_Continue = transform.Find("Panel_Bottom/Btn_Continue").GetComponent<Button>();
         btn_Continue.onClick.AddListener(() => Continue());
         btn_Exit = transform.Find("Panel_Bottom/Btn_Exit").GetComponent<Button>();
+    }
+
+    protected override void OnRefresh()
+    {
+        throw new NotImplementedException();
     }
     #endregion
 

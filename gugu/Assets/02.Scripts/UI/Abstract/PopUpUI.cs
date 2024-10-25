@@ -5,13 +5,10 @@ using UnityEngine;
 public abstract class PopUpUI :BaseUI
 {
     GameObject popUpBG;
-    protected override void InitReference()
+    public override BaseUI Initialize()
     {
         popUpBG = transform.parent.Find("PopUpBG").gameObject;
-    }
-    protected override void OnRefresh()
-    {
-
+        return base.Initialize();
     }
     public override void Enable()
     {

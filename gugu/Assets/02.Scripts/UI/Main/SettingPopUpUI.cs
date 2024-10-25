@@ -67,8 +67,7 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
 
     #region Init Mehtod
     protected override void InitReference()
-    {
-        base.InitReference();      
+    {   
         InitPreference();
         InitAccount();
         InitUserID();
@@ -181,8 +180,8 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
         subUIDic = new Dictionary<eSubUI, PopUpUI>()
         {
             { eSubUI.Account, subUI.Find("AccountSubUI").GetComponent<AccountUI>().Initialize() as PopUpUI },
-            { eSubUI.Coupon, subUI.Find("LanguageSubUI").GetComponent<LanguageUI>().Initialize() as PopUpUI },
-            { eSubUI.Language, subUI.Find("CouponSubUI").GetComponent<CouponUI>().Initialize() as PopUpUI },
+            { eSubUI.Language, subUI.Find("LanguageSubUI").GetComponent<LanguageUI>().Initialize() as PopUpUI },
+            { eSubUI.Coupon, subUI.Find("CouponSubUI").GetComponent<CouponUI>().Initialize() as PopUpUI },
         };
     }
     #endregion
@@ -201,6 +200,11 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     void OnCopyButtonClicked()
     {
         
+    }
+
+    protected override void OnRefresh()
+    {
+        throw new System.NotImplementedException();
     }
     #endregion
 }

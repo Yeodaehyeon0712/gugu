@@ -6,51 +6,46 @@ using UnityEngine.UI;
 
 public class LanguageUI : PopUpUI
 {
-    TextMeshProUGUI _titleText;
+    #region Fields
+    TextMeshProUGUI titleText;
+    Button btn_Exit;
 
-    Dictionary<eLanguage, Button> _languageButtonDic;
-    [SerializeField] Transform _languageButtonResource;
+    Dictionary<eLanguage, SwitchButton> languageButtonDic;
+    [SerializeField] SwitchButton languageButtonResource;
+    #endregion
+
     protected override void InitReference()
     {
-        //base.InitReference();
-        //_titleText = transform.Find("Text_Title").GetComponent<TextMeshProUGUI>();
-        ////transform.Find("Btn_Exit").GetComponent<Button>().onClick.AddListener(OnDownShiftLayerLevel);
-        //_languageButtonDic = new Dictionary<eLanguage, Button>((int)eLanguage.End - 1);
-        //Transform trs = transform.Find("Scroll View/Viewport/Content");
+        var panel_Title = transform.Find("Panel_Title");
+        titleText = panel_Title.Find("Text_Description").GetComponent<TextMeshProUGUI>();
+        btn_Exit= panel_Title.Find("Btn_Exit").GetComponent<Button>();
+        btn_Exit.onClick.AddListener(() => UIManager.Instance.SettingPopUpUI.SubUI = SettingPopUpUI.eSubUI.None);
 
-        //for (eLanguage i = 0; i < eLanguage.End - 1; ++i)
-        //{
-        //    int number = (int)i;
-        //    eLanguage temp = i + 1;
-        //    Transform element = Instantiate(_languageButtonResource, trs);
-        //    Button btn = element.GetComponent<Button>();
-        //    btn.TargetGraphic = element.GetComponent<Image>();
-        //    btn.gameObject.SetActive(true);
-        //    btn.onClick.AddListener(() => OnClickLanguage(temp));
-        //    _languageButtonDic.Add(temp, btn);
-        //    btn.GetComponentInChildren<TextMeshProUGUI>(true).text = LocalizingManager.Instance.GetLocalizing(179 + number);
-        //}
+        Transform root = transform.Find("Scroll View/Viewport/Content");
+        languageButtonDic = new Dictionary<eLanguage, SwitchButton>((int)eLanguage.End - 1);
+        for (eLanguage i = eLanguage.English; i < eLanguage.End; i++)
+        {
+            var btn_language = Instantiate(languageButtonResource, root);
+            btn_language.TargetGraphic = btn_language.GetComponent<Image>();
 
+            eLanguage currentLanguage = i;
+            btn_language.onClick.AddListener(() => OnClickLanguage(currentLanguage));
+            languageButtonDic.Add(currentLanguage, btn_language);
+            btn_language.GetComponentInChildren<TextMeshProUGUI>(true).text = currentLanguage.ToString();
+            btn_language.SetImage(currentLanguage == RuntimePreference.Preference.Language);
+        }
     }
-    private void Awake()
+    protected override void OnRefresh()
     {
-        UIManager.Instance.SettingPopUpUI.SubUI = SettingPopUpUI.eSubUI.None;
+
     }
     void OnClickLanguage(eLanguage language)
     {
         if (RuntimePreference.Preference.Language == language)
             return;
-        //_languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: false);
-        //RuntimePreference.Preference.Language = language;
-        //RuntimePreference.Instance.SavePreference();
-        //UIManager.Instance.Main.SubUI = UMainUI.eSubUI.None;
-        //UIManager.Instance.MainMenu.SubUI = UMainUI.eSubUI.None;
-        //UIManager.Instance.PlayerProperty.Refresh();
-        //UIManager.Instance.MainMenu.Refresh();
-        //UIManager.Instance.Stage.Refresh();
-        //UIManager.Instance.Main.Refresh();
-        //UIManager.Instance.TagUI.Refresh();
-        /*UIManager.Instance.language.Enable();
-        UIManager.Instance.language.OnClickSubmit2(language);*/
+        languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: false);
+        RuntimePreference.Preference.Language = language;
+        RuntimePreference.Instance.SavePreference();
+        languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: true);
     }
 }

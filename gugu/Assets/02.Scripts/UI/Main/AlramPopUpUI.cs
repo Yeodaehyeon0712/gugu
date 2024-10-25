@@ -16,7 +16,6 @@ public class AlramPopUpUI : PopUpUI
     #region Initialize Method
     protected override void InitReference()
     {
-        base.InitReference();
         btn_Confirm= transform.Find("Panel_Alram/Panel_Bottom/Btn_Confirm").GetComponent<Button>();
         btn_Refuse = transform.Find("Panel_Alram/Panel_Bottom/Btn_Refuse").GetComponent<Button>();
         text_AlramTitle = transform.Find("Panel_Alram/Panel_Title/Text_Description").GetComponent<TextMeshProUGUI>();
