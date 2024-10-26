@@ -13,7 +13,7 @@ public abstract class MovableUI : BaseUI
     CanvasGroup canvasGroup;
     GameObject raycastBlock;
     #endregion
-    protected override void InitReference()
+    public override BaseUI Initialize()
     {
         rectTransform = GetComponent<RectTransform>();
         canvasSize = UIManager.Instance.GameUI.GetComponent<CanvasScaler>().referenceResolution;
@@ -21,22 +21,18 @@ public abstract class MovableUI : BaseUI
         canvasGroup.interactable = false;
         raycastBlock = transform.parent.Find("RaycastBlock").gameObject;
         SetFirstPosition();
-    }
-    public override void Disable()
-    {
-        base.Disable();
-        raycastBlock.SetActive(false);
+        return base.Initialize();
     }
     public override void Enable()
     {
         base.Enable();
         raycastBlock.SetActive(true);
     }
-    protected override void OnRefresh()
+    public override void Disable()
     {
-        
+        base.Disable();
+        raycastBlock.SetActive(false);
     }
-
     #region Movable Func
     void SetFirstPosition()
     {
