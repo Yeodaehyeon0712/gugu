@@ -48,8 +48,8 @@ enum eAddressableState
 #region Localizing
 public enum eLanguage
 {
-    English,
-    Korean,
+    EN,     //English
+    KR,     //Korean
     End
 }
 #endregion

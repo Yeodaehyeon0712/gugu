@@ -8,7 +8,7 @@ public class LocalizingTable : TableBase
     public string this[int index] {
         get {
             if (_localizingDic.ContainsKey(index))
-                return _localizingDic[index][LocalizingManager.Instance.CurrentLanguage];
+                return _localizingDic[index][RuntimePreference.Preference.Language];
 
             return null;
         }
@@ -21,8 +21,10 @@ public class LocalizingTable : TableBase
             if (!_localizingDic.ContainsKey(contents.Key))
                 _localizingDic.Add(contents.Key, new Dictionary<eLanguage, string>());
 
-            _localizingDic[contents.Key].Add(eLanguage.English, contents.Value["EN"].Replace("\\n", "\n").Replace("P!0", ","));
-            _localizingDic[contents.Key].Add(eLanguage.Korean, contents.Value["KR"].Replace("\\n", "\n").Replace("P!0",","));
+            for(var i=eLanguage.EN;i<eLanguage.End;i++)
+            {
+                _localizingDic[contents.Key].Add(i, contents.Value[i.ToString()].Replace("\\n", "\n").Replace("P!0", ","));
+            }
         }
     }
 }

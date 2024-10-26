@@ -16,7 +16,7 @@ public class Preference
     public bool Effect = true;
 
     //public bool ConsentedGDPR = false;
-    public eLanguage Language = eLanguage.Korean;
+    public eLanguage Language = eLanguage.KR;
     public Preference ShallowCopy()
     {
         return (Preference)MemberwiseClone();
@@ -77,11 +77,11 @@ public class RuntimePreference : TSingletonMono<RuntimePreference>
     //언어 추가 시 LocalizingManager에서 추가 후 DefaultSetting 메소드에서도 추가
     void DefaultSetting()
     {
-        eLanguage language = eLanguage.English;
+        eLanguage language = eLanguage.EN;
         switch (Application.systemLanguage)
         {
             case SystemLanguage.Korean:
-                language = eLanguage.Korean;
+                language = eLanguage.KR;
                 break;
         }
         preference = new Preference()
