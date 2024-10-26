@@ -6,27 +6,42 @@ using TMPro;
 
 public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
 {
-    
+
     #region Fields
+    //Field
+    TextMeshProUGUI text_title;
+    Button btn_Exit;
+
     //Preference
     Dictionary<ePreference, SlideToggle> preferenceToggleDic=new Dictionary<ePreference, SlideToggle>();
     Preference Preference => RuntimePreference.Preference;
     bool isDirty;
     SlideToggle bgmToggle;
+    TextMeshProUGUI text_bgm;
     SlideToggle sfxToggle;
+    TextMeshProUGUI text_sfx;
     SlideToggle alramToggle;
+    TextMeshProUGUI text_alram;
     SlideToggle joystickToggle;
+    TextMeshProUGUI text_joystick;
     SlideToggle vibrationToggle;
+    TextMeshProUGUI text_vibration;
     SlideToggle effectToggle;
+    TextMeshProUGUI text_effect;
+
 
     //Account 
-    Button btn_Exit;
     Button btn_Account;
+    TextMeshProUGUI text_account;
     Button btn_Language;
+    TextMeshProUGUI text_language;
     Button btn_Coupon;
+    TextMeshProUGUI text_coupon;
     Button btn_Support;
+    TextMeshProUGUI text_support;
     Button btn_Policy;
-    #region Sub UI
+    TextMeshProUGUI text_policy;
+    #region Sub UI - 추후 상속에 대해 고민해보자
     public enum eSubUI
     {
         None,
@@ -57,7 +72,7 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
             currentSubUI = value;
         }
     }
-    #endregion//추후 상속에 대해 고민해보자
+    #endregion
 
     //UUID
     Button btn_CopyUserID;
@@ -86,26 +101,64 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
         }
         base.Disable();
     }
+    protected override void OnRefresh()
+    {
+        text_title.text= LocalizingManager.Instance.GetLocalizing(215);
 
+        text_bgm.text = LocalizingManager.Instance.GetLocalizing(216);
+        text_sfx.text = LocalizingManager.Instance.GetLocalizing(217);
+        text_alram.text = LocalizingManager.Instance.GetLocalizing(218);
+        text_joystick.text = LocalizingManager.Instance.GetLocalizing(219);
+        text_vibration.text = LocalizingManager.Instance.GetLocalizing(220);
+        text_effect.text = LocalizingManager.Instance.GetLocalizing(221);
+
+        text_account.text = LocalizingManager.Instance.GetLocalizing(222);
+        text_language.text = LocalizingManager.Instance.GetLocalizing(223);
+        text_coupon.text = LocalizingManager.Instance.GetLocalizing(224);
+        text_support.text = LocalizingManager.Instance.GetLocalizing(225);
+        text_policy.text = LocalizingManager.Instance.GetLocalizing(226);
+    }
     #endregion
 
     #region Preference Method
     void InitPreference()
     {
+        Transform panel_title = transform.Find("Panel_SettingPopUp/Panel_Title");
+        text_title = panel_title.Find("Text_Description").GetComponent<TextMeshProUGUI>();
+        btn_Exit = panel_title.Find("Btn_Exit").GetComponent<Button>();
+        btn_Exit.onClick.AddListener(() => Disable());
+
         Transform panel_preference = transform.Find("Panel_SettingPopUp/Panel_Setting/Panel_Prefrence");
 
-        bgmToggle = panel_preference.Find("Panel_BGSound/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
+        Transform panel_bgm = panel_preference.Find("Panel_BGSound");
+        bgmToggle = panel_bgm.Find("Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.BGM,bgmToggle.Initialize(()=>ToggleAction(ePreference.BGM)));
-        sfxToggle = panel_preference.Find("Panel_SFXSound/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
+        text_bgm= panel_bgm.Find("Panel_Description/Text_Description").GetComponent<TextMeshProUGUI>();
+
+        Transform panel_sfx = panel_preference.Find("Panel_SFXSound");
+        sfxToggle = panel_sfx.Find("Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.SFX, sfxToggle.Initialize(() => ToggleAction(ePreference.SFX)));
-        alramToggle = panel_preference.Find("Panel_Alram/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
+        text_sfx = panel_sfx.Find("Panel_Description/Text_Description").GetComponent<TextMeshProUGUI>();
+
+        Transform panel_alram = panel_preference.Find("Panel_Alram");
+        alramToggle = panel_alram.Find("Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.Alram, alramToggle.Initialize(() => ToggleAction(ePreference.Alram)));
-        joystickToggle = panel_preference.Find("Panel_JoyStick/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
+        text_alram = panel_alram.Find("Panel_Description/Text_Description").GetComponent<TextMeshProUGUI>();
+
+        Transform panel_joystick = panel_preference.Find("Panel_JoyStick");
+        joystickToggle = panel_joystick.Find("Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.JoyStick, joystickToggle.Initialize(() => ToggleAction(ePreference.JoyStick)));
-        vibrationToggle = panel_preference.Find("Panel_Vibration/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
+        text_joystick = panel_joystick.Find("Panel_Description/Text_Description").GetComponent<TextMeshProUGUI>();
+
+        Transform panel_vibration = panel_preference.Find("Panel_Vibration");
+        vibrationToggle = panel_vibration.Find("Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.Vibration, vibrationToggle.Initialize(() => ToggleAction(ePreference.Vibration)));
-        effectToggle = panel_preference.Find("Panel_Effect/Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
+        text_vibration = panel_vibration.Find("Panel_Description/Text_Description").GetComponent<TextMeshProUGUI>();
+
+        Transform panel_effect = panel_preference.Find("Panel_Effect");
+        effectToggle = panel_effect.Find("Panel_Toggle/SlideToggle").GetComponent<SlideToggle>();
         preferenceToggleDic.Add(ePreference.Effect, effectToggle.Initialize(() => ToggleAction(ePreference.Effect)));
+        text_effect = panel_effect.Find("Panel_Description/Text_Description").GetComponent<TextMeshProUGUI>();
     }
 
     void ToggleAction(ePreference preference)
@@ -146,14 +199,24 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
         Transform panel_Account = transform.Find("Panel_SettingPopUp/Panel_Setting/Panel_Account");
         btn_Account= panel_Account.Find("Btn_Account").GetComponent<Button>();
         btn_Account.onClick.AddListener(() =>SubUI=eSubUI.Account);
+        text_account = btn_Account.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
+
         btn_Language = panel_Account.Find("Btn_Language").GetComponent<Button>();
         btn_Language.onClick.AddListener(() => SubUI=eSubUI.Language);
+        text_language = btn_Language.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
+
         btn_Coupon = panel_Account.Find("Btn_Copon").GetComponent<Button>();
         btn_Coupon.onClick.AddListener(() => SubUI = eSubUI.Coupon);
+        text_coupon = btn_Coupon.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
+
         btn_Support = panel_Account.Find("Btn_Support").GetComponent<Button>();
         btn_Support.onClick.AddListener(OnSupportButtonClicked);
+        text_support = btn_Support.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
+
+
         btn_Policy = panel_Account.Find("Btn_Policy").GetComponent<Button>();
         btn_Policy.onClick.AddListener(OnPolicyButtonClicked);
+        text_policy = btn_Policy.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
     }
 
     void OnSupportButtonClicked()
@@ -173,9 +236,6 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     #region Sub UI Method
     void InitSubUI()
     {
-        btn_Exit = transform.Find("Panel_SettingPopUp/Panel_Title/Btn_Exit").GetComponent<Button>();
-        btn_Exit.onClick.AddListener(() => Disable());
-
         Transform subUI = transform.Find("SubUI");
         subUIDic = new Dictionary<eSubUI, PopUpUI>()
         {
@@ -200,11 +260,6 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     void OnCopyButtonClicked()
     {
         
-    }
-
-    protected override void OnRefresh()
-    {
-        throw new System.NotImplementedException();
     }
     #endregion
 }

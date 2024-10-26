@@ -1,3 +1,28 @@
 Key,EN,KR
 0,Not Set Language,설정 없는 로컬
-1,Test,테스트
+1,Character1,캐릭터1
+2,Character2,캐릭터2
+3,Character3,캐릭터3
+4,Character4,캐릭터4
+101,Enemy1,적1
+102,Enemy2,적2
+103,Enemy3,적3
+104,Enemy4,적4
+201,English,English
+202,한국어,한국어
+211,Attack Skill,공격 스킬
+212,Passive Skill,패시브 스킬
+213,Continue,계속하기
+214,Quit,그만하기
+215,Setting,설정
+216,BGM,배경음
+217,SFX,효과음
+218,Alram,알람
+219,Joy Stick,조이스틱
+220,Vibration,진동
+221,Effect,효과
+222,Account,계정
+223,Language,언어
+224,Copon,쿠폰
+225,Support,지원
+226,Privacy\nPolicy,개인정보\n처리방침

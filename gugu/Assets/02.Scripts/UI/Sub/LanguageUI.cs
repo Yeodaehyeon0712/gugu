@@ -23,7 +23,7 @@ public class LanguageUI : PopUpUI
 
         Transform root = transform.Find("Scroll View/Viewport/Content");
         languageButtonDic = new Dictionary<eLanguage, SwitchButton>((int)eLanguage.End - 1);
-        for (eLanguage i = eLanguage.English; i < eLanguage.End; i++)
+        for (eLanguage i = eLanguage.EN; i < eLanguage.End; i++)
         {
             var btn_language = Instantiate(languageButtonResource, root);
             btn_language.TargetGraphic = btn_language.GetComponent<Image>();
@@ -31,21 +31,22 @@ public class LanguageUI : PopUpUI
             eLanguage currentLanguage = i;
             btn_language.onClick.AddListener(() => OnClickLanguage(currentLanguage));
             languageButtonDic.Add(currentLanguage, btn_language);
-            btn_language.GetComponentInChildren<TextMeshProUGUI>(true).text = currentLanguage.ToString();
+            btn_language.GetComponentInChildren<TextMeshProUGUI>(true).text = LocalizingManager.Instance.GetLocalizing(201+(int)i);
             btn_language.SetImage(currentLanguage == RuntimePreference.Preference.Language);
         }
     }
     protected override void OnRefresh()
     {
-
+        titleText.text = LocalizingManager.Instance.GetLocalizing(223);
     }
     void OnClickLanguage(eLanguage language)
     {
         if (RuntimePreference.Preference.Language == language)
             return;
         languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: false);
-        RuntimePreference.Preference.Language = language;
-        RuntimePreference.Instance.SavePreference();
+        LocalizingManager.Instance.SetLanguage(language);
         languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: true);
+        UIManager.Instance.SettingPopUpUI.SubUI = SettingPopUpUI.eSubUI.None;
     }
+    
 }
