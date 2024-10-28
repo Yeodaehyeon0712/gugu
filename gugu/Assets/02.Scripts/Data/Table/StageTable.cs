@@ -7,7 +7,7 @@ namespace Data
     {
         public readonly long Index;
         public readonly long NameKey;
-        public readonly int BackgroundKey;
+        public readonly string BackgroundPath;
         public readonly WaveData[] WaveDataArr;
 
 
@@ -15,10 +15,11 @@ namespace Data
         {
             Index = index;
             NameKey = long.Parse(dataPair["NameKey"]);
-            BackgroundKey = int.Parse(dataPair["BackgroundKey"]);
+            BackgroundPath = dataPair["BackgroundPath"];
 
             var WaveIndexArr = System.Array.ConvertAll(dataPair[$"WaveIndex"].Split('|'), v => int.Parse(v));
-            for(int i=0;i<WaveIndexArr.Length;i++)
+            WaveDataArr = new WaveData[WaveIndexArr.Length];
+            for (int i=0;i<WaveIndexArr.Length;i++)
             {
                 WaveDataArr[i] = DataManager.WaveTable[WaveIndexArr[i]];
             }

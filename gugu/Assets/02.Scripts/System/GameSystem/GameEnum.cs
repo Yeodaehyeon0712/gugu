@@ -30,6 +30,7 @@ public enum eTableName
     CharacterTable = 1 << 1,
     EnemyTable  =   1 << 2,
     WaveTable = 1 << 3,
+    StageTable = 1 << 4,
     All = ~0,
 }
 
