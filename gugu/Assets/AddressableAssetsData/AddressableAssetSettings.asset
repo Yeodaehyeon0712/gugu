@@ -115,6 +115,7 @@ MonoBehaviour:
     - Table
     - Animator
     - Actor
+    - Background
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: fb4f870a31b2a53458b28beefeb0b0bb, type: 2}
