@@ -29,6 +29,7 @@ public enum eTableName
     LocalizingTable = 1 << 0,
     CharacterTable = 1 << 1,
     EnemyTable  =   1 << 2,
+    WaveTable = 1 << 3,
     All = ~0,
 }
 
