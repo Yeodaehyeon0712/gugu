@@ -51,6 +51,9 @@ public class TitleScene : BaseScene
         StageManager.Instance.Initialize();
         await UniTask.WaitUntil(() => StageManager.Instance.IsLoad);
 
+        //이건 위치 변경 필요
+        Player.Initialize();
+
 
         text_Description.text = "Complete";
         button_NextScene.gameObject.SetActive(true);
