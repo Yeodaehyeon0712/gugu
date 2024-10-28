@@ -11,6 +11,7 @@ public abstract class StageFramework
     public virtual async UniTask SetupStageAsync(long stageIndex)
     {
         await UniTask.Yield();
+        Debug.Log("Áëºñ ¿Â·á");
     }
     public abstract UniTask StartStageAsync(long stageIndex);
 }

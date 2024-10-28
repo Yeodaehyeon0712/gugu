@@ -48,6 +48,10 @@ public class TitleScene : BaseScene
         BackgroundManager.Instance.Initialize();//Initialize SpawnManager First
         await UniTask.WaitUntil(() => BackgroundManager.Instance.IsLoad);
 
+        StageManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => StageManager.Instance.IsLoad);
+
+
         text_Description.text = "Complete";
         button_NextScene.gameObject.SetActive(true);
     }

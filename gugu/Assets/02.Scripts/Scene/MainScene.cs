@@ -18,6 +18,7 @@ public class MainScene : BaseScene
     {
         await SpawnManager.Instance.SpawnCharacter<Character>(1, Vector3.zero);
         Debug.Log("소환 완료");
+        StageManager.Instance.SetupStage(eStageType.Normal, 1);
     }
 
 

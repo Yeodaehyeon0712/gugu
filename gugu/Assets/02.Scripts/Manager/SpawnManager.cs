@@ -38,5 +38,9 @@ public class SpawnManager : TSingletonMono<SpawnManager>
     {
         spawnArea.RegisterParent(target != null ? target : transform);
     }
+    public Vector3 GetRandomPosition()
+    {
+        return spawnArea.GetRandomPosition();
+    }
     #endregion
 }

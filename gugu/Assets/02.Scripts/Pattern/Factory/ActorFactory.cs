@@ -35,6 +35,7 @@ public class ActorFactory
     public async UniTask<T> SpawnActorAsync<T>(eActorType type, long index, Vector2 position) where T : Actor
     {
         ++currentActorID;
+        uint snapshotID = currentActorID;
         var resourceTuple = GetResourcePath(type, index);
         CheckActorPool(type,resourceTuple.pathHash);
 
@@ -47,7 +48,7 @@ public class ActorFactory
             spawnedActor.Initialize(type,index,resourceTuple.pathHash);
         }
 
-        RefreshActor(spawnedActor, type, index, position);
+        RefreshActor(spawnedActor, type, index, snapshotID, position);
         return spawnedActor as T;
     }
     #endregion
@@ -94,12 +95,12 @@ public class ActorFactory
             pooledActorPool[type][pathHash] = memoryPool;
         }
     }
-    void RefreshActor(Actor actor, eActorType type, long index, Vector2 position)
+    void RefreshActor(Actor actor, eActorType type, long index,uint snapshotID, Vector2 position)
     {
         RefreshActorSkin(actor, type, index);
         RefreshActorStat(actor, type, index);
 
-        spawnedActorDic.Add(currentActorID, actor);
+        spawnedActorDic.Add(snapshotID, actor);
         actor.Spawn(position);
     }
     void RefreshActorSkin(Actor actor, eActorType type, long index)

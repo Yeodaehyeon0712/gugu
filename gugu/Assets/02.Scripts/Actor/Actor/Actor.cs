@@ -43,6 +43,7 @@ public class Actor : MonoBehaviour
 
     public void Spawn(Vector2 position)
     {
+        transform.position = position;
         gameObject.SetActive(true);
     }
     public void Death()
