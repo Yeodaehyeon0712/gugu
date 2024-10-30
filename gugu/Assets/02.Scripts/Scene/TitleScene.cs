@@ -27,6 +27,9 @@ public class TitleScene : BaseScene
         RuntimePreference.Instance.Initialize();
         await UniTask.WaitUntil(() => RuntimePreference.Instance.IsLoad);
 
+        TimeManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => TimeManager.Instance.IsLoad);
+
         CameraManager.Instance.Initialize();
         await UniTask.WaitUntil(() => CameraManager.Instance.IsLoad);
 
