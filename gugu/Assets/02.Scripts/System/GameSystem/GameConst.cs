@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class GameConst
 {
+    #region Stage
+    public static float subWaveTime = 30f;
+    public static float spawnInterval=3f;
+    #endregion
+
     #region Background
     public static int BgBlockSideSize=30;
     #endregion

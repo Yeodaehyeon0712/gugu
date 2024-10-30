@@ -1,40 +1,141 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class NormalStageFramework : StageFramework
 {
-    public override async UniTask StartStageAsync(long stageIndex)
+    #region Fields
+    int mainWaveCount;
+    int subWaveCount;
+    #endregion
+
+
+    #region Framework Method
+    protected override async UniTask FrameworkProcessAsync(long stageIndex, CancellationToken token)
     {
-        await UniTask.WaitForFixedUpdate();
-        while(true)//게임이 끝날때까지 ..
+        currentStageState = eStageResultState.InProgress;
+        mainWaveCount = 0;
+
+        var mainWaveTimer = new Timer(0,true);
+        var subWaveTimer = new Timer(0, true);
+        var spawnTimer = new Timer(0, true);
+
+        try
         {
-            //2초를 카운팅한다 . 
-            await UniTask.Delay(2000);
-            Debug.Log("2초 경과");
-            //2초가 경과했다면 몬스터를 스폰. 스폰이 완료될때까지 대기한다 .
-            //스폰이 완료된다면 이제 카운팅을 다시 시작. 
-            //해당 과정은 플레이어가 죽거나 혹은 타이머가 다 된 경우에는 멈춘다 . 
-            //30초/2분마다 몬스터가 많이 스폰됨 . .. 
-            await SpawnGroupAsync();
+            foreach (var waveData in DataManager.StageTable[stageIndex].WaveDataArr)
+            {
+                if (currentStageState != eStageResultState.InProgress) break;
+
+                ++mainWaveCount;
+                await MainWavePorccess(waveData,mainWaveTimer,subWaveTimer,spawnTimer,token);
+                await BossPorccess(token);
+            }
+
+            await UniTask.Yield(PlayerLoopTiming.Update, token);
+
+            switch (currentStageState)
+            {
+                case eStageResultState.Victory:
+                    break;
+                case eStageResultState.Defeat:
+                    break;
+            }
+            ShowVicotry();       
         }
-
-
-        //일반 소환 / 보스 소환 유형에 따라 다른 걸 진행 >?
+        catch (System.OperationCanceledException)
+        {
+            //이건 조금더 고민해보자 ..
+            Debug.Log("NormalFrameworkProcess was canceled.");
+            TimeManager.Instance.RemoveTimer = mainWaveTimer;
+            TimeManager.Instance.RemoveTimer = subWaveTimer;
+            TimeManager.Instance.RemoveTimer = spawnTimer;
+        }
     }
-    async UniTask SpawnGroupAsync()
+    #endregion
+    //하나의 메인 웨이브는 / 10개의 작은 웨이브 / 하나의 웨이브는 30초로 구성됨
+    #region Normal Stage Process
+    async UniTask MainWavePorccess(Data.WaveData waveData,Timer mainWaveTimer,Timer subWaveTimer,Timer spawnTimer, CancellationToken token)
+    {
+        float mainWaveTime = GameConst.subWaveTime * waveData.SubWaveArr.Length;
+        float startTime = mainWaveTime * (mainWaveCount - 1);
+        float targetTime = mainWaveTime * mainWaveCount;
+
+        mainWaveTimer.StartTimer(targetTime, startTime);   
+
+        var subWaveTask = SubWaveProcess(waveData.SubWaveArr.Length,subWaveTimer,token);
+        var spawnEnemyTask = SpawnEnemyProcess(waveData.SubWaveArr,spawnTimer,token);
+
+        while (currentStageState == eStageResultState.InProgress && mainWaveTimer.IsOverTime==false)
+        {
+            CheckStageState();
+            await UniTask.Yield(PlayerLoopTiming.Update, token);
+        }    
+    }
+
+    async UniTask SubWaveProcess(int waveCount, Timer timer, CancellationToken token)
+    {
+        subWaveCount = 0;
+        float subWaveTime = GameConst.subWaveTime;
+        while (currentStageState == eStageResultState.InProgress&&subWaveCount< waveCount)
+        {
+            if(timer.IsOverTime)
+            {
+                subWaveCount++;
+                timer.StartTimer(subWaveTime);
+            }
+            await UniTask.Yield(PlayerLoopTiming.Update,token);
+        }
+    }
+    async UniTask SpawnEnemyProcess(Data.SubWave[] subWaveArr,Timer timer, CancellationToken token)//10번 반복
+    {
+        float spawnTime = GameConst.spawnInterval;
+        while (currentStageState == eStageResultState.InProgress)
+        {
+            if (timer.IsOverTime)
+            {
+                var subWave = subWaveArr[subWaveCount];
+                await SpawnGroupAsync(subWave.MonsterIndexArr, subWave.MonsterCount,token);
+                timer.StartTimer(spawnTime);
+            }
+            await UniTask.Yield(PlayerLoopTiming.Update, token);
+        }
+    }
+    async UniTask SpawnGroupAsync(int[] monsterIndexArr, int spawnCount, CancellationToken token)
     {
         var spawnTasks = new List<UniTask>();
 
-        for(int i=0;i<5;i++)
+        for (int i = 0; i < spawnCount; i++)
         {
-            var a= SpawnManager.Instance.GetRandomPosition();
-            spawnTasks.Add(SpawnManager.Instance.SpawnEnemy<Enemy>(1,a));
+            Vector3 spawnPosition = SpawnManager.Instance.GetRandomPosition();
+            int enemyIndex = monsterIndexArr[Random.Range(0, monsterIndexArr.Length)];
+
+            spawnTasks.Add(SpawnManager.Instance.SpawnEnemy<Enemy>(enemyIndex, spawnPosition));
         }
-        // Add each spawn task to the list
-        // Wait for all spawn tasks to complete
         await UniTask.WhenAll(spawnTasks);
-        Debug.Log("모두 소환");
     }
+
+    async UniTask BossPorccess(CancellationToken token)
+    {
+        await UniTask.Yield(PlayerLoopTiming.Update, token);
+    }
+    #endregion
+
+    #region Result Method
+    void CheckStageState()
+    {
+        //플레이어의 죽음을 체크한다 .
+        //if (Player.PlayerCharacter.FSMState == eFSMState.Death)
+        //{
+        //    _currentContentsResultState = eContentResultState.Defeat;
+        //    StopTimer();
+        //    break;
+        //}
+    }
+    public void ShowVicotry()
+    {
+
+    }
+    #endregion
 }

@@ -13,25 +13,25 @@ public class Timer
     Action<float> onUpdate;
     TimerCondition checkCondition;
     Action onTimerComplete;
+    public bool IsOverTime => (targetTime <= elapsedTime);
     #endregion
 
     #region Timer Method
-    public Timer(float targetTime,Action onTimerComplete, TimerCondition checkCondition=null,Action<float>onUpdate=null)
+    public Timer(float targetTime, bool isFollowMainSpeed, Action onTimerComplete = null, TimerCondition checkCondition=null,Action<float>onUpdate=null)
     {
         this.targetTime = targetTime;
+        this.isFollowMainSpeed = isFollowMainSpeed;
         this.onTimerComplete = onTimerComplete;
         this.checkCondition = checkCondition;
         this.onUpdate = onUpdate;
-
     }
-    public static Timer SetTimer(float targetTime, Action onTimerComplete,bool isFollowMainSpeed, TimerCondition checkCondition = null, Action<float> onUpdate = null)
+    public static Timer SetTimer(float targetTime, bool isFollowMainSpeed, Action onTimerComplete = null, TimerCondition checkCondition = null, Action<float> onUpdate = null)
     {
-        Timer timer = new Timer(targetTime, onTimerComplete,checkCondition, onUpdate);
-        timer.isFollowMainSpeed = isFollowMainSpeed;
+        Timer timer = new Timer(targetTime, isFollowMainSpeed, onTimerComplete,checkCondition, onUpdate);
         TimeManager.Instance.AddTimer = timer;
         return timer;
     }
-    public void ReStartTimer(float targetTime,float startTime=0)
+    public void StartTimer(float targetTime,float startTime=0)
     {
         this.targetTime = targetTime;
         this.elapsedTime = startTime;
@@ -49,12 +49,10 @@ public class Timer
             if (targetTime > elapsedTime)
                 return true;
 
-            if (onTimerComplete != null)
+            if (onTimerComplete!=null&&(checkCondition == null || checkCondition()))
             {
-                if (checkCondition == null) onTimerComplete();
-                else if (checkCondition()) onTimerComplete();
+                onTimerComplete.Invoke();
             }
-
             return false;
         }
     }

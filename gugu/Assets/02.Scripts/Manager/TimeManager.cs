@@ -8,7 +8,7 @@ public class TimeManager : TSingletonMono<TimeManager>
     //Timer
     List<Timer> timerList = new List<Timer>();
     public Timer AddTimer { set { timerList.Add(value); } }
-    public Timer RemoveTimer { set { timerList.Remove(value); } }
+    public Timer RemoveTimer { set { if (timerList.Contains(value)) timerList.Remove(value); } }
 
     //Time
     public bool IsActiveTimeFlow = true;
@@ -44,7 +44,7 @@ public class TimeManager : TSingletonMono<TimeManager>
 
     protected override void OnInitialize()
     {
-        IsLoad = true;
+        IsLoad=true;
     }
     private void Update()
     {

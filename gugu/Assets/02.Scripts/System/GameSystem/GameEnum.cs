@@ -72,6 +72,12 @@ public enum eStageType
     Normal,
     End
 }
+public enum eStageResultState
+{
+    InProgress,
+    Victory,
+    Defeat,
+}
 #endregion
 
 #region System

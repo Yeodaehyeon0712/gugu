@@ -65,18 +65,18 @@ public class StageManager : TSingletonMono<StageManager>
     }
     async UniTask SetupFrameworkAsync(long index)
     {
+        //FadeOn
         await UniTask.Delay(System.TimeSpan.FromSeconds(1), ignoreTimeScale: false);
         await stageFrameworkDic[_currStage].SetupStageAsync(index);
-        //FadeOn
         //해당 프레임 워크의 준비와 Clean을 실행한다 .
-        //모든게 끝나면 FadeOut
+        //FadeOut
     }
     async UniTask StartFrameworkAsync(long index)
     {
         await UniTask.Delay(System.TimeSpan.FromSeconds(1), ignoreTimeScale: false);
         //해당 프레임 워크를 실행해준다 .
         //시간을 흐르게 하고 .. 각종 것들 리스타트..
-        stageFrameworkDic[_currStage].StartStageAsync(index).Forget();
+        stageFrameworkDic[_currStage].StartStageFramework(index).Forget();
     }
     #endregion
 

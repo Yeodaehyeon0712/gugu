@@ -7,7 +7,7 @@ namespace Data
     {
         public readonly long Index;
         public readonly int BossIndex;
-        public readonly ShortWave[] waveArr=new ShortWave[10];
+        public readonly SubWave[] SubWaveArr=new SubWave[10];
 
         public WaveData(long index, Dictionary<string, string> dataPair)
         {
@@ -17,15 +17,15 @@ namespace Data
             {
                 var monsterCount = int.Parse(dataPair[$"MonsterCount_{i+1}"]);
                 var MonsterIndexArr = System.Array.ConvertAll(dataPair[$"MonsterIndex_{i+1}"].Split('|'), v => int.Parse(v));
-                waveArr[i] = new ShortWave(monsterCount, MonsterIndexArr);
+                SubWaveArr[i] = new SubWave(monsterCount, MonsterIndexArr);
             }
         }
     }
-    public readonly struct ShortWave
+    public readonly struct SubWave
     {
         public readonly int MonsterCount;
         public readonly int[] MonsterIndexArr;
-        public ShortWave(int monsterCount, int[] monsterIndexArr)
+        public SubWave(int monsterCount, int[] monsterIndexArr)
         {
             MonsterCount = monsterCount;
             MonsterIndexArr = monsterIndexArr;
