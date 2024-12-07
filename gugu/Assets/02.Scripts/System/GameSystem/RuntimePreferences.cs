@@ -124,6 +124,7 @@ public class RuntimePreference : TSingletonMono<RuntimePreference>
             preference = JsonConvert.DeserializeObject<Preference>(str);
         }
         catch(JsonException e) {
+            Debug.LogWarning(e);
             fs.Close();
             return false;
         }

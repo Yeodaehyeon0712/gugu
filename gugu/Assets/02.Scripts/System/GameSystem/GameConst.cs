@@ -7,16 +7,17 @@ public class GameConst
 {
     #region Stage
     public static float subWaveTime = 30f;
-    public static float spawnInterval=3f;
+    public static float spawnInterval = 3f;
     #endregion
 
     #region Background
-    public static int BgBlockSideSize=30;
+    public static int BgBlockSideSize = 40;
     #endregion
 
     #region Camera
-    public static Vector2 targetResolution = new Vector2(1080, 1920);
-    public static float defaultOrthoSize = 15.0f;
+    public static Vector2 defaultResolution = new Vector2(1080, 1920);
+    public static int defaultMinimumPPU = 48;
+    public static int[] zoomArray ={1, 2, 3};
     #endregion
 
     #region Path

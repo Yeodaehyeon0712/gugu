@@ -17,7 +17,7 @@ public class CameraManager : TSingletonMono<CameraManager>
     {
         var prefab = Resources.Load<BaseCamera>("Camera/" + type.ToString());
         BaseCamera cam = Instantiate(prefab, transform);
-        cam.Initialize(GameConst.targetResolution, GameConst.defaultOrthoSize);
+        cam.Initialize(GameConst.defaultResolution);
         return cam;
     }  
     public void RegisterFollowTarget(Transform target)
