@@ -12,6 +12,13 @@ public class GameConst
 
     #region Background
     public static int BgBlockSideSize = 40;
+    public static Vector2[] BgBlockPositions =
+    {
+    new Vector2(1, 1),
+    new Vector2(-1, 1),
+    new Vector2(-1, -1),
+    new Vector2(1, -1)
+    };
     #endregion
 
     #region Camera

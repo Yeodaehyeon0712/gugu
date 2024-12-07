@@ -12,12 +12,13 @@ public class BackgroundBlock : RepositionObject
     #endregion
 
     #region Background Method
-    public override void Initialize(Transform spawnArea)
+    public void Initialize(Transform spawnArea,int index)
     {
         base.Initialize(spawnArea);
-        firstPosition = transform.position;
+        apothem = GameConst.BgBlockSideSize/2;
         tilemap = GetComponent<Tilemap>();
-        this.apothem = GameConst.BgBlockSideSize/2;
+        transform.position = GameConst.BgBlockPositions[index] * apothem;
+        firstPosition = transform.position;
     }
     public void SetBackground(RuleTile tile)
     {

@@ -44,8 +44,8 @@ public class MainCamera : BaseCamera
     #region Zoom Method
     public void Zoom(float rate, float duration)
     {
-        var targetPPU = Mathf.RoundToInt(currentPPU * rate);
-        DOTween.To(() => pixelPerfectCamera.assetsPPU, x => pixelPerfectCamera.assetsPPU = x, Mathf.RoundToInt(currentPPU * rate), duration).SetEase(Ease.InOutQuad).SetUpdate(true);
+        var targetPPU = Mathf.RoundToInt(pixelPerfectCamera.assetsPPU * rate);
+        DOTween.To(() => pixelPerfectCamera.assetsPPU, x => pixelPerfectCamera.assetsPPU = x, targetPPU, duration).SetEase(Ease.InOutQuad).SetUpdate(true);
     }
     #endregion
 }
