@@ -62,10 +62,6 @@ public class RuntimePreference : TSingletonMono<RuntimePreference>
     }
     protected override void OnInitialize()
     {
-
-        if (Directory.Exists(GameConst.CacheDirectoryPath)==false)
-            Directory.CreateDirectory(GameConst.CacheDirectoryPath);
-
         if (LoadPreference()==false)
         {
             DefaultSetting();

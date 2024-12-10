@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class GameConst
 {
+    #region Data
+    public static Dictionary<long, string> LongToString;
+    public static Dictionary<string, long> StringToLong;
+    #endregion
+
     #region Stage
     public static float subWaveTime = 30f;
     public static float spawnInterval = 3f;
@@ -62,4 +67,24 @@ public class GameConst
             container.Add(names[count++], (T)element);
     }
     #endregion
+
+    public static void Initialize()
+    {
+        if (System.IO.Directory.Exists(CacheDirectoryPath) == false)
+            System.IO.Directory.CreateDirectory(CacheDirectoryPath);
+
+        StringToLong = new Dictionary<string, long>(200);
+        LongToString = new Dictionary<long, string>(200);
+        for (long i = 1; i < 201; ++i)
+        {
+            string key = i.ToString();
+            StringToLong.Add(key, i);
+            LongToString.Add(i, key);
+        }
+        InitializeEnumConverter();
+        //for(eStatusType i = 0; i < eStatusType.End; ++i)
+        //{
+        //    Sprite sprite = Resources.Load<Sprite>("");
+        //}
+    }
 }
