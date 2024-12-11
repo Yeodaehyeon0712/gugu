@@ -1,0 +1,3 @@
+Index,Name,ClassAssembly,DurationTime,CoolTime,IntCoeffcient,Coefficient,EffectKey,IconPath,NameKey,ExplanationKey
+1,회전칼날,RotateBlade,6,3,x,7*x+63,1,Icon/Skill_Icon/Skill_RotateBlade.png,1101,1201
+2,뼈다귀 폭격,SkeletonMissile,6,3,9+0.2*x,45+5*x,2,Icon/Skill_Icon/Skill_Bonebombing.png,1102,1202

@@ -20,6 +20,12 @@ public enum eCharacterAnimState
     Hit ,
     Death ,
 }
+public enum eSkillState
+{
+    None,
+    Using,
+    Cooltime,
+}
 #endregion
 
 #region Data
@@ -31,6 +37,7 @@ public enum eTableName
     EnemyTable  =   1 << 2,
     WaveTable = 1 << 3,
     StageTable = 1 << 4,
+    SkillTable=1<<5,
     All = ~0,
 }
 

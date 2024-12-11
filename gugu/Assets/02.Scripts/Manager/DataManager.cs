@@ -12,6 +12,7 @@ public class DataManager : TSingletonMono<DataManager>
     public static EnemyStatContainer EnemyStats;
     public static WaveTable WaveTable;
     public static StageTable StageTable;//Initialize WaveTable First
+    public static SkillTable SkillTable;
 
     protected override void OnInitialize()
     {
@@ -26,6 +27,8 @@ public class DataManager : TSingletonMono<DataManager>
         WaveTable.Reload();
         StageTable = LoadTable<StageTable>(eTableName.StageTable);
         StageTable.Reload();
+        SkillTable = LoadTable<SkillTable>(eTableName.SkillTable);
+        SkillTable.Reload();
         IsLoad = true;      
     }
     public void InitAddressableSystem()
