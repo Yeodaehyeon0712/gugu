@@ -61,8 +61,9 @@ public abstract class BaseSkill
     }
     public void LevelUpSkill(bool isResetTime)
     {
-        StopSkill();
+        //StopSkill();
         level++;
+        processState = eSkillState.Cooltime;
         elapsedTime = isResetTime ? 0:skillData.CoolTime;
         OnLevelUp();
     }
@@ -77,10 +78,10 @@ public abstract class BaseSkill
     #endregion
 
     #region Abstract Method
-    protected abstract void OnRegister();
-    protected abstract  UniTask OnUsingSequenceAsync();
-    protected abstract void OnStop();
-    protected abstract void OnLevelUp();
-    protected abstract void OnUnRegister();
+    protected virtual void OnRegister() { }
+    protected abstract UniTask OnUsingSequenceAsync();
+    protected virtual void OnStop(){}
+    protected virtual void OnLevelUp(){}
+    protected virtual void OnUnRegister(){}
     #endregion
 }

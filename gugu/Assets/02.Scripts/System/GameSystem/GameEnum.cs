@@ -12,6 +12,7 @@ public enum eComponent
     SkinComponent,
     ControllerComponent,
     StatComponent,
+    SkillComponent,
 }
 public enum eCharacterAnimState
 {

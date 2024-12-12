@@ -36,8 +36,8 @@ public class RotateBlade : BaseSkill
             float targetAngle = i * angleInterval;
             var angleIntervalInDegrees = targetAngle * Mathf.Rad2Deg - 90f;
             Debug.Log("A" + angleIntervalInDegrees);
-            bladeList[i].transform.rotation = Quaternion.Euler(0, 0, angleIntervalInDegrees);
-            bladeList[i].transform.position = new Vector3(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * rotateRadius;
+            bladeList[i].transform.localRotation = Quaternion.Euler(0, 0, angleIntervalInDegrees);
+            bladeList[i].transform.localPosition = new Vector3(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * rotateRadius;
         }
         //여기서 생성하는 칼날은 이펙트로 생성, 데미지를 심어준다 .레벨업 하면 바로 ... 
     }
@@ -49,8 +49,8 @@ public class RotateBlade : BaseSkill
     {
         bladeParent = new GameObject("BladeParent").transform;
         bladeParent.SetParent(owner.transform);
-        bladeParent.position = Vector3.zero;
-        bladeParent.rotation = Quaternion.identity;
+        bladeParent.localPosition = Vector3.zero;
+        bladeParent.localRotation = Quaternion.identity;
         GenerateBlade(level);
     }
     protected override async UniTask OnUsingSequenceAsync()
@@ -59,7 +59,7 @@ public class RotateBlade : BaseSkill
         while (processState == eSkillState.Using)
         {
             await UniTask.Yield();
-            bladeParent.transform.RotateAround(owner.transform.position, Vector3.forward, rotationAnglePerSec * Time.deltaTime);
+            bladeParent.transform.Rotate(Vector3.forward, rotationAnglePerSec * Time.deltaTime);
         }
     }
     protected override void OnStop()
