@@ -43,12 +43,11 @@ public class GameConst
     #endregion
 
     #region Enum Converter
-    //public static Dictionary<string, eStatusType> StringToStatusType;
-
+    public static Dictionary<string, eEffectChainCondition> EffectChainType;
 
     public static void InitializeEnumConverter()
     {
-       // OnGenerateEnumContainer(ref StringToStatusType);
+       OnGenerateEnumContainer(ref EffectChainType);
         
     }
     public static void ClearEnumConverter()

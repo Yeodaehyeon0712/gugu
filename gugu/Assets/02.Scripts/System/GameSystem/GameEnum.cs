@@ -39,6 +39,7 @@ public enum eTableName
     WaveTable = 1 << 3,
     StageTable = 1 << 4,
     SkillTable=1<<5,
+    EffectTable=1<<6,
     All = ~0,
 }
 
@@ -62,6 +63,16 @@ public enum eLanguage
     EN,     //English
     KR,     //Korean
     End
+}
+#endregion
+
+#region Effect
+public enum eEffectChainCondition
+{
+    None,
+    Enable,
+    Disable,
+    Overlap,
 }
 #endregion
 
