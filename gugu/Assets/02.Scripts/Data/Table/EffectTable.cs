@@ -19,7 +19,7 @@ namespace Data
             }
             else
             {
-                string[] keys = dataPair["ChainEffectCondition"].Split('I');
+                string[] keys = dataPair["ChainEffectCondition"].Split('|');
                 string[] values = dataPair["ChainEffectKey"].Split('|');
                 string[] durations = dataPair["ChainEffectDurationTime"].Split('|');
 

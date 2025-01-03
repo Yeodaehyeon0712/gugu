@@ -1,0 +1,2 @@
+Index,Name,ResourcePath,ChainEffectCondition,ChainEffectKey,ChainEffectDurationTime,SoundIndex
+1,DefaultMissile,Effect/Missile/DefaultMissile,Enable|Overlap,46|40,2|2,10014
