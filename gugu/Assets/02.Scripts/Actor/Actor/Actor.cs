@@ -17,6 +17,7 @@ public class Actor : MonoBehaviour
     public int SpawnHashCode => spawnHashCode;
     protected int spawnHashCode;
     protected long index;
+    public long Index => index;
     protected int currentActorID;
     #endregion
 

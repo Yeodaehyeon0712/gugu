@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : TSingletonMono<SpawnManager>
+public class ActorManager : TSingletonMono<ActorManager>
 {
     //캐릭터 + 에네미를 생성하는 액터 팩토리 ..
     //아이템 팩토리
@@ -20,12 +20,14 @@ public class SpawnManager : TSingletonMono<SpawnManager>
         actorFactory = new ActorFactory(transform);
         CreateSpawnArea();
         IsLoad = true;
+
+        
     }
 
     #region Spawn Method
-    public async UniTask<T> SpawnCharacter<T>(long index, Vector3 position) where T : Actor => await actorFactory.SpawnActorAsync<T>(eActorType.Character, index, position);
-    public async UniTask<T> SpawnEnemy<T>(long index, Vector3 position) where T : Actor => await actorFactory.SpawnActorAsync<T>(eActorType.Enemy, index, position);
-    public void RegisterActorPool(uint worldID) => actorFactory.RegisterActorPool(worldID);
+    public async UniTask<Character> SpawnCharacter(long index, Vector3 position) => await actorFactory.SpawnObjectAsync((uint)eActorType.Character, index, position) as Character;
+    public async UniTask<Enemy> SpawnEnemy(long index, Vector3 position)  => await actorFactory.SpawnObjectAsync((uint)eActorType.Enemy, index, position) as Enemy;
+    public void RegisterActorPool(uint worldID, uint type, int pathHash) => actorFactory.RegisterToObjectPool(worldID, type, pathHash);
     #endregion
 
     #region Spawn Area Method

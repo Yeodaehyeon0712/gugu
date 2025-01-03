@@ -1,72 +1,42 @@
-using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActorFactory
+public class ActorFactory : Factory<Actor>
 {
-    #region Fields
-    Dictionary<eActorType , Dictionary<int,MemoryPool<Actor>>>pooledActorPool=new Dictionary<eActorType, Dictionary<int, MemoryPool<Actor>>>();
-    Dictionary<uint, Actor> spawnedActorDic=new Dictionary<uint, Actor>();
-    Transform instanceRoot;
-    uint currentActorID;
-    #endregion
-
-    #region Factory Method
-    public ActorFactory(Transform instanceRoot)
+    #region Abstract Method
+    public ActorFactory(Transform instanceRoot) : base(instanceRoot)
     {
-        this.instanceRoot = instanceRoot;
-        currentActorID = 0;
+        
+    }
+
+    protected override void CreateObjectPoolDic()
+    {
         for (eActorType i = eActorType.None; i < eActorType.End; ++i)
-            pooledActorPool[i] = new Dictionary<int, MemoryPool<Actor>>();
+            objectPool[(uint)i] = new Dictionary<int, MemoryPool<Actor>>();
     }
-    public void RegisterActorPool(uint currentActorID)
+
+    protected override int GetPoolCapacity(uint type)
     {
-        if (!spawnedActorDic.ContainsKey(currentActorID))
-            return;
-
-        Actor pooledActor = spawnedActorDic[currentActorID];
-        spawnedActorDic.Remove(currentActorID);
-        pooledActorPool[pooledActor.ActorType][pooledActor.SpawnHashCode].Register(pooledActor);
-    }
-    #endregion
-
-    #region Spawn Method
-    public async UniTask<T> SpawnActorAsync<T>(eActorType type, long index, Vector2 position) where T : Actor
-    {
-        ++currentActorID;
-        uint snapshotID = currentActorID;
-        var resourceTuple = GetResourcePath(type, index);
-        CheckActorPool(type,resourceTuple.pathHash);
-
-        Actor spawnedActor = pooledActorPool[type][resourceTuple.pathHash].GetItem();
-
-        if (spawnedActor == null)
+        return (eActorType)type switch
         {
-            T originAsset = await DataManager.AddressableSystem.LoadAssetAsync<T>(resourceTuple.prefabPath);
-            spawnedActor = Object.Instantiate(originAsset, instanceRoot);
-            spawnedActor.Initialize(type,index,resourceTuple.pathHash);
-        }
-
-        RefreshActor(spawnedActor, type, index, snapshotID, position);
-        return spawnedActor as T;
+            eActorType.Character => 5,
+            eActorType.Enemy=>50,
+            _ => 0,
+        };
     }
-    #endregion
 
-    #region Spawn Support Method
-    (string prefabPath, string animatorPath, int pathHash) GetResourcePath(eActorType type, long index)
+    protected override (string prefabPath, int pathHash) GetResourcePath(uint type, long index)
     {
         string resourcePath = null;
-        string animatorPath = null;
         int pathHash = 0;
 
-        switch (type)
+        switch ((eActorType)type)
         {
             case eActorType.Character:
                 {
                     var table = DataManager.CharacterTable[index];
                     resourcePath = table.ResourcePath;
-                    animatorPath = table.AnimatorPath;
                     pathHash = table.PathHash;
                     break;
                 }
@@ -74,35 +44,27 @@ public class ActorFactory
                 {
                     var table = DataManager.EnemyTable[index];
                     resourcePath = table.ResourcePath;
-                    animatorPath = table.AnimatorPath;
                     pathHash = table.PathHash;
                     break;
                 }
         }
-        return (resourcePath, animatorPath, pathHash);
+        return (resourcePath,pathHash);
     }
-    void CheckActorPool(eActorType type,int pathHash)
-    {
-        if (pooledActorPool[type].TryGetValue(pathHash, out var memoryPool) == false)
-        {
-            int capacity = type switch
-            {
-                eActorType.Character => 5,
-                eActorType.Enemy=>100,
-                _ => 0,
-            };
-            memoryPool = new MemoryPool<Actor>(capacity);
-            pooledActorPool[type][pathHash] = memoryPool;
-        }
-    }
-    void RefreshActor(Actor actor, eActorType type, long index,uint snapshotID, Vector2 position)
-    {
-        RefreshActorSkin(actor, type, index);
-        RefreshActorStat(actor, type, index);
 
-        spawnedActorDic.Add(snapshotID, actor);
-        actor.Spawn(position);
+    protected override void InitializeObject(Actor obj, uint type, long index, int pathHash)
+    {
+        obj.Initialize((eActorType)type, index, pathHash);
     }
+
+    protected override void ReSetObject(Actor obj, Vector2 position)
+    {
+        RefreshActorSkin(obj, obj.ActorType, obj.Index);
+        RefreshActorStat(obj, obj.ActorType, obj.Index);
+        obj.Spawn(position);
+    }
+    #endregion
+
+    #region Actor Factory Method
     void RefreshActorSkin(Actor actor, eActorType type, long index)
     {
         RuntimeAnimatorController animator = type switch

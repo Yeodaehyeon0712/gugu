@@ -45,8 +45,8 @@ public class TitleScene : BaseScene
         UIManager.Instance.Initialize();//Initialize LocalizingManager First
         await UniTask.WaitUntil(() => UIManager.Instance.IsLoad);
 
-        SpawnManager.Instance.Initialize();
-        await UniTask.WaitUntil(() => SpawnManager.Instance.IsLoad);
+        ActorManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => ActorManager.Instance.IsLoad);
 
         BackgroundManager.Instance.Initialize();//Initialize SpawnManager First
         await UniTask.WaitUntil(() => BackgroundManager.Instance.IsLoad);

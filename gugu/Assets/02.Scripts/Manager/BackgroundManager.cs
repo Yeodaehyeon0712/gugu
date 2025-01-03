@@ -16,7 +16,7 @@ public class BackgroundManager : TSingletonMono<BackgroundManager>
         var clonedObject = Instantiate(Resources.Load<GameObject>("Background/Grid"), transform);
         grid = clonedObject;
         backgroundBlocks = grid.transform.GetComponentsInChildren<BackgroundBlock>();
-        var spawnArea = SpawnManager.Instance.SpawnArea.transform;
+        var spawnArea = ActorManager.Instance.SpawnArea.transform;
 
         for (int i=0;i<backgroundBlocks.Length;i++)
             backgroundBlocks[i].Initialize(spawnArea,i);

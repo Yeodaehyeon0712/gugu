@@ -108,10 +108,10 @@ public class NormalStageFramework : StageFramework
 
         for (int i = 0; i < spawnCount; i++)
         {
-            Vector3 spawnPosition = SpawnManager.Instance.GetRandomPosition();
+            Vector3 spawnPosition = ActorManager.Instance.GetRandomPosition();
             int enemyIndex = monsterIndexArr[Random.Range(0, monsterIndexArr.Length)];
 
-            spawnTasks.Add(SpawnManager.Instance.SpawnEnemy<Enemy>(enemyIndex, spawnPosition));
+            spawnTasks.Add(ActorManager.Instance.SpawnEnemy(enemyIndex, spawnPosition));
         }
         await UniTask.WhenAll(spawnTasks);
     }

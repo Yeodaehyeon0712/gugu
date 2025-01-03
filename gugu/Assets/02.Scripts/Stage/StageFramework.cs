@@ -14,7 +14,7 @@ public abstract class StageFramework
     #region Stage Method
     public virtual async UniTask SetupStageAsync(long stageIndex)
     {
-        var actor = await SpawnManager.Instance.SpawnCharacter<Character>(1, Vector3.zero);
+        var actor = await ActorManager.Instance.SpawnCharacter(1, Vector3.zero);
         Player.PlayerCharacter = actor;
         //배경
         BackgroundManager.Instance.ShowBackgroundByStage(DataManager.StageTable[stageIndex].BackgroundPath);
@@ -27,7 +27,7 @@ public abstract class StageFramework
         CameraManager.Instance.RegisterFollowTarget(actor.transform);
 
         //Spawn
-        SpawnManager.Instance.RegisterSpawnAreaParent(actor.transform);
+        ActorManager.Instance.RegisterSpawnAreaParent(actor.transform);
         Debug.Log("쥰비 온료");
     }
     protected abstract UniTask FrameworkProcessAsync(long stageIndex, CancellationToken token);
