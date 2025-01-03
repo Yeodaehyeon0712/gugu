@@ -74,6 +74,19 @@ public enum eEffectChainCondition
     Disable,
     Overlap,
 }
+[System.Flags]
+public enum eEffectAttribute
+{
+    Velocity = 1 << 0,
+    Overlap = 1 << 1,
+    PostEffect = 1 << 2,
+}
+public enum ePostEffectType
+{
+    None,
+    KnockBack,
+    Stun
+}
 #endregion
 
 #region Manager

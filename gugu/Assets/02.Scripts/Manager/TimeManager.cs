@@ -39,6 +39,13 @@ public class TimeManager : TSingletonMono<TimeManager>
             return Instance.deltaTime;
         }
     }
+    public static float FixedDeltaTime
+    {
+        get
+        {
+            return Time.fixedDeltaTime * Instance.ElasticTimeScale;
+        }
+    }
     #endregion
 
 
