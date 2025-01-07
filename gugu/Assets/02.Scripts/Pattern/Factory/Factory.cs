@@ -7,8 +7,9 @@ public abstract class Factory<T> where T : Object
 {
     #region Fields
     Transform instanceRoot;
-    uint currentObjectID;
+    uint currentWorldID;
     protected Dictionary<uint, T> spawnedObjectDic = new Dictionary<uint, T>();
+    //First uint is Type . Like eActorType
     protected  Dictionary<uint ,Dictionary<int, MemoryPool<T>>> objectPool = new Dictionary<uint, Dictionary<int, MemoryPool<T>>>();
     #endregion
 
@@ -16,7 +17,7 @@ public abstract class Factory<T> where T : Object
     public Factory(Transform instanceRoot)
     {
         this.instanceRoot = instanceRoot;
-        currentObjectID = 0;
+        currentWorldID = 0;
         CreateObjectPoolDic();
     }
     #endregion
@@ -24,8 +25,8 @@ public abstract class Factory<T> where T : Object
     #region Spawn Method
     public async UniTask<T> SpawnObjectAsync(uint type, long index, Vector2 position)
     {
-        ++currentObjectID;
-        uint snapshotID = currentObjectID;
+        ++currentWorldID;
+        uint snapshotID = currentWorldID;
         var resourceTuple = GetResourcePath(type, index);
         CheckObjectPool(type, resourceTuple.pathHash);
 
@@ -37,12 +38,12 @@ public abstract class Factory<T> where T : Object
             spawnObject = Object.Instantiate(originalAsset, instanceRoot);
             InitializeObject(spawnObject,type,index,resourceTuple.pathHash);
         }
-        ReSetObject(spawnObject , position);
+        ReSetObject(spawnObject,snapshotID , position);
         spawnedObjectDic.Add(snapshotID, spawnObject);
         return spawnObject;
     }
     protected abstract void InitializeObject(T obj,uint type,long index,int pathHash);
-    protected abstract void ReSetObject(T obj,Vector2 position);
+    protected abstract void ReSetObject(T obj,uint worldID,Vector2 position);
     protected abstract (string prefabPath, int pathHash) GetResourcePath(uint type,long index);
 
     #endregion
@@ -62,12 +63,12 @@ public abstract class Factory<T> where T : Object
     {
         return objectPool[type][pathHash].GetItem();
     }
-    public void RegisterToObjectPool(uint targetObjectID, uint type, int pathHash)
+    public void RegisterToObjectPool(uint targetWorldID, uint type, int pathHash)
     {
-        if (spawnedObjectDic.ContainsKey(targetObjectID) == false) return;
+        if (spawnedObjectDic.ContainsKey(targetWorldID) == false) return;
 
-        T obj = spawnedObjectDic[targetObjectID];
-        spawnedObjectDic.Remove(targetObjectID);
+        T obj = spawnedObjectDic[targetWorldID];
+        spawnedObjectDic.Remove(targetWorldID);
         objectPool[type][pathHash].Register(obj);
     }
     #endregion

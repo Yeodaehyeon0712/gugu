@@ -1,9 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Actor : MonoBehaviour
+public class Actor : PoolingObject
 {
     #region Fields
+    //Fields
+    protected eActorType type;
+    public eActorType ActorType => type;
+    protected long index;
+    public long Index => index;
+
     //Component Fields
     protected Dictionary<eComponent, BaseComponent> updateComponentDictionary = new Dictionary<eComponent, BaseComponent>();
     [SerializeField] protected SkinComponent skinComponent;
@@ -11,17 +17,9 @@ public class Actor : MonoBehaviour
     public SkinComponent Skin => skinComponent;
     public ControllerComponent Controller=> controllerComponent;
 
-    //Fields
-    protected eActorType type;
-    public eActorType ActorType => type;
-    public int SpawnHashCode => spawnHashCode;
-    protected int spawnHashCode;
-    protected long index;
-    public long Index => index;
-    protected int currentActorID;
     #endregion
 
-    #region Unity Method
+    #region Unity API
     protected virtual void Update()
     {
         OnUpdateComponent(Time.deltaTime);
@@ -34,26 +32,30 @@ public class Actor : MonoBehaviour
     #endregion
 
     #region Actor Method
-    public virtual void Initialize(eActorType type,long index,int spawnHashCode)
+    public virtual void Initialize(eActorType type,long index,int pathHash)
     {
         this.type = type;
         this.index = index;
-        this.spawnHashCode = spawnHashCode;
+        SetPathHashCode(pathHash);
         InitializeComponent(type);
     }
 
-    public void Spawn(Vector2 position)
+    public override void Spawn(uint worldID, Vector2 position)
     {
-        transform.position = position;
-        gameObject.SetActive(true);
+        base.Spawn(worldID,position);
     }
-    public void Death()
+    public virtual void Death()
     {
         gameObject.SetActive(false);
+        Clean(2.5f);
     }
     public void Hit()
     {
 
+    }
+    protected override void ReturnToPool()
+    {
+        ActorManager.Instance.RegisterActorPool(worldID,(uint)type,pathHashCode);
     }
     #endregion
 
@@ -84,5 +86,7 @@ public class Actor : MonoBehaviour
         foreach (var component in updateComponentDictionary)
             component.Value.ComponentUpdate(deltaTime);
     }
+
+
     #endregion
 }

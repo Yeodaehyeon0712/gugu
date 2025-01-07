@@ -1,6 +1,6 @@
 
 #region Actor
-public enum eActorType
+public enum eActorType:uint
 {
     None,
     Character,

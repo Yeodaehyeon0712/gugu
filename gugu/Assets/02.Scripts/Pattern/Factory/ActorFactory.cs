@@ -56,11 +56,11 @@ public class ActorFactory : Factory<Actor>
         obj.Initialize((eActorType)type, index, pathHash);
     }
 
-    protected override void ReSetObject(Actor obj, Vector2 position)
+    protected override void ReSetObject(Actor obj, uint worldID, Vector2 position)
     {
         RefreshActorSkin(obj, obj.ActorType, obj.Index);
         RefreshActorStat(obj, obj.ActorType, obj.Index);
-        obj.Spawn(position);
+        obj.Spawn(worldID,position);
     }
     #endregion
 
