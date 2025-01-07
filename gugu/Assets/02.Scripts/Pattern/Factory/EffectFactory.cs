@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectFactory : Factory<BaseEffect>
+public class EffectFactory : Factory<BaseEffect,eEffectType>
 {
     public EffectFactory(Transform instanceRoot) : base(instanceRoot)
     {
@@ -13,23 +13,34 @@ public class EffectFactory : Factory<BaseEffect>
         objectPool[0] = new Dictionary<int, MemoryPool<BaseEffect>>();
     }
 
-    protected override int GetPoolCapacity(uint type)
+    protected override int GetPoolCapacity(eEffectType type)
     {
-        return 30;
+        return type switch
+        {
+            _=>10,
+        };
     }
 
-    protected override (string prefabPath, int pathHash) GetResourcePath(uint type, long index)
+    protected override (string prefabPath, int pathHash) GetResourcePath(eEffectType type, long index)
     {
         string resourcePath = null;
-        int pathHash = (int)index;
+        int pathHash = 0;
 
-        var table = DataManager.EffectTable[(int)index];
-        resourcePath = table.ResourcePath;
+        switch (type)
+        {
 
+            default:
+                {
+                    var table = DataManager.EffectTable[index];
+                    resourcePath = table.ResourcePath;
+                    pathHash = (int)index;
+                    break;
+                }
+        }
         return (resourcePath, pathHash);
     }
 
-    protected override void InitializeObject(BaseEffect obj, uint type, long index, int pathHash)
+    protected override void InitializeObject(BaseEffect obj, eEffectType type, long index, int pathHash)
     {
         obj.Initialize((int)index);
     }

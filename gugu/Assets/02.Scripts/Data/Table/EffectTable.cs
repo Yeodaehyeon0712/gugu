@@ -41,8 +41,8 @@ namespace Data
 }
 public class EffectTable : TableBase
 {
-    Dictionary<int, Data.EffectData> _effectDataDic = new Dictionary<int, Data.EffectData>();
-    public Data.EffectData this[int index] => _effectDataDic[index];
+    Dictionary<long, Data.EffectData> _effectDataDic = new Dictionary<long, Data.EffectData>();
+    public Data.EffectData this[long index] => _effectDataDic[index];
     protected override void OnLoad()
     {
         LoadData(_tableName);

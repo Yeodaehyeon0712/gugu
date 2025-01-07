@@ -67,6 +67,11 @@ public enum eLanguage
 #endregion
 
 #region Effect
+public enum eEffectType
+{
+    None,
+    End
+}
 public enum eEffectChainCondition
 {
     None,

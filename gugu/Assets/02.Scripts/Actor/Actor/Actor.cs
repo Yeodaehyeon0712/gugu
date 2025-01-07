@@ -54,7 +54,7 @@ public class Actor : PoolingObject
     }
     protected override void ReturnToPool()
     {
-        ActorManager.Instance.RegisterActorPool(worldID,(uint)type,pathHashCode);
+        ActorManager.Instance.RegisterActorPool(worldID,type,pathHashCode);
     }
     #endregion
 

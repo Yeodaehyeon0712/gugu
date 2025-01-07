@@ -12,6 +12,6 @@ public class EffectManager : TSingletonMono<EffectManager>
         effectFactory = new EffectFactory(transform);
         IsLoad = true;
     }
-    //이펙트도 나눌까 ..
-    public async UniTask<BaseEffect> SpawnCharacter(long index, Vector3 position) => await effectFactory.SpawnObjectAsync((uint)eActorType.Character, index, position);
+    //???????? ?????? ..
+    public async UniTask<BaseEffect> SpawnCharacter(long index, Vector3 position) => await effectFactory.SpawnObjectAsync(eEffectType.None, index, position);
 }

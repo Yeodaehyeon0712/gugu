@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ActorManager : TSingletonMono<ActorManager>
 {
-    //Ä³¸¯ÅÍ + ¿¡³×¹Ì¸¦ »ı¼ºÇÏ´Â ¾×ÅÍ ÆÑÅä¸® ..
-    //¾ÆÀÌÅÛ ÆÑÅä¸®
+    //Ã„Â³Â¸Â¯Ã…Ã + Â¿Â¡Â³Ã—Â¹ÃŒÂ¸Â¦ Â»Ã½Â¼ÂºÃ‡ÃÂ´Ã‚ Â¾Ã—Ã…Ã Ã†Ã‘Ã…Ã¤Â¸Â® ..
+    //Â¾Ã†Ã€ÃŒÃ…Ã› Ã†Ã‘Ã…Ã¤Â¸Â®
     #region Fields
     //Factory
     ActorFactory actorFactory;
@@ -25,9 +25,9 @@ public class ActorManager : TSingletonMono<ActorManager>
     }
 
     #region Spawn Method
-    public async UniTask<Character> SpawnCharacter(long index, Vector3 position) => await actorFactory.SpawnObjectAsync((uint)eActorType.Character, index, position) as Character;
-    public async UniTask<Enemy> SpawnEnemy(long index, Vector3 position)  => await actorFactory.SpawnObjectAsync((uint)eActorType.Enemy, index, position) as Enemy;
-    public void RegisterActorPool(uint worldID, uint type, int pathHash) => actorFactory.RegisterToObjectPool(worldID, type, pathHash);
+    public async UniTask<Character> SpawnCharacter(long index, Vector3 position) => await actorFactory.SpawnObjectAsync(eActorType.Character, index, position) as Character;
+    public async UniTask<Enemy> SpawnEnemy(long index, Vector3 position)  => await actorFactory.SpawnObjectAsync(eActorType.Enemy, index, position) as Enemy;
+    public void RegisterActorPool(uint worldID, eActorType type, int pathHash) => actorFactory.RegisterToObjectPool(worldID, type, pathHash);
     #endregion
 
     #region Spawn Area Method
