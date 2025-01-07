@@ -21,10 +21,10 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
         };
     }
 
-    protected override (string prefabPath, int pathHash) GetResourcePath(eEffectType type, long index)
+    protected override (string prefabPath, int objectID) GetResourcePath(eEffectType type, long index)
     {
         string resourcePath = null;
-        int pathHash = 0;
+        int objectID = 0;
 
         switch (type)
         {
@@ -33,14 +33,14 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
                 {
                     var table = DataManager.EffectTable[index];
                     resourcePath = table.ResourcePath;
-                    pathHash = (int)index;
+                    objectID = (int)index;
                     break;
                 }
         }
-        return (resourcePath, pathHash);
+        return (resourcePath, objectID);
     }
 
-    protected override void InitializeObject(BaseEffect obj, eEffectType type, long index, int pathHash)
+    protected override void InitializeObject(BaseEffect obj, eEffectType type, long index, int objectID)
     {
         obj.Initialize((int)index);
     }

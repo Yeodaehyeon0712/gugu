@@ -36,13 +36,13 @@ public class BaseEffect : PoolingObject
     #region Effect Mehtod
     protected override void ReturnToPool()
     {
-        ActorManager.Instance.RegisterActorPool(worldID,0, pathHashCode);
+        ActorManager.Instance.RegisterActorPool(worldID,0, objectID);
     }
     public virtual BaseEffect Initialize(int index)
     {
         this.index = index;
         //this.soundIndex = DataManager.EffectTable[index].SoundIndex;
-        SetPathHashCode(index);
+        SetObjectID(index);
         return this;
     }
     public override void Spawn(uint worldID,Vector2 position)

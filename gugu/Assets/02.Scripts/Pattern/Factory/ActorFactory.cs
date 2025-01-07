@@ -26,7 +26,7 @@ public class ActorFactory : Factory<Actor,eActorType>
         };
     }
 
-    protected override (string prefabPath, int pathHash) GetResourcePath(eActorType type, long index)
+    protected override (string prefabPath, int objectID) GetResourcePath(eActorType type, long index)
     {
         string resourcePath = null;
         int pathHash = 0;
@@ -51,9 +51,9 @@ public class ActorFactory : Factory<Actor,eActorType>
         return (resourcePath,pathHash);
     }
 
-    protected override void InitializeObject(Actor obj, eActorType type, long index, int pathHash)
+    protected override void InitializeObject(Actor obj, eActorType type, long index, int objectID)
     {
-        obj.Initialize(type, index, pathHash);
+        obj.Initialize(type, index, objectID);
     }
 
     protected override void ReSetObject(Actor obj, uint worldID, Vector2 position)

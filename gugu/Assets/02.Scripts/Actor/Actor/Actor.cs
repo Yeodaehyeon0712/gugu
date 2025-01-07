@@ -32,11 +32,11 @@ public class Actor : PoolingObject
     #endregion
 
     #region Actor Method
-    public virtual void Initialize(eActorType type,long index,int pathHash)
+    public virtual void Initialize(eActorType type,long index,int objectID)
     {
         this.type = type;
         this.index = index;
-        SetPathHashCode(pathHash);
+        SetObjectID(objectID);
         InitializeComponent(type);
     }
 
@@ -54,7 +54,7 @@ public class Actor : PoolingObject
     }
     protected override void ReturnToPool()
     {
-        ActorManager.Instance.RegisterActorPool(worldID,type,pathHashCode);
+        ActorManager.Instance.RegisterActorPool(worldID,type,objectID);
     }
     #endregion
 

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Factory<T,TType> where T : Object where TType:System.Enum
+public abstract class Factory<T,TType> where T : PoolingObject where TType:System.Enum
 {
     #region Fields
     Transform instanceRoot;
@@ -27,23 +27,23 @@ public abstract class Factory<T,TType> where T : Object where TType:System.Enum
         ++currentWorldID;
         uint snapshotID = currentWorldID;
         var resourceTuple = GetResourcePath(type, index);
-        CheckObjectPool(type, resourceTuple.pathHash);
+        CheckObjectPool(type, resourceTuple.objectID);
 
-        T spawnObject = GetFromObjectPool(type, resourceTuple.pathHash);
+        T spawnObject = GetFromObjectPool(type, resourceTuple.objectID);
 
         if(spawnObject==null)
         {
             T originalAsset = await DataManager.AddressableSystem.LoadAssetAsync<T>(resourceTuple.prefabPath);
             spawnObject = Object.Instantiate(originalAsset, instanceRoot);
-            InitializeObject(spawnObject,type,index,resourceTuple.pathHash);
+            InitializeObject(spawnObject,type,index,resourceTuple.objectID);
         }
         ReSetObject(spawnObject,snapshotID , position);
         spawnedObjectDic.Add(snapshotID, spawnObject);
         return spawnObject;
     }
-    protected abstract void InitializeObject(T obj,TType type,long index,int pathHash);
+    protected abstract void InitializeObject(T obj,TType type,long index,int objectID);
     protected abstract void ReSetObject(T obj,uint worldID,Vector2 position);
-    protected abstract (string prefabPath, int pathHash) GetResourcePath(TType type,long index);
+    protected abstract (string prefabPath, int objectID) GetResourcePath(TType type,long index);
 
     #endregion
 
@@ -51,24 +51,24 @@ public abstract class Factory<T,TType> where T : Object where TType:System.Enum
     protected abstract void CreateObjectPoolDic();
     protected abstract int GetPoolCapacity(TType type);
 
-    void CheckObjectPool(TType type,int pathHash)
+    void CheckObjectPool(TType type,int objectID)
     {
-        if (objectPool[type].TryGetValue(pathHash, out var memoryPool)) return;
+        if (objectPool[type].TryGetValue(objectID, out var memoryPool)) return;
 
         memoryPool = new MemoryPool<T>(GetPoolCapacity(type));
-        objectPool[type][pathHash] = memoryPool;
+        objectPool[type][objectID] = memoryPool;
     }
-    T GetFromObjectPool(TType type, int pathHash)
+    T GetFromObjectPool(TType type, int objectID)
     {
-        return objectPool[type][pathHash].GetItem();
+        return objectPool[type][objectID].GetItem();
     }
-    public void RegisterToObjectPool(uint targetWorldID, TType type, int pathHash)
+    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID)
     {
         if (spawnedObjectDic.ContainsKey(targetWorldID) == false) return;
 
         T obj = spawnedObjectDic[targetWorldID];
         spawnedObjectDic.Remove(targetWorldID);
-        objectPool[type][pathHash].Register(obj);
+        objectPool[type][objectID].Register(obj);
     }
     #endregion
 }

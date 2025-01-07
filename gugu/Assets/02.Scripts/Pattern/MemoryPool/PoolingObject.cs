@@ -6,12 +6,12 @@ public abstract class PoolingObject : MonoBehaviour
 {
     protected uint worldID;
     public uint WorldID=>worldID;
-    protected int pathHashCode;
-    public int PathHashCode => pathHashCode;
+    protected int objectID;
+    public int PathHashCode => objectID;
     bool isClean;
-    public void SetPathHashCode(int pathHash)
+    public void SetObjectID(int objectID)
     {
-        this.pathHashCode = pathHash;
+        this.objectID = objectID;
     }
     public virtual void Spawn(uint worldID,Vector2 position)
     {
