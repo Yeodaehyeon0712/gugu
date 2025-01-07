@@ -10,6 +10,11 @@ public class Actor : PoolingObject
     protected long index;
     public long Index => index;
 
+    //체력
+    public double CurrentHP => _currentHP;
+    [SerializeField] protected double _currentHP;
+    [SerializeField] public double SetHP { set => _currentHP = value; }
+
     //Component Fields
     protected Dictionary<eComponent, BaseComponent> updateComponentDictionary = new Dictionary<eComponent, BaseComponent>();
     [SerializeField] protected SkinComponent skinComponent;
@@ -48,9 +53,20 @@ public class Actor : PoolingObject
     {
         Clean(2.5f);
     }
-    public void Hit()
+    public virtual void Hit(in AttackHandler attackHandler)
     {
+        //만약 무적 상태라면 리턴 
+        double damage = attackHandler.Damage;
 
+        //여기서 체력 마니어스 ..
+        _currentHP -= damage;
+        //데미지 텍스트 띄우기 
+
+        if (_currentHP <= 0f)
+            Death();
+        else
+            //hit anim 처리
+            Skin.SetAnimationTrigger(eCharacterAnimState.Hit);
     }
     protected override void ReturnToPool()
     {
