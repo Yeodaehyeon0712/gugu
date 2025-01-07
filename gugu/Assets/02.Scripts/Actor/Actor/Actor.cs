@@ -46,7 +46,6 @@ public class Actor : PoolingObject
     }
     public virtual void Death()
     {
-        gameObject.SetActive(false);
         Clean(2.5f);
     }
     public void Hit()

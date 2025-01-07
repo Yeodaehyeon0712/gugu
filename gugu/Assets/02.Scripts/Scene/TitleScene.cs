@@ -48,11 +48,14 @@ public class TitleScene : BaseScene
         ActorManager.Instance.Initialize();
         await UniTask.WaitUntil(() => ActorManager.Instance.IsLoad);
 
-        BackgroundManager.Instance.Initialize();//Initialize SpawnManager First
+        BackgroundManager.Instance.Initialize();//Initialize ActorManager First
         await UniTask.WaitUntil(() => BackgroundManager.Instance.IsLoad);
 
         StageManager.Instance.Initialize();
         await UniTask.WaitUntil(() => StageManager.Instance.IsLoad);
+
+        EffectManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => EffectManager.Instance.IsLoad);
 
         //이건 위치 변경 필요
         Player.Initialize();

@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
  
-public class BaseEffect : MonoBehaviour
+public class BaseEffect : PoolingObject
 {
     #region Fields
     //Effect Fields
     public bool IsActive => isActive;
     bool isActive;
-    public uint WorldID => worldID;
-    [SerializeField] protected uint worldID;
     public int Index => index;
     [SerializeField] protected int index;
     [SerializeField] float elapsedTime;
@@ -36,34 +34,37 @@ public class BaseEffect : MonoBehaviour
     #endregion
 
     #region Effect Mehtod
+    protected override void ReturnToPool()
+    {
+        ActorManager.Instance.RegisterActorPool(worldID,0, pathHashCode);
+    }
     public virtual BaseEffect Initialize(int index)
     {
         this.index = index;
         //this.soundIndex = DataManager.EffectTable[index].SoundIndex;
+        SetPathHashCode(index);
         return this;
     }
-    public virtual void Enable(uint worldID, Vector3 position, float durationTime)
+    public override void Spawn(uint worldID,Vector2 position)
     {
         isActive = true;
-
-        this.worldID = worldID;
-        this.durationTime = durationTime;
+        //this.durationTime = durationTime;
         elapsedTime = 0;
-        transform.position = position;
 
         //SoundManager.Instance.PlaySFXMusic(soundIndex);
         OnEventChainEffect(eEffectChainCondition.Enable);
-        gameObject.SetActive(true);
+        base.Spawn(worldID, position);
     }
+
     public virtual void Disable(bool isRegist=true)
     {
         if (isActive==false) return;
 
         isActive = false;
         builderAttribute = 0;
-        //액터풀로 돌려보내기
+        
         OnEventChainEffect(eEffectChainCondition.Disable);
-        gameObject.SetActive(false);
+        Clean(2.5f);
     }
     void OnEventChainEffect(eEffectChainCondition chain)
     {
