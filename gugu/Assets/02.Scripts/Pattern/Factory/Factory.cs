@@ -10,6 +10,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     uint currentWorldID;
     protected Dictionary<uint, T> spawnedObjectDic = new Dictionary<uint, T>();
     protected  Dictionary<TType ,Dictionary<int, MemoryPool<T>>> objectPool = new Dictionary<TType, Dictionary<int, MemoryPool<T>>>();
+    public Dictionary<uint, T> GetSpawnedObjects => spawnedObjectDic;
     #endregion
 
     #region Factory Method

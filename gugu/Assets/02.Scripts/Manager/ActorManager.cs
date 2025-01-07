@@ -5,29 +5,41 @@ using UnityEngine;
 
 public class ActorManager : TSingletonMono<ActorManager>
 {
-    //Ä³¸¯ÅÍ + ¿¡³×¹Ì¸¦ »ý¼ºÇÏ´Â ¾×ÅÍ ÆÑÅä¸® ..
-    //¾ÆÀÌÅÛ ÆÑÅä¸®
     #region Fields
-    //Factory
+    //Factory Fields
     ActorFactory actorFactory;
 
-    //SpawnArea
+    //Attack Handler Fields
+    Queue<AttackHandler> attackHandlerQueue = new Queue<AttackHandler>(100);
+    public AttackHandler PushAttackHandler
+    {
+        set => attackHandlerQueue.Enqueue(value);
+    }
+
+    //Spawn Area Fields
     SpawnArea spawnArea;
     public SpawnArea SpawnArea => spawnArea;
     #endregion
+
+    #region Actor Manager Method
     protected override void OnInitialize()
     {
         actorFactory = new ActorFactory(transform);
         CreateSpawnArea();
         IsLoad = true;
-
-        
     }
+    private void Update()
+    {
+        if (TimeManager.Instance.IsActiveTimeFlow == false) return;
+        OnUpdateAttackHandler();
+    }
+    #endregion
 
     #region Spawn Method
     public async UniTask<Character> SpawnCharacter(long index, Vector3 position) => await actorFactory.SpawnObjectAsync(eActorType.Character, index, position) as Character;
     public async UniTask<Enemy> SpawnEnemy(long index, Vector3 position)  => await actorFactory.SpawnObjectAsync(eActorType.Enemy, index, position) as Enemy;
     public void RegisterActorPool(uint worldID, eActorType type, int pathHash) => actorFactory.RegisterToObjectPool(worldID, type, pathHash);
+    public Dictionary<uint, Actor> GetSpawnedActors => actorFactory.GetSpawnedObjects;
     #endregion
 
     #region Spawn Area Method
@@ -43,6 +55,26 @@ public class ActorManager : TSingletonMono<ActorManager>
     public Vector3 GetRandomPosition()
     {
         return spawnArea.GetRandomPosition();
+    }
+    #endregion
+
+    #region Attack Handler Method
+    void OnUpdateAttackHandler()
+    {
+        while (attackHandlerQueue.Count > 0)
+        {
+            AttackHandler attackHandler = attackHandlerQueue.Dequeue();
+            if (GetSpawnedActors.ContainsKey(attackHandler.TargetID)==false)
+                continue;
+
+            //if (GetSpawnedActors[attackHandler.TargetID].FSMState != eFSMState.Death)
+            //{
+            //    if (attackHandler.Damage >= 0)
+            //        GetSpawnedActors[attackHandler.TargetID].Hit(ref attackHandler);
+            //    else
+            //        GetSpawnedActors[attackHandler.TargetID].Recovery(ref attackHandler);
+            //}
+        }
     }
     #endregion
 }
