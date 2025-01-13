@@ -4,15 +4,13 @@ using UnityEngine;
 
 public abstract class PoolingObject : MonoBehaviour
 {
-    protected uint worldID;
+    #region Fields
     public uint WorldID=>worldID;
+    protected uint worldID;
+    public int ObjectID { get=>objectID; set=>objectID=value; }
     protected int objectID;
-    public int PathHashCode => objectID;
     bool isClean;
-    public void SetObjectID(int objectID)
-    {
-        this.objectID = objectID;
-    }
+    #endregion
     public virtual void Spawn(uint worldID,Vector2 position)
     {
         this.worldID = worldID;

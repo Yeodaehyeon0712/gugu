@@ -42,7 +42,7 @@ public class BaseEffect : PoolingObject
     {
         this.index = index;
         //this.soundIndex = DataManager.EffectTable[index].SoundIndex;
-        SetObjectID(index);
+        objectID=index;
         return this;
     }
     public override void Spawn(uint worldID,Vector2 position)

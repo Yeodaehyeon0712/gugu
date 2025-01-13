@@ -15,13 +15,13 @@ public class MainScene : BaseScene
     }
     public void GetSkill()
     {
-        a= GameObject.Find("Character(Clone)").GetComponent<Character>();
-        Debug.Log(a.Skill+"123");
-        a.Skill.GetSkill(1);
+        //a= GameObject.Find("Character(Clone)").GetComponent<Character>();
+        //Debug.Log(a.Skill+"123");
+        //a.Skill.GetSkill(1);
     }
 
     public void LevelUpSkill()
     {
-        a.Skill.LevelUpSkill(0);
+        //a.Skill.LevelUpSkill(0);
     }
 }

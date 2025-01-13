@@ -5,14 +5,16 @@ using UnityEngine;
 public class Enemy : Actor
 {
     #region Fields
-    [SerializeField]SOEnemyStat stat;
-    public SOEnemyStat Stat { get=>stat; set=>stat=value; }
+
     #endregion
 
     #region EnemyMethod
-    public override void Initialize(eActorType type, long index, int spawnHashCode)
-    {
-        base.Initialize(type, index, spawnHashCode);
-    }
+
     #endregion
+    protected override void InitializeComponent()
+    {
+        var animController = AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath);
+        skinComponent = new SkinComponent(this, animController);
+        controllerComponent = new EnemyControllerComponent(this);
+    }
 }

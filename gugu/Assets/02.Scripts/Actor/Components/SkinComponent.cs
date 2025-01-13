@@ -18,11 +18,12 @@ public class SkinComponent : BaseComponent
     #endregion
 
     #region Component Method
-    public SkinComponent(Actor owner) : base(owner, eComponent.SkinComponent,useUpdate:false)
+    public SkinComponent(Actor owner, RuntimeAnimatorController controller) : base(owner, eComponent.SkinComponent,useUpdate:false)
     {
         var skin = owner.transform.Find("Skin");
         renderer = skin.GetComponent<SpriteRenderer>();
         animator = skin.GetComponent<Animator>();
+        animator.runtimeAnimatorController = controller;
 
         speedHash = Animator.StringToHash("Speed");
         animatorHashDic.Add(eCharacterAnimState.Move, speedHash);
@@ -34,11 +35,7 @@ public class SkinComponent : BaseComponent
         deathHash = Animator.StringToHash("Death");
         animatorHashDic.Add(eCharacterAnimState.Death, deathHash);
     }
-    //처음 초기화 할때 셋 .
-    public void SetSkin(RuntimeAnimatorController animator)
-    {
-        this.animator.runtimeAnimatorController = animator;
-    }
+
     public void SetAnimationTrigger(eCharacterAnimState state)
     {
         currentAnim = state;

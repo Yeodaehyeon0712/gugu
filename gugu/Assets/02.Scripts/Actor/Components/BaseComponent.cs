@@ -4,32 +4,31 @@ using UnityEngine;
 public abstract class BaseComponent 
 {
     #region Fields
-    [SerializeField] protected eComponent componentType;
     public eComponent ComponentType => componentType;
-    [SerializeField] protected bool isActive;
-    public bool Active { get => isActive; set => isActive = value; }
-    [SerializeField] protected Actor owner;
+    [SerializeField] protected readonly eComponent componentType;
     public Actor Owner => owner;
+    [SerializeField] protected readonly Actor owner;
+    public bool UseUpdate { get => useUpdate; set => useUpdate = value; }
+    [SerializeField] protected bool useUpdate;
     #endregion
 
     #region Component Method
     protected BaseComponent(Actor owner, eComponent componentType,bool useUpdate=true)
     {
-        isActive = true;
+        this.useUpdate = useUpdate;
         this.owner = owner;
         this.componentType = componentType;
-        if(useUpdate)
-            owner.AddComponent(this);
+        owner.AddComponent(this);
     }
     public void ComponentUpdate(float deltaTime)
     {
-        if (isActive == false) return;
+        if (useUpdate == false) return;
         OnComponentUpdate(deltaTime);
 
     }
     public void FixedComponentUpdate(float fixedDeltaTime)
     {
-        if (isActive == false) return;
+        if (useUpdate == false) return;
         OnComponentFixedUpdate(fixedDeltaTime);
     }
     public void ResetComponent()

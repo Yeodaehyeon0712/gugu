@@ -58,40 +58,8 @@ public class ActorFactory : Factory<Actor,eActorType>
 
     protected override void ReSetObject(Actor obj, uint worldID, Vector2 position)
     {
-        RefreshActorSkin(obj, obj.ActorType, obj.Index);
-        RefreshActorStat(obj, obj.ActorType, obj.Index);
+        obj.ResetComponent();
         obj.Spawn(worldID,position);
     }
-    #endregion
-
-    #region Actor Factory Method
-    void RefreshActorSkin(Actor actor, eActorType type, long index)
-    {
-        RuntimeAnimatorController animator = type switch
-        {
-            eActorType.Character => AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath),
-            eActorType.Enemy => AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath),
-            _ => null
-        };
-        actor.Skin.SetSkin(animator);
-    }
-    void RefreshActorStat(Actor actor, eActorType type, long index)
-    {
-        switch (type)
-        {
-            case eActorType.Character:
-                {
-                    var target = actor as Character;
-                    target.Stat.SetStat(DataManager.CharacterTable[index]);
-                    break;
-                }
-            case eActorType.Enemy:
-                {
-                    var target = actor as Enemy;
-                    target.Stat = DataManager.EnemyStats[index];
-                    break;
-                }
-        }
-    }
-    #endregion
+    #endregion  
 }
