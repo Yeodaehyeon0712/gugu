@@ -8,6 +8,7 @@ using TMPro;
 
 public class TitleScene : BaseScene
 {
+    public bool isTestMode;
     Button button_NextScene;
     //나중에 퍼센테이지로 변경할것 .
     TextMeshProUGUI text_Description;
@@ -16,7 +17,7 @@ public class TitleScene : BaseScene
     {
         DontDestroyOnLoad(gameObject);
         button_NextScene = transform.GetComponentInChildren<Button>();
-        button_NextScene.onClick.AddListener(() => AsyncSceneChange<MainScene>().Forget());
+        button_NextScene.onClick.AddListener(() => SceneChange());
         button_NextScene.gameObject.SetActive(false);
         text_Description = transform.Find("TitleUI/Panel_Progress/Text_Progress").GetComponent<TextMeshProUGUI>();
         InitManager().Forget();
@@ -63,5 +64,12 @@ public class TitleScene : BaseScene
 
         text_Description.text = "Complete";
         button_NextScene.gameObject.SetActive(true);
+    }
+    void SceneChange()
+    {
+        if (isTestMode)
+            AsyncSceneChange<TestScene>().Forget();
+        else
+            AsyncSceneChange<MainScene>().Forget();
     }
 }
