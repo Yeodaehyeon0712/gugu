@@ -1,0 +1,2 @@
+Index,Name,DefaultValue,CalculateType,MaxLevel,ValueCalculator,GoldCalculator,IconPath,NameKey,ExplanationKey
+1,MaxHP,100,Percentage,3,10*x,222*x-22,Icon/Status/MaxHP.png,1301,1331

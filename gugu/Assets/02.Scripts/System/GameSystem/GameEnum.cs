@@ -27,6 +27,18 @@ public enum eSkillState
     Using,
     Cooltime,
 }
+[System.Flags]
+public enum eStatusType
+{
+    None=0,
+    MaxHP=1<<0,
+}
+public enum eCalculateType
+{
+    Flat,
+    Percentage
+}
+
 #endregion
 
 #region Data
@@ -40,6 +52,7 @@ public enum eTableName
     StageTable = 1 << 4,
     SkillTable=1<<5,
     EffectTable=1<<6,
+    StatusTable=1<<7,
     All = ~0,
 }
 

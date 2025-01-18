@@ -15,6 +15,10 @@ public class GameConst
     public static float spawnInterval = 3f;
     #endregion
 
+    #region Status
+    public static uint MaxStatusLevel=6;
+    #endregion
+
     #region Background
     public static int BgBlockSideSize = 40;
     public static Vector2[] BgBlockPositions =
@@ -44,11 +48,15 @@ public class GameConst
 
     #region Enum Converter
     public static Dictionary<string, eEffectChainCondition> EffectChainType;
+    public static Dictionary<string, eStatusType> StatusType;
+    public static Dictionary<string, eCalculateType> CalculateType;
+
 
     public static void InitializeEnumConverter()
     {
        OnGenerateEnumContainer(ref EffectChainType);
-        
+       OnGenerateEnumContainer(ref StatusType);
+       OnGenerateEnumContainer(ref CalculateType);
     }
     public static void ClearEnumConverter()
     {
