@@ -58,7 +58,6 @@ public class ActorFactory : Factory<Actor,eActorType>
 
     protected override void ReSetObject(Actor obj, uint worldID, Vector2 position)
     {
-        obj.ResetComponent();
         obj.Spawn(worldID,position);
     }
     #endregion  

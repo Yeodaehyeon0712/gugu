@@ -27,11 +27,11 @@ public enum eSkillState
     Using,
     Cooltime,
 }
-[System.Flags]
 public enum eStatusType
 {
-    None=0,
-    MaxHP=1<<0,
+    None,
+    MaxHP,
+    End
 }
 public enum eCalculateType
 {

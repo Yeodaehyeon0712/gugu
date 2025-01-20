@@ -10,12 +10,18 @@ public abstract class Actor : PoolingObject
     public long Index => index;
     protected long index;
 
+    //Status Fields
+    [SerializeField] public float SetHP { set => currentHP = value; }
+    [SerializeField] protected float currentHP;
+
     //Component Fields
     protected Dictionary<eComponent, BaseComponent> componentDictionary = new Dictionary<eComponent, BaseComponent>();
     public SkinComponent Skin => skinComponent;
     [SerializeField] protected SkinComponent skinComponent;
     public ControllerComponent Controller => controllerComponent;
     [SerializeField] protected ControllerComponent controllerComponent;
+    public StatusComponent Status=> statusComponent;
+    [SerializeField] protected StatusComponent statusComponent;
     #endregion
 
     #region Init Method
@@ -49,6 +55,7 @@ public abstract class Actor : PoolingObject
     {
         base.Spawn(worldID, position);
         ResetComponent();
+        currentHP = statusComponent.GetStat(eStatusType.MaxHP);
     }
     public virtual void Death()
     {
@@ -58,17 +65,21 @@ public abstract class Actor : PoolingObject
     public virtual void Hit(in AttackHandler attackHandler)
     {
         ////만약 무적 상태라면 리턴 
-        //double damage = attackHandler.Damage;
+        double damage = attackHandler.Damage;
 
         ////여기서 체력 마니어스 ..
-        //_currentHP -= damage;
+        currentHP -= (float)damage;
         ////데미지 텍스트 띄우기 
 
-        //if (_currentHP <= 0f)
-        //    Death();
-        //else
-        //    //hit anim 처리
-        //    Skin.SetAnimationTrigger(eCharacterAnimState.Hit);
+        if (currentHP <= 0f)
+            Death();
+        else
+            Skin.SetAnimationTrigger(eCharacterAnimState.Hit);
+    }
+    public void Recovery(ref AttackHandler attackHandler)
+    {
+        currentHP = System.Math.Clamp(currentHP - (float)attackHandler.Damage, 0, statusComponent.GetStat(eStatusType.MaxHP));
+        //UIManager.Instance.FieldUI.SetDamageText2(_attachment.GetAttachmentElement(eAttachmentTarget.Body).Transform.position, attackHandler.Damage, attackHandler.IsCritical, _characterType);
     }
     #endregion
 

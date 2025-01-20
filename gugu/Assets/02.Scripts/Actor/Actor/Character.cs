@@ -16,5 +16,6 @@ public class Character : Actor
         var animController = AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath);
         skinComponent = new SkinComponent(this, animController);
         controllerComponent = new CharacterControllerComponent(this);
+        statusComponent = new StatusComponent(this);
     }
 }

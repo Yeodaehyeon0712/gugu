@@ -16,5 +16,6 @@ public class Enemy : Actor
         var animController = AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath);
         skinComponent = new SkinComponent(this, animController);
         controllerComponent = new EnemyControllerComponent(this);
+        statusComponent = new StatusComponent(this);
     }
 }
