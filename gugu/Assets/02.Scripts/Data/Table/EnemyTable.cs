@@ -10,8 +10,7 @@ namespace Data
         public string ResourcePath;
         public string AnimatorPath;
         public int PathHash;
-        public bool IsRanged;
-        public bool IsBoss;
+
         public SOEnemyStatus EnemyStatus;
         public EnemyData(long index, Dictionary<string, string> dataPair)
         {
@@ -20,8 +19,6 @@ namespace Data
             AnimatorPath = dataPair["AnimatorPath"];
             ResourcePath = dataPair["ResourcePath"];
             PathHash = ResourcePath.GetHashCode();
-            IsRanged = bool.Parse(dataPair["IsRanged"]);
-            IsBoss = bool.Parse(dataPair["IsBoss"]);
             EnemyStatus = SOEnemyStatus.CreateEnemyStatus(dataPair);
         }
     }
