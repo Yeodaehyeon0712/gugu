@@ -13,9 +13,8 @@ public class Enemy : Actor
     #endregion
     protected override void InitializeComponent()
     {
-        var animController = AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath);
-        skinComponent = new SkinComponent(this, animController);
+        skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath));
         controllerComponent = new EnemyControllerComponent(this);
-        statusComponent = new StatusComponent(this);
+        statusComponent = new EnemyStatusComponent(this);
     }
 }

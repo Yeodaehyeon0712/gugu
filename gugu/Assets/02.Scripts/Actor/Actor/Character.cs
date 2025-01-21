@@ -13,9 +13,8 @@ public class Character : Actor
     #endregion
     protected override void InitializeComponent()
     {
-        var animController = AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath);
-        skinComponent = new SkinComponent(this, animController);
+        skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath););
         controllerComponent = new CharacterControllerComponent(this);
-        statusComponent = new StatusComponent(this);
+        statusComponent = new CharacterStatusComponent(this);
     }
 }

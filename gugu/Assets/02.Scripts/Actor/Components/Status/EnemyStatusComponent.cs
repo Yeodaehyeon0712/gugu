@@ -2,18 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatusComponent : MonoBehaviour
+public class EnemyStatusComponent : StatusComponent
 {
-    SOEnemyStatus stat=DataManager.EnemyTable[3].EnemyStatus;
-    // Start is called before the first frame update
-    void Start()
+    SOEnemyStatus status;
+    public EnemyStatusComponent(Actor owner) : base(owner)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public override float GetStatus(eStatusType type)
     {
-        
+        switch (type)
+        {
+
+            case eStatusType.MaxHP:
+                return status.HP;
+            default:
+                return 0;
+        }
     }
+
+    public override void SetDefaultStatus()
+    {
+        status = DataManager.EnemyTable[owner.Index].EnemyStatus;
+    }
+
 }

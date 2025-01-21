@@ -27,9 +27,9 @@ public abstract class Actor : PoolingObject
     #region Init Method
     public virtual void Initialize(eActorType type, long index, int objectID)
     {
+        base.Initialize(objectID);
         this.type = type;
         this.index = index;
-        this.objectID=objectID;
         InitializeComponent();
     }
     protected override void ReturnToPool()
@@ -55,10 +55,11 @@ public abstract class Actor : PoolingObject
     {
         base.Spawn(worldID, position);
         ResetComponent();
-        currentHP = statusComponent.GetStat(eStatusType.MaxHP);
+        currentHP = statusComponent.GetStatus(eStatusType.MaxHP);
     }
     public virtual void Death()
     {
+        currentHP = 0;
         Skin.SetAnimationTrigger(eCharacterAnimState.Death);
         Clean(2.5f);
     }
@@ -78,7 +79,7 @@ public abstract class Actor : PoolingObject
     }
     public void Recovery(ref AttackHandler attackHandler)
     {
-        currentHP = System.Math.Clamp(currentHP - (float)attackHandler.Damage, 0, statusComponent.GetStat(eStatusType.MaxHP));
+        currentHP = System.Math.Clamp(currentHP - (float)attackHandler.Damage, 0, statusComponent.GetStatus(eStatusType.MaxHP));
         //UIManager.Instance.FieldUI.SetDamageText2(_attachment.GetAttachmentElement(eAttachmentTarget.Body).Transform.position, attackHandler.Damage, attackHandler.IsCritical, _characterType);
     }
     #endregion
