@@ -9,7 +9,6 @@ public class DataManager : TSingletonMono<DataManager>
     public static LocalizingTable LocalizingTable;
     public static CharacterTable CharacterTable;
     public static EnemyTable EnemyTable;
-    public static EnemyStatContainer EnemyStats;
     public static WaveTable WaveTable;
     public static StageTable StageTable;//Initialize WaveTable First
     public static SkillTable SkillTable;
@@ -24,7 +23,6 @@ public class DataManager : TSingletonMono<DataManager>
         CharacterTable.Reload();
         EnemyTable = LoadTable<EnemyTable>(eTableName.EnemyTable);
         EnemyTable.Reload();
-        EnemyStats = new EnemyStatContainer(EnemyTable.GetDataDic);
         WaveTable = LoadTable<WaveTable>(eTableName.WaveTable);
         WaveTable.Reload();
         StageTable = LoadTable<StageTable>(eTableName.StageTable);

@@ -14,7 +14,6 @@ public class StatusComponent : BaseComponent
     #region Component Method
     public StatusComponent(Actor owner) : base(owner, eComponent.StatComponent,useUpdate:false)
     {
-        //스탯과 스탯 데이터로 구성 ..
         SetDefaultStat();
     }
 

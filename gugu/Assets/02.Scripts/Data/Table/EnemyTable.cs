@@ -6,28 +6,23 @@ namespace Data
     public class EnemyData
     {
         public long Index;
-        public int NameKey;
-        public float HP;
-        public float MoveSpeed;
-        public float AttackDamage;
+        public int NameKey;       
         public string ResourcePath;
         public string AnimatorPath;
         public int PathHash;
         public bool IsRanged;
         public bool IsBoss;
-
+        public SOEnemyStatus EnemyStatus;
         public EnemyData(long index, Dictionary<string, string> dataPair)
         {
             Index = index;
-            NameKey = int.Parse(dataPair["NameKey"]);
-            HP = float.Parse(dataPair["HP"]);
-            MoveSpeed = float.Parse(dataPair["MoveSpeed"]);
-            AttackDamage = float.Parse(dataPair["AttackDamage"]);
+            NameKey = int.Parse(dataPair["NameKey"]);           
             AnimatorPath = dataPair["AnimatorPath"];
             ResourcePath = dataPair["ResourcePath"];
             PathHash = ResourcePath.GetHashCode();
             IsRanged = bool.Parse(dataPair["IsRanged"]);
             IsBoss = bool.Parse(dataPair["IsBoss"]);
+            EnemyStatus = SOEnemyStatus.CreateEnemyStatus(dataPair);
         }
     }
 }
