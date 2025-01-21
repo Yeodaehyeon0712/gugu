@@ -8,8 +8,8 @@ public class BaseEffect : PoolingObject
     //Effect Fields
     public bool IsActive => isActive;
     bool isActive;
-    public int Index => index;
-    [SerializeField] protected int index;
+    public long Index => index;
+    [SerializeField] protected long index;
     [SerializeField] float elapsedTime;
     [SerializeField] protected float durationTime;
 
@@ -38,11 +38,11 @@ public class BaseEffect : PoolingObject
     {
         ActorManager.Instance.RegisterActorPool(worldID,0, objectID);
     }
-    public virtual BaseEffect Initialize(int index)
+    public virtual BaseEffect Initialize(long index, int objectID)
     {
+        base.Initialize(objectID);
         this.index = index;
         //this.soundIndex = DataManager.EffectTable[index].SoundIndex;
-        objectID=index;
         return this;
     }
     public override void Spawn(uint worldID,Vector2 position)
