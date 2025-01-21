@@ -9,13 +9,20 @@ public abstract class PoolingObject : MonoBehaviour
     protected uint worldID;
     public int ObjectID { get=>objectID; set=>objectID=value; }
     protected int objectID;
+
     bool isClean;
     #endregion
+
+    #region Pooling Method
+    public virtual void Initialize(int objectID)
+    {
+        this.objectID = objectID;
+    }
     public virtual void Spawn(uint worldID,Vector2 position)
     {
         this.worldID = worldID;
-        isClean = false;
         transform.position = position;
+        isClean = false;
         gameObject.SetActive(true);
     }
     public void Clean(float time)
@@ -34,6 +41,7 @@ public abstract class PoolingObject : MonoBehaviour
         ReturnToPool();
     }
     protected abstract void ReturnToPool();
+    #endregion
 }
 
 
