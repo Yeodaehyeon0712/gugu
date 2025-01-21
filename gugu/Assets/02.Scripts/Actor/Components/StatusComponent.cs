@@ -56,7 +56,7 @@ public class StatusComponent : BaseComponent
         // 1. InGame Status
         //result *= (float)DataManager.StatusTable[type].GetValue(itemLevelDic[type]);
         // 2 . 기타 등등 .. 의 값을 거쳐서 최종값이 산출 될 것이다 .
-        //computedStatusDic[type] = result;
+        computedStatusDic[type] = result;
 
         //1 . 강화 스탯
         //2 . 캐릭터 기본 스탯

@@ -10,7 +10,7 @@ public class ControllerComponent : BaseComponent
     #endregion
 
     #region Component Method
-    public ControllerComponent(Actor owner) : base(owner, eComponent.ControllerComponent,false)
+    public ControllerComponent(Actor owner) : base(owner, eComponent.ControllerComponent)
     {
         rigidBody = owner.GetComponent<Rigidbody2D>();
     }
