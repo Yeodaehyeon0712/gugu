@@ -43,11 +43,12 @@ public abstract class Actor : PoolingObject
     #region Unity API
     protected virtual void Update()
     {
+        if (state != eActorState.Battle) return;
         UpdateComponent(TimeManager.DeltaTime);
     }
     protected virtual void FixedUpdate()
     {
-        if (controllerComponent == null) return;
+        if (controllerComponent == null||state != eActorState.Battle) return;
         controllerComponent.FixedComponentUpdate(TimeManager.FixedDeltaTime);
     }
     #endregion
@@ -74,12 +75,8 @@ public abstract class Actor : PoolingObject
     }
     public virtual void Hit(in AttackHandler attackHandler)
     {
-        ////만약 무적 상태라면 리턴 
         double damage = attackHandler.Damage;
-
-        ////여기서 체력 마니어스 ..
         currentHP -= (float)damage;
-        ////데미지 텍스트 띄우기 
 
         if (currentHP <= 0f)
             Death();
