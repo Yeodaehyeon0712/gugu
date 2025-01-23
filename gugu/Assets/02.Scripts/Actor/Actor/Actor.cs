@@ -60,18 +60,18 @@ public abstract class Actor : PoolingObject
     #region Actor Method
     public override void Spawn(uint worldID, Vector2 position)
     {
-        base.Spawn(worldID, position);
         ActorState = eActorState.Battle;
+        base.Spawn(worldID, position);
     }
     public virtual void Death()
     {
-        Clean(2.5f);
         ActorState = eActorState.Death;   
+        Clean(2.5f);
     }
     protected override void OnClean()
     {
-        base.OnClean();
         ActorState = eActorState.Inactive;
+        base.OnClean();
     }
     public virtual void Hit(in AttackHandler attackHandler)
     {
