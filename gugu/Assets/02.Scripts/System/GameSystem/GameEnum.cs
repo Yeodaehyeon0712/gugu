@@ -37,6 +37,7 @@ public enum eStatusType
 {
     None,
     MaxHP,
+    MoveSpeed,
     End
 }
 public enum eCalculateType

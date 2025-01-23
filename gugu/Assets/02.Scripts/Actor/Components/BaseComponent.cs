@@ -31,9 +31,13 @@ public abstract class BaseComponent
         if (useUpdate == false) return;
         OnComponentFixedUpdate(fixedDeltaTime);
     }
-    public void ResetComponent()
+    public void ActiveComponent()
     {
-        OnComponentReset();
+        OnComponentActive();
+    }
+    public void InactiveComponent()
+    {
+        OnComponentInactive();
     }
     public void DestroyComponent()
     {
@@ -44,7 +48,8 @@ public abstract class BaseComponent
     #region Virtual Method
     protected virtual void OnComponentUpdate(float deltaTime) { }
     protected virtual void OnComponentFixedUpdate(float fixedDeltaTime) { }
-    protected virtual void OnComponentReset() { }
+    protected virtual void OnComponentActive() { }
+    protected virtual void OnComponentInactive() { }
     protected virtual void OnComponentDestroy() { }
     #endregion
 }

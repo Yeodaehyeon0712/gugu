@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class EnemyControllerComponent :ControllerComponent
 {
+    #region Fields
     Rigidbody2D target;
+    #endregion
+
     #region Component Method
     public EnemyControllerComponent(Actor owner) : base(owner)
     {
+
+    }
+    protected override void OnComponentActive()
+    {
         target = Player.PlayerCharacter.GetComponent<Rigidbody2D>();
     }
+    protected override void OnComponentInactive()
+    {
+        target = null;
+    }
+
     #endregion
 
+    #region Move Method
     protected override void MoveActor(float fixedDeltaTime)
     {
         Vector2 dirVector = target.position - rigidBody.position;
@@ -21,5 +34,5 @@ public class EnemyControllerComponent :ControllerComponent
         rigidBody.MovePosition(rigidBody.position + nextVector);
         rigidBody.velocity = Vector2.zero;
     }
-
+    #endregion
 }

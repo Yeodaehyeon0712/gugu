@@ -20,10 +20,10 @@ public abstract class Actor : PoolingObject
     protected Dictionary<eComponent, BaseComponent> componentDictionary = new Dictionary<eComponent, BaseComponent>();
     public SkinComponent Skin => skinComponent;
     [SerializeField] protected SkinComponent skinComponent;
-    public ControllerComponent Controller => controllerComponent;
-    [SerializeField] protected ControllerComponent controllerComponent;
     public StatusComponent Status=> statusComponent;
     [SerializeField] protected StatusComponent statusComponent;
+    public ControllerComponent Controller => controllerComponent;
+    [SerializeField] protected ControllerComponent controllerComponent;//Controller Must be Init at Last.
     #endregion
 
     #region Init Method
@@ -57,7 +57,7 @@ public abstract class Actor : PoolingObject
     public override void Spawn(uint worldID, Vector2 position)
     {
         base.Spawn(worldID, position);
-        ResetComponent();
+        ActiveComponent();
         state = eActorState.Battle;
         currentHP = statusComponent.GetStatus(eStatusType.MaxHP);
     }
@@ -105,15 +105,20 @@ public abstract class Actor : PoolingObject
         }
         componentDictionary.Add(component.ComponentType, component);
     }
-    public void ResetComponent()
+    public void ActiveComponent()
     {
-        foreach (var component in componentDictionary)
-            component.Value.ResetComponent();
+        foreach (var component in componentDictionary.Values)
+            component.ActiveComponent();
+    }
+    public void InactiveComponent()
+    {
+        foreach (var component in componentDictionary.Values)
+            component.InactiveComponent();
     }
     void UpdateComponent(float deltaTime)
     {
-        foreach (var component in componentDictionary)
-            component.Value.ComponentUpdate(deltaTime);
+        foreach (var component in componentDictionary.Values)
+            component.ComponentUpdate(deltaTime);
     }
     #endregion
 }
