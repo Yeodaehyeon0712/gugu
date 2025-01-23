@@ -43,12 +43,12 @@ public abstract class Actor : PoolingObject
     #region Unity API
     protected virtual void Update()
     {
-        UpdateComponent(Time.deltaTime);
+        UpdateComponent(TimeManager.DeltaTime);
     }
     protected virtual void FixedUpdate()
     {
         if (controllerComponent == null) return;
-        controllerComponent.FixedComponentUpdate(Time.fixedDeltaTime);
+        controllerComponent.FixedComponentUpdate(TimeManager.FixedDeltaTime);
     }
     #endregion
 
