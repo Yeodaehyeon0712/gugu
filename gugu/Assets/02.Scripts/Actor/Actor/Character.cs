@@ -14,7 +14,7 @@ public class Character : Actor
     protected override void InitializeComponent()
     {
         skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath));
-        controllerComponent = new CharacterControllerComponent(this);
         statusComponent = new CharacterStatusComponent(this);
+        controllerComponent = new CharacterControllerComponent(this);
     }
 }

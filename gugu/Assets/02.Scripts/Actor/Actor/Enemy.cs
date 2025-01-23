@@ -14,7 +14,7 @@ public class Enemy : Actor
     protected override void InitializeComponent()
     {
         skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath));
-        controllerComponent = new EnemyControllerComponent(this);
         statusComponent = new EnemyStatusComponent(this);
+        controllerComponent = new EnemyControllerComponent(this);
     }
 }
