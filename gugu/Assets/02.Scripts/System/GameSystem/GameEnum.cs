@@ -9,9 +9,10 @@ public enum eActorType:uint
 }
 public enum eActorState
 {
-    Inactive,
+    None,
     Battle,
     Death,
+    Inactive,
 }
 public enum eComponent
 {

@@ -9,7 +9,11 @@ public abstract class Actor : PoolingObject
     protected long index;
     public eActorType ActorType => type;
     protected eActorType type;
-    public eActorState ActorState => state;
+    public eActorState ActorState
+    {
+        get => state;
+        set { state = value; OnStateChange(state); }
+    }
     protected eActorState state;
 
     //Status Fields
@@ -57,21 +61,17 @@ public abstract class Actor : PoolingObject
     public override void Spawn(uint worldID, Vector2 position)
     {
         base.Spawn(worldID, position);
-        ActiveComponent();
-        state = eActorState.Battle;
-        currentHP = statusComponent.GetStatus(eStatusType.MaxHP);
+        ActorState = eActorState.Battle;
     }
     public virtual void Death()
     {
-        state = eActorState.Death;
-        currentHP = 0;
-        Skin.SetAnimationTrigger(eCharacterAnimState.Death);
         Clean(2.5f);
+        ActorState = eActorState.Death;   
     }
     protected override void OnClean()
     {
-        state = eActorState.Inactive;
         base.OnClean();
+        ActorState = eActorState.Inactive;
     }
     public virtual void Hit(in AttackHandler attackHandler)
     {
@@ -87,6 +87,26 @@ public abstract class Actor : PoolingObject
     {
         currentHP = System.Math.Clamp(currentHP - (float)attackHandler.Damage, 0, statusComponent.GetStatus(eStatusType.MaxHP));
         //UIManager.Instance.FieldUI.SetDamageText2(_attachment.GetAttachmentElement(eAttachmentTarget.Body).Transform.position, attackHandler.Damage, attackHandler.IsCritical, _characterType);
+    }
+    public void OnStateChange(eActorState state)
+    {
+        switch (state)
+        {
+
+            case eActorState.Battle:
+                ActiveComponent();
+                currentHP = statusComponent.GetStatus(eStatusType.MaxHP);
+                break;
+
+            case eActorState.Death:
+                currentHP = 0;
+                Skin.SetAnimationTrigger(eCharacterAnimState.Death);
+                break;
+
+            case eActorState.Inactive:
+                InactiveComponent();
+                break;
+        }
     }
     #endregion
 
@@ -120,5 +140,6 @@ public abstract class Actor : PoolingObject
         foreach (var component in componentDictionary.Values)
             component.ComponentUpdate(deltaTime);
     }
+
     #endregion
 }
