@@ -7,6 +7,12 @@ public enum eActorType:uint
     Enemy,
     End
 }
+public enum eActorState
+{
+    Inactive,
+    Battle,
+    Death,
+}
 public enum eComponent
 {
     SkinComponent,
