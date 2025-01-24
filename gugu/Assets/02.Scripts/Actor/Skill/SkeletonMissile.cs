@@ -25,7 +25,7 @@ public class SkeletonMissile :BaseSkill
         
     }
 
-    protected override async UniTask OnUsingSequenceAsync()
+    protected override async UniTask UsingSequenceAsync()
     {
         await UniTask.Yield();
     }

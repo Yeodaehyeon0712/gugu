@@ -4,10 +4,37 @@ using UnityEngine;
 
 public static class Player 
 {
+    #region Fields
     public static Actor PlayerCharacter;
+    //추후 하나의 데이터 혹은 클래스로 묶을 것들
+    public static Dictionary<long,BaseSkill> IngameSkillDic = new Dictionary<long, BaseSkill>();
+    #endregion
 
     public static void Initialize()
     {
-
+        //여기서 기본 가지고 있는 데이터를 받는다 .
     }
+
+    #region Skill
+    public static void RegisterSkill(long index)
+    {
+        if (IngameSkillDic.ContainsKey(index) || PlayerCharacter == null) return;
+
+        var skill = DataManager.SkillTable[index];
+        IngameSkillDic.Add(index,skill.RegisterSkill(PlayerCharacter));
+    }
+    public static void LevelUpSkill(long index)
+    {
+        if (IngameSkillDic.TryGetValue(index, out var skill) == false || skill.isMaxLevel) return;       
+        skill.LevelUpSkill(false);      
+    }
+    public static void ResetSkills()
+    {
+        foreach (var item in IngameSkillDic)
+        {
+            item.Value.UnregisterSkill();
+            IngameSkillDic.Remove(item.Key);
+        }
+    }
+    #endregion
 }

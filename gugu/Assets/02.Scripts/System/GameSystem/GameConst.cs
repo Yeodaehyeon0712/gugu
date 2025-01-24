@@ -17,6 +17,8 @@ public class GameConst
 
     #region Status
     public static uint MaxStatusLevel=6;
+    public static uint MaxSkillLevel = 6;
+
     #endregion
 
     #region Background

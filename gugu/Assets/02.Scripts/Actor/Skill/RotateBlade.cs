@@ -53,10 +53,10 @@ public class RotateBlade : BaseSkill
         bladeParent.localRotation = Quaternion.identity;
         GenerateBlade(level);
     }
-    protected override async UniTask OnUsingSequenceAsync()
+    protected override async UniTask UsingSequenceAsync()
     {
         bladeParent.gameObject.SetActive(true);
-        while (processState == eSkillState.Using)
+        while (state == eSkillState.Using)
         {
             await UniTask.Yield();
             bladeParent.transform.Rotate(Vector3.forward, rotationAnglePerSec * Time.deltaTime);

@@ -4,28 +4,35 @@ using UnityEngine;
 [System.Serializable]
 public class SkillComponent : BaseComponent
 {
-    //여기가 아니라 플레이어에서 관리할까 ..
-    List<BaseSkill> attackSkillList = new List<BaseSkill>();
+    #region Fields
+
+    #endregion
+
+    #region Component Method
     public SkillComponent(Actor owner) : base(owner, eComponent.SkillComponent)
     {
 
     }
+    //컴포넌트 초기화 직후 불린다 .
+    protected override void OnComponentActive()
+    {
+        Player.RegisterSkill(DataManager.CharacterTable[owner.Index].DefaultSkillKey);
+    }
+    protected override void OnComponentInactive()
+    {
+        Player.ResetSkills();
+    }
+    //리스트로 변경하는거 고민해봐 .. 
     protected override void OnComponentUpdate(float fixedDeltaTime)
     {
-        foreach(var skill in attackSkillList)
-        {
+        if (Player.IngameSkillDic.Count < 1) return;
+
+        foreach (var skill in Player.IngameSkillDic.Values)
             skill.UpdateSkill(fixedDeltaTime);
-        }
     }
-    public void GetSkill(long index)
-    {
-        var skill = DataManager.SkillTable[index];
-        skill.RegisterSkill(owner);
-        attackSkillList.Add(skill);
-    }
-    public void LevelUpSkill(long index)
-    {
-        //이건 고민해바 ..
-        attackSkillList[0].LevelUpSkill(false);
-    }
+    #endregion
+
+    #region Skill Method
+
+    #endregion
 }

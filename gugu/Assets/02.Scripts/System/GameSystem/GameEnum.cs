@@ -33,6 +33,7 @@ public enum eSkillState
     None,
     Using,
     Cooltime,
+    Inactive,
 }
 public enum eStatusType
 {

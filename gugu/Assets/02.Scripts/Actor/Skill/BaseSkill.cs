@@ -7,81 +7,79 @@ using System.Threading;
 public abstract class BaseSkill
 {
     #region Fields
-    //불변
-    protected readonly Data.SkillData skillData;
-    public Data.SkillData Data => skillData;
+    //readonly Fields
+    public long Index => index;
     protected readonly long index;
+    public Data.SkillData Data => skillData;
+    protected readonly Data.SkillData skillData;
 
-    //변하는 것
+    //Variable Fields
     protected Actor owner;
-    protected eSkillState processState;
-    public eSkillState ProcessState => processState;
-    protected float elapsedTime;
-
+    protected eSkillState state;
+    protected float elapsedTime=0;
+    public bool isMaxLevel => ( level >= GameConst.MaxSkillLevel );
     protected int level=1;
-    public int Level => level;
     #endregion
 
-    #region Init Method
+    #region Skill Method
     public BaseSkill(long index, Data.SkillData skillData)
     {
         this.index = index;
         this.skillData = skillData;
     }
-    #endregion
-
-    #region Skill Method
-    public void RegisterSkill(Actor owner)
+    public BaseSkill RegisterSkill(Actor owner,bool isResetTime= false)
     {
         this.owner = owner;
-        processState = eSkillState.Cooltime;
-        elapsedTime = skillData.CoolTime;
-        OnRegister(); 
+        state = eSkillState.Cooltime;
+        elapsedTime = isResetTime ? 0 : skillData.CoolTime;
+        OnRegister();
+        return this;
+    }
+    public void UnregisterSkill()
+    {
+        owner = null;
+        state = eSkillState.Inactive;
+        elapsedTime = 0;
+        level = 1;
+        OnUnRegister();
     }
     public void UpdateSkill(float deltaTime)
     {
         elapsedTime += deltaTime;
 
-        if (processState == eSkillState.Cooltime && elapsedTime >= skillData.CoolTime)
+        if (state == eSkillState.Cooltime && elapsedTime >= skillData.CoolTime)
             UseSkill();
-        else if (processState == eSkillState.Using && elapsedTime >= skillData.DurationTime)
+        else if (state == eSkillState.Using && elapsedTime >= skillData.DurationTime)
             StopSkill();
     }
     void UseSkill()
     {
-        processState = eSkillState.Using;
+        state = eSkillState.Using;
         elapsedTime = 0;
-        OnUsingSequenceAsync().Forget();        
+        UsingSequenceAsync().Forget();        
     }
     void StopSkill()
     {
-        processState = eSkillState.Cooltime;
+        state = eSkillState.Cooltime;
         elapsedTime = 0;
         OnStop();
     }
-    public void LevelUpSkill(bool isResetTime)
+    //이 부분은 고민 필요
+    public void LevelUpSkill(bool isResetTime=false)
     {
-        //StopSkill();
-        level++;
-        processState = eSkillState.Cooltime;
+        if (isMaxLevel) return;
+        Mathf.Min(++level, GameConst.MaxSkillLevel);
+        state = eSkillState.Cooltime;
         elapsedTime = isResetTime ? 0:skillData.CoolTime;
         OnLevelUp();
-    }
-    public void UnregisterSkill()
-    {
-        owner = null;
-        processState = eSkillState.None;
-        elapsedTime = 0;
-        level = 0;
-        OnUnRegister();
     }
     #endregion
 
     #region Abstract Method
     protected virtual void OnRegister() { }
-    protected abstract UniTask OnUsingSequenceAsync();
+    protected virtual void OnUnRegister(){}
     protected virtual void OnStop(){}
     protected virtual void OnLevelUp(){}
-    protected virtual void OnUnRegister(){}
+    protected abstract UniTask UsingSequenceAsync();
     #endregion
 }
