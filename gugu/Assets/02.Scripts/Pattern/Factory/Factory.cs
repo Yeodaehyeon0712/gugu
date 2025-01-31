@@ -23,7 +23,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     #endregion
 
     #region Spawn Method
-    public async UniTask<T> SpawnObjectAsync(TType type, long index, Vector2 position)
+    public async UniTask<T> SpawnObjectAsync(TType type, long index, Vector2 position,Transform parent=null)
     {
         ++currentWorldID;
         uint snapshotID = currentWorldID;
@@ -38,6 +38,9 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
             spawnObject = Object.Instantiate(originalAsset, instanceRoot);
             InitializeObject(spawnObject,type,index,resourceTuple.objectID);
         }
+        if (parent != null) 
+            spawnObject.transform.SetParent(parent);
+
         ReSetObject(spawnObject,snapshotID , position);
         spawnedObjectDic.Add(snapshotID, spawnObject);
         return spawnObject;
@@ -63,13 +66,16 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     {
         return objectPool[type][objectID].GetItem();
     }
-    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID)
+    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID,bool returnToInstanceRoot=false)
     {
         if (spawnedObjectDic.ContainsKey(targetWorldID) == false) return;
 
         T obj = spawnedObjectDic[targetWorldID];
         spawnedObjectDic.Remove(targetWorldID);
         objectPool[type][objectID].Register(obj);
+
+        if (returnToInstanceRoot == true)
+            obj.transform.SetParent(instanceRoot);
     }
     #endregion
 }
