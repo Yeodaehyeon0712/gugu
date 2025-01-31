@@ -66,7 +66,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     {
         return objectPool[type][objectID].GetItem();
     }
-    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID,bool returnToInstanceRoot=false)
+    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID,bool resetParent=false)
     {
         if (spawnedObjectDic.ContainsKey(targetWorldID) == false) return;
 
@@ -74,7 +74,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
         spawnedObjectDic.Remove(targetWorldID);
         objectPool[type][objectID].Register(obj);
 
-        if (returnToInstanceRoot == true)
+        if (resetParent == true)
             obj.transform.SetParent(instanceRoot);
     }
     #endregion

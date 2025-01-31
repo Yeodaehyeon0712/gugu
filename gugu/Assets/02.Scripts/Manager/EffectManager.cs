@@ -12,6 +12,10 @@ public class EffectManager : TSingletonMono<EffectManager>
         effectFactory = new EffectFactory(transform);
         IsLoad = true;
     }
-    //???????? ?????? ..
-    public async UniTask<BaseEffect> SpawnCharacter(long index, Vector3 position) => await effectFactory.SpawnObjectAsync(eEffectType.None, index, position);
+    #region Spawn Method
+    public async UniTask<BaseEffect> SpawnEffect(long index, Vector3 position,Transform parent=null) => await effectFactory.SpawnObjectAsync(eEffectType.None, index, position,parent);
+    public void RegisterToEffectPool(uint worldID, eEffectType type, int pathHash,bool resetParent=false) => effectFactory.RegisterToObjectPool(worldID, type, pathHash, resetParent);
+    public Dictionary<uint, BaseEffect> GetSpawnedActors => effectFactory.GetSpawnedObjects;
+    #endregion
+
 }

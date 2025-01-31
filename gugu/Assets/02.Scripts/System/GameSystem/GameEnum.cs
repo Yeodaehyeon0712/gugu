@@ -92,6 +92,7 @@ public enum eLanguage
 public enum eEffectType
 {
     None,
+    Effect,
     End
 }
 public enum eEffectChainCondition
@@ -104,9 +105,10 @@ public enum eEffectChainCondition
 [System.Flags]
 public enum eEffectAttribute
 {
-    Velocity = 1 << 0,
-    Overlap = 1 << 1,
-    PostEffect = 1 << 2,
+    Duration = 1 << 0,
+    Velocity = 1 << 1,
+    Overlap = 1 << 2,
+    PostEffect = 1 << 3,
 }
 public enum ePostEffectType
 {

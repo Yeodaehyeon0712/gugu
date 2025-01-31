@@ -6,24 +6,22 @@ public class BaseEffect : PoolingObject
 {
     #region Fields
     //Effect Fields
-    public bool IsActive => isActive;
-    bool isActive;
     public long Index => index;
     [SerializeField] protected long index;
-    [SerializeField] float elapsedTime;
-    [SerializeField] protected float durationTime;
+    bool resetParent;//이거 set 어디선가 해야함 . 일단 보류
 
     //Builder Fields
     [Space]
     [Header("Builder Attribute")]
     [SerializeField] eEffectAttribute builderAttribute;
 
+    [Space][Header("Duration")]
+    [SerializeField] protected float durationTime;
+    [SerializeField] float elapsedTime;
+
     [Header("Velocity")]
     [SerializeField] float speed;
-    Vector2 initPosition;
-    Vector2 targetPosition;
-    float elapsedLerpTime;
-    float distance;
+    Vector3 direction;
 
     [Header("Overlap")]
     [SerializeField] eActorType overlapTargetType;
@@ -36,66 +34,54 @@ public class BaseEffect : PoolingObject
     #region Effect Mehtod
     protected override void ReturnToPool()
     {
-        ActorManager.Instance.RegisterActorPool(worldID,0, objectID);
+        EffectManager.Instance.RegisterToEffectPool(worldID,0, objectID,resetParent);
     }
     public virtual BaseEffect Initialize(long index, int objectID)
     {
         base.Initialize(objectID);
         this.index = index;
-        //this.soundIndex = DataManager.EffectTable[index].SoundIndex;
         return this;
     }
     public override void Spawn(uint worldID,Vector2 position)
     {
-        isActive = true;
-        //this.durationTime = durationTime;
-        elapsedTime = 0;
-
-        //SoundManager.Instance.PlaySFXMusic(soundIndex);
         OnEventChainEffect(eEffectChainCondition.Enable);
         base.Spawn(worldID, position);
     }
 
-    public virtual void Disable(bool isRegist=true)
+    public virtual void Disable()
     {
-        if (isActive==false) return;
-
-        isActive = false;
         builderAttribute = 0;
-        
         OnEventChainEffect(eEffectChainCondition.Disable);
         Clean(2.5f);
     }
     void OnEventChainEffect(eEffectChainCondition chain)
     {
         //if (DataManager.EffectTable[index].EffectChainDictionary == null) return;
-
         //if (DataManager.EffectTable[index].EffectChainDictionary.ContainsKey(chain) == false) return;
 
         //int effectKey = DataManager.EffectTable[index].EffectChainDictionary[chain];
-        //EffectManager.Instance.SpawnEffect(effectKey, transform.position, DataManager.EffectTable[_index].EffectChainDurationDictionary[chain]);
+        //EffectManager.Instance.SpawnEffect(effectKey, transform.position, DataManager.EffectTable[index].EffectChainDurationDictionary[chain]);
     }
     #endregion
 
     #region Unity API
     protected virtual void Update()
     {
-        if (isActive == false|| durationTime == 0) return;
+        if ((builderAttribute & eEffectAttribute.Duration) == 0) return;
 
         elapsedTime += Time.deltaTime;
-
         if (elapsedTime > durationTime)
             Disable();
     }
     private void FixedUpdate()
     {
-        if (isActive==false|| TimeManager.Instance.IsActiveTimeFlow == false) return;
+        if ((builderAttribute & eEffectAttribute.Velocity) == 0) return;
 
-        OnUpdateVelocity();
+        OnUpdateVelocity(TimeManager.DeltaTime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsActive == false || (builderAttribute & eEffectAttribute.Overlap) == 0) return;
+        if ((builderAttribute & eEffectAttribute.Overlap) == 0) return;
 
         Debug.Log("충돌");
         //if (actor.CharacterType == _overlapTargetType && actor.FSMState != eFSMState.Death)
@@ -116,24 +102,26 @@ public class BaseEffect : PoolingObject
     }
     #endregion
 
-    #region Builder - Velocity
-    Vector3 direction;
-    public BaseEffect SetVelocity(Transform Target)//추후에 Actor로 변경
+    #region Builder - Duration
+    public BaseEffect SetDuration(float durationTime)
     {
-        builderAttribute |= eEffectAttribute.Velocity;
-        direction = (Target.position- transform.position).normalized;
+        builderAttribute |= eEffectAttribute.Duration;
+        this.durationTime = durationTime;
+        this.elapsedTime = 0;
         return this;
     }
-    void OnUpdateVelocity()
-    {
-        if ((builderAttribute & eEffectAttribute.Velocity) == 0) return;
+    #endregion
 
-        //if (_target.FSMState == eFSMState.Death)
-        //{
-        //    Disable();
-        //    return;
-        //}
-        transform.position  += (direction * speed * Time.fixedDeltaTime);
+    #region Builder - Velocity
+    public BaseEffect SetVelocity(Actor Target)//추후에 Actor로 변경
+    {
+        builderAttribute |= eEffectAttribute.Velocity;
+        direction = (Target.transform.position- transform.position).normalized;
+        return this;
+    }
+    void OnUpdateVelocity(float deltaTime)
+    {
+        transform.position  += (direction * speed * deltaTime);
     }
     #endregion
 
@@ -156,7 +144,6 @@ public class BaseEffect : PoolingObject
     }
     void OnPostEffect() 
     {
-        Debug.Log("qkftod");
         switch (postEffectType)
         {
             case ePostEffectType.None:
