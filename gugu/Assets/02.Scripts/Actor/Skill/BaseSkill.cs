@@ -16,9 +16,10 @@ public abstract class BaseSkill
     //Variable Fields
     protected Actor owner;
     protected eSkillState state;
-    protected float elapsedTime=0;
+    float elapsedTime=0;
+    public uint SkillLevel => level;
+    protected uint level;
     public bool isMaxLevel => ( level >= GameConst.MaxSkillLevel );
-    protected int level=1;
     #endregion
 
     #region Skill Method
@@ -32,6 +33,7 @@ public abstract class BaseSkill
         this.owner = owner;
         state = eSkillState.Cooltime;
         elapsedTime = isResetTime ? 0 : skillData.CoolTime;
+        level = 1;
         OnRegister();
         return this;
     }
@@ -43,20 +45,34 @@ public abstract class BaseSkill
         level = 1;
         OnUnRegister();
     }
-    public void UpdateSkill(float deltaTime)
-    {
-        elapsedTime += deltaTime;
-
-        if (state == eSkillState.Cooltime && elapsedTime >= skillData.CoolTime)
-            UseSkill();
-        else if (state == eSkillState.Using && elapsedTime >= skillData.DurationTime)
-            StopSkill();
-    }
     void UseSkill()
     {
         state = eSkillState.Using;
         elapsedTime = 0;
-        UsingSequenceAsync().Forget();        
+        OnUse();
+    }
+    public void UpdateSkill(float deltaTime)
+    {
+        elapsedTime += deltaTime;
+
+        if (state == eSkillState.Using)
+        {
+            if (elapsedTime >= skillData.DurationTime)
+            {
+                StopSkill();
+            }
+            else
+            {
+                OnUpdate();
+            }
+        }
+        else if (state == eSkillState.Cooltime)
+        {
+            if (elapsedTime >= skillData.DurationTime)
+            {
+                UseSkill();
+            }
+        }
     }
     void StopSkill()
     {
@@ -64,13 +80,10 @@ public abstract class BaseSkill
         elapsedTime = 0;
         OnStop();
     }
-    //이 부분은 고민 필요
-    public void LevelUpSkill(bool isResetTime=false)
+    public void LevelUpSkill()
     {
         if (isMaxLevel) return;
-        Mathf.Min(++level, GameConst.MaxSkillLevel);
-        state = eSkillState.Cooltime;
-        elapsedTime = isResetTime ? 0:skillData.CoolTime;
+        level = System.Math.Min(level + 1, GameConst.MaxSkillLevel);
         OnLevelUp();
     }
     #endregion
@@ -78,8 +91,9 @@ public abstract class BaseSkill
     #region Abstract Method
     protected virtual void OnRegister() { }
     protected virtual void OnUnRegister(){}
-    protected virtual void OnStop(){}
+    protected virtual void OnUse() { }
+    protected virtual void OnUpdate() { }
+    protected virtual void OnStop() { }
     protected virtual void OnLevelUp(){}
-    protected abstract UniTask UsingSequenceAsync();
     #endregion
 }

@@ -16,6 +16,7 @@ public abstract class StageFramework
     {
         var actor = await ActorManager.Instance.SpawnCharacter(1, Vector3.zero);
         Player.PlayerCharacter = actor;
+        Player.RegisterSkill(DataManager.CharacterTable[Player.PlayerCharacter.Index].DefaultSkillKey);
         //¹è°æ
         BackgroundManager.Instance.ShowBackgroundByStage(DataManager.StageTable[stageIndex].BackgroundPath);
         //UI

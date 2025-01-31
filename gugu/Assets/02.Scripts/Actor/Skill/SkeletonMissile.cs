@@ -9,29 +9,4 @@ public class SkeletonMissile :BaseSkill
     public SkeletonMissile(long index, SkillData skillData) : base(index, skillData)
     {
     }
-
-    protected override void OnUnRegister()
-    {
-        
-    }
-
-    protected override void OnLevelUp()
-    {
-        
-    }
-
-    protected override void OnStop()
-    {
-        
-    }
-
-    protected override async UniTask UsingSequenceAsync()
-    {
-        await UniTask.Yield();
-    }
-
-    protected override void OnRegister()
-    {
-        
-    }
 }

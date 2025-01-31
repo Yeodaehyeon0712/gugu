@@ -18,8 +18,9 @@ public class RotateBlade : BaseSkill
     {
 
     }
-    void GenerateBlade(int level)
+    void GenerateBlade(uint level)
     {
+        Debug.Log("칼날 생성");
         var prefab = Resources.Load<GameObject>("Blade");
         int bladeCount = skillData.GetIntCoefficient(level);
 
@@ -52,16 +53,21 @@ public class RotateBlade : BaseSkill
         bladeParent.localPosition = Vector3.zero;
         bladeParent.localRotation = Quaternion.identity;
         GenerateBlade(level);
+        Debug.Log("등록 완료");
     }
-    protected override async UniTask UsingSequenceAsync()
+    protected override void OnUnRegister()
+    {
+        //GameObject.Destroy(bladeParent);
+    }
+    protected override void OnUse()
     {
         bladeParent.gameObject.SetActive(true);
-        while (state == eSkillState.Using)
-        {
-            await UniTask.Yield();
-            bladeParent.transform.Rotate(Vector3.forward, rotationAnglePerSec * Time.deltaTime);
-        }
+    } 
+    protected override void OnUpdate()
+    {
+        bladeParent.transform.Rotate(Vector3.forward, rotationAnglePerSec * Time.deltaTime);
     }
+
     protected override void OnStop()
     {
         bladeParent.gameObject.SetActive(false);
@@ -69,10 +75,6 @@ public class RotateBlade : BaseSkill
     protected override void OnLevelUp()
     {
         GenerateBlade(level);
-    }
-    protected override void OnUnRegister()
-    {
-        //GameObject.Destroy(bladeParent);
     }
     #endregion
 }

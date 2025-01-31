@@ -16,7 +16,7 @@ public class SkillComponent : BaseComponent
     //컴포넌트 초기화 직후 불린다 .
     protected override void OnComponentActive()
     {
-        Player.RegisterSkill(DataManager.CharacterTable[owner.Index].DefaultSkillKey);
+        
     }
     protected override void OnComponentInactive()
     {

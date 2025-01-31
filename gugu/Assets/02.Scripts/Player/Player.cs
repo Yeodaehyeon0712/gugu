@@ -26,7 +26,7 @@ public static class Player
     public static void LevelUpSkill(long index)
     {
         if (IngameSkillDic.TryGetValue(index, out var skill) == false || skill.isMaxLevel) return;       
-        skill.LevelUpSkill(false);      
+        skill.LevelUpSkill();      
     }
     public static void ResetSkills()
     {
