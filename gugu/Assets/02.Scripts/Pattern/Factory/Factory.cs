@@ -41,12 +41,12 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
         if (parent != null) 
             spawnObject.transform.SetParent(parent);
 
-        ReSetObject(spawnObject,snapshotID , position);
+        SpawnObject(spawnObject,snapshotID , position);
         spawnedObjectDic.Add(snapshotID, spawnObject);
         return spawnObject;
     }
     protected abstract void InitializeObject(T obj,TType type,long index,int objectID);
-    protected abstract void ReSetObject(T obj,uint worldID,Vector2 position);
+    protected abstract void SpawnObject(T obj,uint worldID,Vector2 position);
     protected abstract (string prefabPath, int objectID) GetResourcePath(TType type,long index);
 
     #endregion

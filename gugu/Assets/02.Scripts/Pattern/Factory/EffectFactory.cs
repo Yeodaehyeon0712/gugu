@@ -10,14 +10,15 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
 
     protected override void CreateObjectPoolDic()
     {
-        objectPool[0] = new Dictionary<int, MemoryPool<BaseEffect>>();
+        for (eEffectType i = eEffectType.None+1; i < eEffectType.End; ++i)
+            objectPool[i] = new Dictionary<int, MemoryPool<BaseEffect>>();
     }
 
     protected override int GetPoolCapacity(eEffectType type)
     {
         return type switch
         {
-            _=>10,
+            _ => 10,
         };
     }
 
@@ -28,7 +29,6 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
 
         switch (type)
         {
-
             default:
                 {
                     var table = DataManager.EffectTable[index];
@@ -45,11 +45,9 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
         obj.Initialize((int)index);
     }
 
-    protected override void ReSetObject(BaseEffect obj,uint worldID, Vector2 position)
+    protected override void SpawnObject(BaseEffect obj,uint worldID, Vector2 position)
     {
         obj.Spawn(worldID, position);
     }
-
-    // Start is called before the first frame update
 
 }

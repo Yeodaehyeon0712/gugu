@@ -56,7 +56,7 @@ public class ActorFactory : Factory<Actor,eActorType>
         obj.Initialize(type, index, objectID);
     }
 
-    protected override void ReSetObject(Actor obj, uint worldID, Vector2 position)
+    protected override void SpawnObject(Actor obj, uint worldID, Vector2 position)
     {
         obj.Spawn(worldID,position);
     }
