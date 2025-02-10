@@ -10,7 +10,7 @@ public class RotateBlade : BaseSkill
     Transform bladeParent;
     float rotateRadius = 1.5f;
     float rotationAnglePerSec = 30f;
-    List<GameObject> bladeList = new List<GameObject>();
+    List<BaseEffect> bladeList = new List<BaseEffect>();
     #endregion
 
     #region Init Method
@@ -18,18 +18,38 @@ public class RotateBlade : BaseSkill
     {
 
     }
-    void GenerateBlade(uint level)
-    {
-        Debug.Log("칼날 생성");
-        var prefab = Resources.Load<GameObject>("Blade");
-        int bladeCount = skillData.GetIntCoefficient(level);
+    //void GenerateBlade(uint level)
+    //{
+    //    Debug.Log("칼날 생성");
+    //    var prefab = Resources.Load<GameObject>("Blade");
+    //    int bladeCount = skillData.GetIntCoefficient(level);
 
+    //    while (bladeList.Count < bladeCount)
+    //    {
+    //        var newBlade = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, bladeParent);
+    //        bladeList.Add(newBlade);
+    //    }
+
+    //    var angleInterval = (Mathf.PI * 2 / bladeCount);
+
+    //    for (int i = 0; i < bladeList.Count; i++)
+    //    {
+    //        float targetAngle = i * angleInterval;
+    //        var angleIntervalInDegrees = targetAngle * Mathf.Rad2Deg - 90f;
+    //        Debug.Log("A" + angleIntervalInDegrees);
+    //        bladeList[i].transform.localRotation = Quaternion.Euler(0, 0, angleIntervalInDegrees);
+    //        bladeList[i].transform.localPosition = new Vector3(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * rotateRadius;
+    //    }
+    //    //여기서 생성하는 칼날은 이펙트로 생성, 데미지를 심어준다 .레벨업 하면 바로 ... 
+    //}
+    async UniTask GenerateBlade()
+    {
+        int bladeCount = skillData.GetIntCoefficient(level);
         while (bladeList.Count < bladeCount)
         {
-            var newBlade = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, bladeParent);
-            bladeList.Add(newBlade);
+            var blade = await EffectManager.Instance.SpawnEffect(1, Vector3.zero, bladeParent);
+            bladeList.Add(blade);
         }
-
         var angleInterval = (Mathf.PI * 2 / bladeCount);
 
         for (int i = 0; i < bladeList.Count; i++)
@@ -40,9 +60,7 @@ public class RotateBlade : BaseSkill
             bladeList[i].transform.localRotation = Quaternion.Euler(0, 0, angleIntervalInDegrees);
             bladeList[i].transform.localPosition = new Vector3(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * rotateRadius;
         }
-        //여기서 생성하는 칼날은 이펙트로 생성, 데미지를 심어준다 .레벨업 하면 바로 ... 
     }
-
     #endregion
 
     #region Skill Method
@@ -52,11 +70,15 @@ public class RotateBlade : BaseSkill
         bladeParent.SetParent(owner.transform);
         bladeParent.localPosition = Vector3.zero;
         bladeParent.localRotation = Quaternion.identity;
-        GenerateBlade(level);
+        GenerateBlade().Forget();
         Debug.Log("등록 완료");
     }
     protected override void OnUnRegister()
     {
+        foreach(var a in bladeList)
+        {
+            a.Disable();
+        }
         //GameObject.Destroy(bladeParent);
     }
     protected override void OnUse()
@@ -74,7 +96,7 @@ public class RotateBlade : BaseSkill
     }
     protected override void OnLevelUp()
     {
-        GenerateBlade(level);
+        GenerateBlade().Forget();
     }
     #endregion
 }
