@@ -46,11 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fe4e72570ae20241aad0b8c893edd0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHP: 0
   skinComponent:
-    componentType: 0
-    isActive: 0
-    owner: {fileID: 0}
-  stat: {fileID: 0}
+    useUpdate: 0
+  controllerComponent:
+    useUpdate: 0
 --- !u!50 &686986988274721081
 Rigidbody2D:
   serializedVersion: 4
@@ -188,7 +188,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}

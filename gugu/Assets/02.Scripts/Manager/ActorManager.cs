@@ -67,13 +67,13 @@ public class ActorManager : TSingletonMono<ActorManager>
             if (GetSpawnedActors.ContainsKey(attackHandler.TargetID)==false)
                 continue;
 
-            //if (GetSpawnedActors[attackHandler.TargetID].FSMState != eFSMState.Death)
-            //{
-            //    if (attackHandler.Damage >= 0)
-            //        GetSpawnedActors[attackHandler.TargetID].Hit(ref attackHandler);
-            //    else
-            //        GetSpawnedActors[attackHandler.TargetID].Recovery(ref attackHandler);
-            //}
+            if (GetSpawnedActors[attackHandler.TargetID].ActorState != eActorState.Death)
+            {
+                if (attackHandler.Damage >= 0)
+                    GetSpawnedActors[attackHandler.TargetID].Hit(in attackHandler);
+                else
+                    GetSpawnedActors[attackHandler.TargetID].Recovery(ref attackHandler);
+            }
         }
     }
     #endregion

@@ -18,36 +18,14 @@ public class RotateBlade : BaseSkill
     {
 
     }
-    //void GenerateBlade(uint level)
-    //{
-    //    Debug.Log("칼날 생성");
-    //    var prefab = Resources.Load<GameObject>("Blade");
-    //    int bladeCount = skillData.GetIntCoefficient(level);
-
-    //    while (bladeList.Count < bladeCount)
-    //    {
-    //        var newBlade = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity, bladeParent);
-    //        bladeList.Add(newBlade);
-    //    }
-
-    //    var angleInterval = (Mathf.PI * 2 / bladeCount);
-
-    //    for (int i = 0; i < bladeList.Count; i++)
-    //    {
-    //        float targetAngle = i * angleInterval;
-    //        var angleIntervalInDegrees = targetAngle * Mathf.Rad2Deg - 90f;
-    //        Debug.Log("A" + angleIntervalInDegrees);
-    //        bladeList[i].transform.localRotation = Quaternion.Euler(0, 0, angleIntervalInDegrees);
-    //        bladeList[i].transform.localPosition = new Vector3(Mathf.Cos(targetAngle), Mathf.Sin(targetAngle)) * rotateRadius;
-    //    }
-    //    //여기서 생성하는 칼날은 이펙트로 생성, 데미지를 심어준다 .레벨업 하면 바로 ... 
-    //}
     async UniTask GenerateBlade()
     {
         int bladeCount = skillData.GetIntCoefficient(level);
         while (bladeList.Count < bladeCount)
         {
             var blade = await EffectManager.Instance.SpawnEffect(1, Vector3.zero, bladeParent);
+            var damage = 100 * skillData.GetCoefficient(level);//이건 다시 해야해
+            blade.SetOverlapEvent(eActorType.Enemy,owner.WorldID,damage,true);
             bladeList.Add(blade);
         }
         var angleInterval = (Mathf.PI * 2 / bladeCount);

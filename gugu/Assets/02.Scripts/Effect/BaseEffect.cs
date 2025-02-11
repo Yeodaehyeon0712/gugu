@@ -25,6 +25,9 @@ public class BaseEffect : PoolingObject
 
     [Header("Overlap")]
     [SerializeField] eActorType overlapTargetType;
+    [SerializeField] uint casterID;
+    [SerializeField] double damage;
+    [SerializeField] bool isCritical;
 
     [Header("Post Effect")]
     [SerializeField]ePostEffectType postEffectType;
@@ -34,7 +37,7 @@ public class BaseEffect : PoolingObject
     #region Effect Mehtod
     protected override void ReturnToPool()
     {
-        EffectManager.Instance.RegisterToEffectPool(worldID,0, objectID,resetParent);
+        EffectManager.Instance.RegisterToEffectPool(worldID,eEffectType.Effect, objectID,resetParent);
     }
     public virtual BaseEffect Initialize(long index, int objectID)
     {
@@ -82,19 +85,22 @@ public class BaseEffect : PoolingObject
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((builderAttribute & eEffectAttribute.Overlap) == 0) return;
+        var actor = collision.GetComponentInParent<Actor>();
 
-        Debug.Log("Ãæµ¹");
-        //if (actor.CharacterType == _overlapTargetType && actor.FSMState != eFSMState.Death)
-        //{
-        //    AttackHandler attackHandler = new AttackHandler(_casterID, actor.WorldID, _damage, _isCritical);
-        //    ActorManager.Instance.PushAttackHandler = attackHandler;
-        //    OnEventChainEffect(eEffectChainCondition.Overlap);
-        //    OverlapChainEvent?.Invoke();
-        //    if (_postEffectType != eMissilePostEffectType.None)
-        //        OnPostEffect(_casterID, actor);
+        if (actor == null) return;
 
-        //    Disable();
-        //}
+        if(actor.ActorType==overlapTargetType&&actor.ActorState!=eActorState.Death)
+        {
+            AttackHandler attackHandler = new AttackHandler(casterID, actor.WorldID, damage, isCritical);
+            ActorManager.Instance.PushAttackHandler = attackHandler;
+
+            OnEventChainEffect(eEffectChainCondition.Overlap);
+            //OverlapChainEvent?.Invoke();
+            if (postEffectType != ePostEffectType.None)
+                OnPostEffect();
+
+            Disable();
+        }
         if ((builderAttribute & eEffectAttribute.PostEffect) != 0) 
             OnPostEffect();
 
@@ -126,10 +132,13 @@ public class BaseEffect : PoolingObject
     #endregion
 
     #region Bulider - Overlap
-    public BaseEffect SetOverlapEvent(eActorType targetType)
+    public BaseEffect SetOverlapEvent(eActorType targetType,uint casterID, double damage,bool isCritical)
     {
-        builderAttribute |= eEffectAttribute.Overlap;       
+        builderAttribute |= eEffectAttribute.Overlap;
         overlapTargetType = targetType;
+        this.casterID = casterID;
+        this.damage = damage;
+        this.isCritical = isCritical;
         return this;
     }
     #endregion
