@@ -92,7 +92,9 @@ public enum eLanguage
 public enum eEffectType
 {
     None,
-    Effect,
+    Projectile,
+    Crash,
+    Shape,//To Do :추후 더 좋은 이름으로 변경 하자 
     End
 }
 public enum eEffectChainCondition

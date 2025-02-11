@@ -8,6 +8,8 @@ public class BaseEffect : PoolingObject
     //Effect Fields
     public long Index => index;
     [SerializeField] protected long index;
+    public eEffectType EffectType=>type;
+    [SerializeField]protected eEffectType type;
     bool resetParent;//이거 set 어디선가 해야함 . 일단 보류
 
     //Builder Fields
@@ -37,11 +39,12 @@ public class BaseEffect : PoolingObject
     #region Effect Mehtod
     protected override void ReturnToPool()
     {
-        EffectManager.Instance.RegisterToEffectPool(worldID,eEffectType.Effect, objectID,resetParent);
+        EffectManager.Instance.RegisterToEffectPool(worldID,type, objectID,resetParent);
     }
-    public virtual BaseEffect Initialize(long index, int objectID)
+    public virtual BaseEffect Initialize(eEffectType type,long index, int objectID)
     {
         base.Initialize(objectID);
+        this.type = type;
         this.index = index;
         return this;
     }
@@ -89,22 +92,19 @@ public class BaseEffect : PoolingObject
 
         if (actor == null) return;
 
-        if(actor.ActorType==overlapTargetType&&actor.ActorState!=eActorState.Death)
-        {
-            AttackHandler attackHandler = new AttackHandler(casterID, actor.WorldID, damage, isCritical);
-            ActorManager.Instance.PushAttackHandler = attackHandler;
+        if (actor == null || actor.ActorType != overlapTargetType || actor.ActorState == eActorState.Death)
+            return;
 
-            OnEventChainEffect(eEffectChainCondition.Overlap);
-            //OverlapChainEvent?.Invoke();
-            if (postEffectType != ePostEffectType.None)
-                OnPostEffect();
+        AttackHandler attackHandler = new AttackHandler(casterID, actor.WorldID, damage, isCritical);
+        ActorManager.Instance.PushAttackHandler = attackHandler;
 
-            Disable();
-        }
-        if ((builderAttribute & eEffectAttribute.PostEffect) != 0) 
+        OnEventChainEffect(eEffectChainCondition.Overlap);
+        //OverlapChainEvent?.Invoke();
+        if (((builderAttribute&eEffectAttribute.PostEffect)!=0) && (postEffectType != ePostEffectType.None))
             OnPostEffect();
 
-        Disable();
+        if (type == eEffectType.Projectile)
+            Disable();
     }
     #endregion
 
