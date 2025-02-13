@@ -10,7 +10,6 @@ public class BaseEffect : PoolingObject
     [SerializeField] protected long index;
     public eEffectType EffectType=>type;
     [SerializeField]protected eEffectType type;
-    bool resetParent;//이거 set 어디선가 해야함 . 일단 보류
 
     //Builder Fields
     [Space]
@@ -39,7 +38,7 @@ public class BaseEffect : PoolingObject
     #region Effect Mehtod
     protected override void ReturnToPool()
     {
-        EffectManager.Instance.RegisterToEffectPool(worldID,type, objectID,resetParent);
+        EffectManager.Instance.RegisterToEffectPool(worldID,type, objectID);
     }
     public virtual BaseEffect Initialize(eEffectType type,long index, int objectID)
     {

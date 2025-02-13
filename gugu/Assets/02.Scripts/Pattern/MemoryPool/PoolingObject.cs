@@ -9,6 +9,8 @@ public abstract class PoolingObject : MonoBehaviour
     protected uint worldID;
     public int ObjectID { get=>objectID; set=>objectID=value; }
     protected int objectID;
+    public bool ResetParent => resetParent;
+    protected bool resetParent;
 
     bool isClean;
     #endregion
@@ -25,6 +27,11 @@ public abstract class PoolingObject : MonoBehaviour
         isClean = false;
         gameObject.SetActive(true);
     }
+    public void SetParent(Transform parent)
+    {
+        resetParent = true;
+        transform.SetParent(parent);
+    }
     public void Clean(float time)
     {
         if (time == 0f) OnClean();
@@ -37,6 +44,7 @@ public abstract class PoolingObject : MonoBehaviour
     protected virtual void OnClean()
     {
         isClean = true;
+        resetParent = false;
         gameObject.SetActive(false);
         ReturnToPool();
     }

@@ -39,7 +39,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
             InitializeObject(spawnObject,type,index,resourceTuple.objectID);
         }
         if (parent != null) 
-            spawnObject.transform.SetParent(parent);
+            spawnObject.SetParent(parent);
 
         SpawnObject(spawnObject,snapshotID , position);
         spawnedObjectDic.Add(snapshotID, spawnObject);
@@ -66,7 +66,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     {
         return objectPool[type][objectID].GetItem();
     }
-    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID,bool resetParent=false)
+    public void RegisterToObjectPool(uint targetWorldID, TType type, int objectID)
     {
         if (spawnedObjectDic.ContainsKey(targetWorldID) == false) return;
 
@@ -74,7 +74,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
         spawnedObjectDic.Remove(targetWorldID);
         objectPool[type][objectID].Register(obj);
 
-        if (resetParent == true)
+        if (obj.ResetParent == true)
             obj.transform.SetParent(instanceRoot);
     }
     #endregion
