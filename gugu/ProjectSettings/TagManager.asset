@@ -12,13 +12,13 @@ TagManager:
   - Water
   - UI
   - SpawnArea
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Character
+  - CharacterTrigger
+  - Enemy
+  - EnemyTrigger
+  - Effect
+  - Item
+  - Obstacle
   - 
   - 
   - 
