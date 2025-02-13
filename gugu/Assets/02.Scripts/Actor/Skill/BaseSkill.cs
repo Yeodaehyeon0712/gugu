@@ -68,7 +68,7 @@ public abstract class BaseSkill
         }
         else if (state == eSkillState.Cooltime)
         {
-            if (elapsedTime >= skillData.DurationTime)
+            if (elapsedTime >= skillData.CoolTime)
             {
                 UseSkill();
             }
