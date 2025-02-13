@@ -88,10 +88,8 @@ public class BaseEffect : PoolingObject
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((builderAttribute & eEffectAttribute.Overlap) == 0) return;
+
         var actor = collision.GetComponentInParent<Actor>();
-
-        if (actor == null) return;
-
         if (actor == null || actor.ActorType != overlapTargetType || actor.ActorState == eActorState.Death)
             return;
 
