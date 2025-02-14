@@ -70,7 +70,7 @@ public abstract class Actor : PoolingObject
     }
     protected override void OnClean()
     {
-        ActorState = eActorState.Inactive;
+        ActorState = eActorState.Clean;
         base.OnClean();
     }
     public virtual void Hit(in AttackHandler attackHandler)
@@ -92,19 +92,17 @@ public abstract class Actor : PoolingObject
     {
         switch (state)
         {
-
             case eActorState.Battle:
                 ActiveComponent();
                 currentHP = statusComponent.GetStatus(eStatusType.MaxHP);
                 break;
 
             case eActorState.Death:
+                InactiveComponent();
                 currentHP = 0;
-                Skin.SetAnimationTrigger(eCharacterAnimState.Death);
                 break;
 
-            case eActorState.Inactive:
-                InactiveComponent();
+            case eActorState.Clean:
                 break;
         }
     }

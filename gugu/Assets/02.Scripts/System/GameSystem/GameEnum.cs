@@ -12,7 +12,7 @@ public enum eActorState
     None,
     Battle,
     Death,
-    Inactive,
+    Clean,
 }
 public enum eComponent
 {
