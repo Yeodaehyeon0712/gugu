@@ -7,7 +7,7 @@ public class SkinComponent : BaseComponent
     #region Fields
     SpriteRenderer renderer;//아마 안쓸듯 ..
     Animator animator;
-    BoxCollider2D collider;
+    CircleCollider2D collider;
 
     //Animator Hash
     int speedHash;
@@ -25,7 +25,7 @@ public class SkinComponent : BaseComponent
         renderer = skin.GetComponent<SpriteRenderer>();
         animator = skin.GetComponent<Animator>();
         animator.runtimeAnimatorController = controller;
-        collider = skin.GetComponent<BoxCollider2D>();
+        collider = skin.GetComponent<CircleCollider2D>();
 
         speedHash = Animator.StringToHash("Speed");
         animatorHashDic.Add(eCharacterAnimState.Move, speedHash);

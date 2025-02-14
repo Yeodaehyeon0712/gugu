@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 4535808117918179286}
   - component: {fileID: 4535808117918179285}
   - component: {fileID: 4535808117918179284}
-  - component: {fileID: 4060829192599379046}
+  - component: {fileID: 6317224400977238927}
   m_Layer: 7
   m_Name: Skin
   m_TagString: Untagged
@@ -164,8 +164,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &4060829192599379046
-BoxCollider2D:
+--- !u!58 &6317224400977238927
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -178,18 +178,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.1111112}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.1111112}
-  m_EdgeRadius: 0
+  m_Radius: 0.5555556
 --- !u!1 &4535808119375030506
 GameObject:
   m_ObjectHideFlags: 0
