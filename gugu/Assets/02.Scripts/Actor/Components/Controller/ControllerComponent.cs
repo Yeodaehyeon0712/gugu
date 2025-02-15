@@ -25,5 +25,10 @@ public class ControllerComponent : BaseComponent
        MoveActor(fixedDeltaTime);
     }
     protected virtual void MoveActor(float fixedDeltaTime) { }
+    public void TeleportActor(Vector2 value)
+    {
+        rigidBody.position = value;
+        rigidBody.velocity = Vector2.zero; 
+    }
     #endregion
 }

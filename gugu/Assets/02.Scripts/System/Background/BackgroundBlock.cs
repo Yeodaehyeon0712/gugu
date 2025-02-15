@@ -12,9 +12,9 @@ public class BackgroundBlock : RepositionObject
     #endregion
 
     #region Background Method
-    public void Initialize(Transform spawnArea,int index)
+    public void Initialize(Transform repositionArea, int index)
     {
-        base.Initialize(spawnArea);
+        base.Initialize(repositionArea);
         apothem = GameConst.BgBlockSideSize/2;
         tilemap = GetComponent<Tilemap>();
         transform.position = GameConst.BgBlockPositions[index] * apothem;
@@ -38,11 +38,11 @@ public class BackgroundBlock : RepositionObject
     #endregion
 
     #region Reposition Method
-    protected override void Reposition()
+    protected override void OnReposition()
     {
-        Vector2 spawnAreaPos = spawnArea.position; 
+        Vector2 repositionAreaPos = repositionArea.position; 
         Vector2 myPos = transform.position;
-        Vector2 diff = spawnAreaPos - myPos;
+        Vector2 diff = repositionAreaPos - myPos;
 
         bool isHorizontal = Mathf.Abs(diff.x) > Mathf.Abs(diff.y);
         Vector2 movementDirection = isHorizontal ? Vector2.right : Vector2.up;
