@@ -30,10 +30,16 @@ public static class Player
     }
     public static void ResetSkills()
     {
+        var keysToRemove = new List<long>(); 
         foreach (var item in IngameSkillDic)
         {
             item.Value.UnregisterSkill();
-            IngameSkillDic.Remove(item.Key);
+            keysToRemove.Add(item.Key); 
+        }
+
+        foreach (var key in keysToRemove)
+        {
+            IngameSkillDic.Remove(key);
         }
     }
     #endregion
