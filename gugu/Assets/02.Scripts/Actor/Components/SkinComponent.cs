@@ -61,5 +61,9 @@ public class SkinComponent : BaseComponent
         currentAnim = nextState;
         animator.SetFloat(animatorHashDic[currentAnim], value);
     }
+    public void SetSkinColor(Color color)
+    {
+        renderer.color = color;
+    }
     #endregion
 }

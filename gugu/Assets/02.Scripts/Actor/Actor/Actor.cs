@@ -15,6 +15,8 @@ public abstract class Actor : PoolingObject
         set { state = value; OnStateChange(state); }
     }
     protected eActorState state;
+    protected LayerMask targetLayer;
+
 
     //Status Fields
     [SerializeField] public float SetHP { set => currentHP = value; }
@@ -83,6 +85,16 @@ public abstract class Actor : PoolingObject
         else
             Skin.SetAnimationTrigger(eCharacterAnimState.Hit);
     }
+    public virtual void Hit(double damage)
+    {
+        currentHP -= (float)damage;
+
+
+        if (currentHP <= 0f)
+            Death();
+        else
+            Skin.SetAnimationTrigger(eCharacterAnimState.Hit);
+    }
     public void Recovery(ref AttackHandler attackHandler)
     {
         currentHP = System.Math.Clamp(currentHP - (float)attackHandler.Damage, 0, statusComponent.GetStatus(eStatusType.MaxHP));
@@ -105,6 +117,10 @@ public abstract class Actor : PoolingObject
             case eActorState.Clean:
                 break;
         }
+    }
+    protected bool CheckTargetLayer(int layer)
+    {
+        return (targetLayer.value & (1 << layer)) != 0;
     }
     #endregion
 
