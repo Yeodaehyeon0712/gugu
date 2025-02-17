@@ -42,7 +42,7 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
 
     protected override void InitializeObject(BaseEffect obj, eEffectType type, long index, int objectID)
     {
-        obj.Initialize((int)index);
+        obj.Initialize(type,(int)index,objectID);
     }
 
     protected override void SpawnObject(BaseEffect obj,uint worldID, Vector2 position)

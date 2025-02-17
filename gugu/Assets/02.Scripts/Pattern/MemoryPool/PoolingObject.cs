@@ -16,7 +16,7 @@ public abstract class PoolingObject : MonoBehaviour
     #endregion
 
     #region Pooling Method
-    public virtual void Initialize(int objectID)
+    protected void Initialize(int objectID)
     {
         this.objectID = objectID;
     }
