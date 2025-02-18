@@ -25,5 +25,12 @@ public class CameraManager : TSingletonMono<CameraManager>
         var mainCam = cameraDic[eCameraType.MainCamera] as MainCamera;
         mainCam.RegisterFollowTarget(target);
     }
+    public BaseCamera GetCamera(eCameraType cameraType)
+    {
+        if (cameraDic.ContainsKey(cameraType)==false)
+            CreateCamera(cameraType);
+
+        return cameraDic[cameraType];
+    }
 }
 

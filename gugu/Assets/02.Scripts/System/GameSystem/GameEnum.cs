@@ -194,4 +194,9 @@ enum LetterBoxDirection
     Top,
     Bottom,
 }
+public enum eFieldUI
+{
+    HPBar,
+    DamageText,
+}
 #endregion

@@ -19,7 +19,7 @@ public abstract class Actor : PoolingObject
 
 
     //Status Fields
-    [SerializeField] public float SetHP { set => currentHP = value; }
+    [SerializeField] public float CurrentHP { get => currentHP; set => currentHP = value; }
     [SerializeField] protected float currentHP;
 
     //Component Fields

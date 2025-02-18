@@ -22,6 +22,8 @@ public abstract class StageFramework
         //UI
         UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.BattleState);
         UIManager.Instance.ControllerUI.AddObserver(actor.Controller as CharacterControllerComponent);
+
+        UIManager.Instance.FieldUI.SetHPBar(actor);
         //À½¾Ç
 
         //Ä«¸Þ¶ó

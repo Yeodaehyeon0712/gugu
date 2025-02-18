@@ -6,8 +6,10 @@ using UnityEngine.UI;
 public class UIManager : TSingletonMono<UIManager>
 {
     #region Fields
-    GameUI _gameUI;
     public GameUI GameUI => _gameUI;
+    GameUI _gameUI;
+    public FieldUI FieldUI => fieldUI;
+    FieldUI fieldUI;
 
     //Battle Scene UI
     public ControllerUI ControllerUI => _gameUI.Controller;
@@ -24,16 +26,25 @@ public class UIManager : TSingletonMono<UIManager>
 
     protected override void OnInitialize()
     {
+        fieldUI = Instantiate(Resources.Load<FieldUI>("UI/FieldUI"), transform);
+        fieldUI.Initialize();
+        InitCanvas(fieldUI, CameraManager.Instance.GetCamera(eCameraType.MainCamera).Camera);
         //To do : Addressable ·Î º¯°æ
         _gameUI = Instantiate(Resources.Load<GameUI>("UI/GameUI"), transform);
-        _gameUI.Initialize();        
+        _gameUI.Initialize();     
         InitCanvas(_gameUI);
         IsLoad = true;
     }
-    void InitCanvas(Component root)
+    void InitCanvas(Component root,Camera targetCamera=null)
     {
         Canvas canvas = root.GetComponent<Canvas>();
         CanvasScaler scaler = root.GetComponent<CanvasScaler>();        
+
+        if(targetCamera!=null)
+        {
+            canvas.worldCamera = targetCamera;
+            canvas.planeDistance = 5;
+        }
 
         if (scaler != null)
         {
