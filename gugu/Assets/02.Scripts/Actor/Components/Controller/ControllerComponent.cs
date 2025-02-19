@@ -30,5 +30,9 @@ public class ControllerComponent : BaseComponent
         rigidBody.position = value;
         rigidBody.velocity = Vector2.zero; 
     }
+    protected override void OnComponentInactive()
+    {
+        rigidBody.velocity = Vector2.zero;
+    }
     #endregion
 }

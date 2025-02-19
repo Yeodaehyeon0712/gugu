@@ -22,6 +22,7 @@ public class CharacterControllerComponent :ControllerComponent,IObserver<Vector2
     }
     protected override void OnComponentInactive()
     {
+        base.OnComponentInactive();
         UIManager.Instance.ControllerUI.RemoveObserver(this);
         CameraManager.Instance.RegisterFollowTarget(null);
         ActorManager.Instance.RegisterSpawnAreaParent(null);

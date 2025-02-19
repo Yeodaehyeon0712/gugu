@@ -19,6 +19,7 @@ public class EnemyControllerComponent :ControllerComponent
     }
     protected override void OnComponentInactive()
     {
+        base.OnComponentInactive();
         target = null;
     }
 
