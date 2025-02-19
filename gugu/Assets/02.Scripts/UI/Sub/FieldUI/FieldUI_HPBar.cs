@@ -22,8 +22,8 @@ public class FieldUI_HPBar : BaseFieldUI
     public void Enable(Actor target)
     {
         this.target = target;
-        pivotTrs = target.transform;//º¸Ãæ
-        //transform.localPosition = pivotTrs.localpPosition+new Vector3(0,35,0);
+        pivotTrs = target.Attachment.GetAttachmentElement(eAttachmentTarget.OverHead).Transform;
+        transform.position = pivotTrs.position;
         OnUpdateHPRate();
         base.Enable();
     }
@@ -55,7 +55,7 @@ public class FieldUI_HPBar : BaseFieldUI
 
         if (transform.position != pivotTrs.position)
         {
-            //transform.position = pivotTrs.position;
+            transform.position = pivotTrs.position;
 
         }
 

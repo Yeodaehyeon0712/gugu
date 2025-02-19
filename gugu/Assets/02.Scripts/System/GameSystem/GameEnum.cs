@@ -48,7 +48,11 @@ public enum eCalculateType
     Flat,
     Percentage
 }
-
+public enum eAttachmentTarget
+{
+    OverHead,    
+    End,
+}
 #endregion
 
 #region Data

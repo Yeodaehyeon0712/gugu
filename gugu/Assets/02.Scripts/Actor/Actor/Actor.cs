@@ -30,6 +30,10 @@ public abstract class Actor : PoolingObject
     [SerializeField] protected StatusComponent statusComponent;
     public ControllerComponent Controller => controllerComponent;
     [SerializeField] protected ControllerComponent controllerComponent;//Controller Must be Init at Last.
+
+    //Attachment Fields
+    public Attachment Attachment => attachment;
+    protected Attachment attachment;
     #endregion
 
     #region Init Method
@@ -38,6 +42,8 @@ public abstract class Actor : PoolingObject
         base.Initialize(objectID);
         this.type = type;
         this.index = index;
+        attachment = GetComponentInChildren<Attachment>();
+        attachment.Initialize();
         InitializeComponent();
     }
     protected override void ReturnToPool()
