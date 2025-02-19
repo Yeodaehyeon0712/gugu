@@ -126,16 +126,17 @@ public class NormalStageFramework : StageFramework
     void CheckStageState()
     {
         //플레이어의 죽음을 체크한다 .
-        //if (Player.PlayerCharacter.FSMState == eFSMState.Death)
-        //{
-        //    _currentContentsResultState = eContentResultState.Defeat;
-        //    StopTimer();
-        //    break;
-        //}
+        if (Player.PlayerCharacter.ActorState == eActorState.Death)
+        {
+            currentStageState = eStageResultState.Defeat;
+            //StopTimer();
+            //break;
+        }
     }
     public void ShowVicotry()
     {
-
+        TimeManager.Instance.IsActiveTimeFlow = false;
+        Debug.Log("tm");
     }
     #endregion
 }
