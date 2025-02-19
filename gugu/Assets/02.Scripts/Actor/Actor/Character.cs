@@ -13,11 +13,13 @@ public class Character : Actor
     #endregion
 
     #region Character Method
+    public override void Initialize(eActorType type, long index, int objectID)
+    {
+        base.Initialize(type,index,objectID);
+        targetLayer = 1<< LayerMask.NameToLayer("Enemy");      
+    }
     protected override void InitializeComponent()
     {
-        //Temp Init
-        targetLayer = 1<< LayerMask.NameToLayer("Enemy");
-
         //Default Component
         skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath));
         statusComponent = new CharacterStatusComponent(this);
@@ -31,19 +33,16 @@ public class Character : Actor
     {
         collisionCount += isCollisonEnter ? 1 : -1;
 
-        if (collisionCount < 0)
-            Debug.Log("문제 발생");
-
         if (collisionCount == (isCollisonEnter ? 1 : 0))
             Skin.SetSkinColor(isCollisonEnter ? Color.red : Color.white);
     }
     #endregion
 
     #region Unity API
-    private void LateUpdate()
-    {
-        hasDamagedThisFrame = false;
-    }
+    //private void LateUpdate()
+    //{
+    //    hasDamagedThisFrame = false;
+    //}
     #endregion
 
     #region Collision Method
@@ -56,13 +55,13 @@ public class Character : Actor
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (CheckTargetLayer(collision.gameObject.layer)==false || hasDamagedThisFrame) return;
+        if (CheckTargetLayer(collision.gameObject.layer)==false /*|| hasDamagedThisFrame*/) return;
 
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        var damage = enemy.Status.GetStatus(eStatusType.MoveSpeed);
+        var damage = enemy.Status.GetStatus(eStatusType.AttackDamage);
 
         Hit(TimeManager.DeltaTime * damage);
-        hasDamagedThisFrame = true;
+        //hasDamagedThisFrame = true;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {

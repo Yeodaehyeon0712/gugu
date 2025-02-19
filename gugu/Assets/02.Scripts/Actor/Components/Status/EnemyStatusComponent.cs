@@ -19,6 +19,8 @@ public class EnemyStatusComponent : StatusComponent
                 return status.HP;
             case eStatusType.MoveSpeed:
                 return status.MoveSpeed;
+            case eStatusType.AttackDamage:
+                return status.AttackDamage;
             default:
                 return 0;
         }

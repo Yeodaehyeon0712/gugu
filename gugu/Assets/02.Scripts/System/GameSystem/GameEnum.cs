@@ -40,6 +40,7 @@ public enum eStatusType
     None,
     MaxHP,
     MoveSpeed,
+    AttackDamage,
     End
 }
 public enum eCalculateType

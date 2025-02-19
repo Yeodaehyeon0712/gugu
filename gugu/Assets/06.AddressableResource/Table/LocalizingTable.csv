@@ -26,5 +26,15 @@ Key,EN,KR
 224,Copon,쿠폰
 225,Support,지원
 226,Privacy Policy,개인정보 처리방침
-1001,Wild Street,야생거리
-1002,Wild Street,야생거리
+1001,Wild Street1,야생거리1
+1002,Wild Street2,야생거리2
+1101,Rotate Blade,회전칼날
+1102,Fire Arrow,불화살
+1201,Summons {0} blades that rotate around,주위를 회전하는 \n{0}개의 회전칼날을 소환
+1202,"Fire Arrow ,,",불화살을 전방으로 발사
+1301,MaxHP,최대 체력
+1302,MoveSpeed,이동 속도
+1303,Attack Damage,공격력
+1331,MaxHP Explanation{0},최대 체력 설명
+1332,MoveSpeed Exp,이동 속도 설명
+1333,AttackDamage Exp,공격력 설명
