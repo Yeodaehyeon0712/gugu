@@ -23,12 +23,12 @@ public class SkillComponent : BaseComponent
         Player.ResetSkills();
     }
     //리스트로 변경하는거 고민해봐 .. 
-    protected override void OnComponentUpdate(float fixedDeltaTime)
+    protected override void OnComponentUpdate(float deltaTime)
     {
         if (Player.IngameSkillDic.Count < 1) return;
 
         foreach (var skill in Player.IngameSkillDic.Values)
-            skill.UpdateSkill(fixedDeltaTime);
+            skill.UpdateSkill(deltaTime);
     }
     #endregion
 

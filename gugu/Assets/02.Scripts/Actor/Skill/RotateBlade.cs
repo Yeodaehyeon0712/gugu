@@ -63,9 +63,9 @@ public class RotateBlade : BaseSkill
     {
         bladeParent.gameObject.SetActive(true);
     } 
-    protected override void OnUpdate()
+    protected override void OnUpdate(float deltaTime)
     {
-        bladeParent.transform.Rotate(Vector3.forward, rotationAnglePerSec * Time.deltaTime);
+        bladeParent.transform.Rotate(Vector3.forward, rotationAnglePerSec * deltaTime);
     }
 
     protected override void OnStop()

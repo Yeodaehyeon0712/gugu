@@ -12,9 +12,12 @@ public class TimeManager : TSingletonMono<TimeManager>
 
     //Time
     public bool IsActiveTimeFlow = true;
+    float elasticTimeScale = 1f;
+
     bool isCurrentFrameTime;
     float deltaTime;
-    float elasticTimeScale = 1f;
+    bool isCurrentFixedFrameTime;
+    float fixedDeltaTime;
 
     public float ElasticTimeScale
     {
@@ -30,20 +33,25 @@ public class TimeManager : TSingletonMono<TimeManager>
 
             Instance.isCurrentFrameTime = true;
 
-            if (Instance.IsActiveTimeFlow==false)               
-                return Instance.deltaTime = 0f;
-
             float accelFactor = /*Player.SnapshotDataProperty.Data.AccelMode ? 2f :*/ 1f;
-            Instance.deltaTime = Time.unscaledDeltaTime * Instance.ElasticTimeScale * accelFactor ;
-
+            Instance.deltaTime = Instance.IsActiveTimeFlow ? (Time.unscaledDeltaTime * Instance.ElasticTimeScale * accelFactor) : 0f;
             return Instance.deltaTime;
+
+
         }
     }
     public static float FixedDeltaTime
     {
         get
         {
-            return Time.fixedDeltaTime * Instance.ElasticTimeScale;
+            if (Instance.isCurrentFixedFrameTime)
+                return Instance.fixedDeltaTime;
+
+            Instance.isCurrentFixedFrameTime = true;
+
+            float accelFactor = /*Player.SnapshotDataProperty.Data.AccelMode ? 2f :*/ 1f;
+            Instance.fixedDeltaTime = Instance.IsActiveTimeFlow ? (Time.fixedDeltaTime* Instance.ElasticTimeScale * accelFactor) : 0f;
+            return Instance.fixedDeltaTime;
         }
     }
     #endregion
@@ -55,12 +63,15 @@ public class TimeManager : TSingletonMono<TimeManager>
     }
     private void Update()
     {
-        isCurrentFrameTime = false;
-
         for (int i = timerList.Count - 1; i >= 0; --i)
         {
             if (timerList[i].NextFrame==false)
                 RemoveTimer = timerList[i];
         }
+    }
+    private void LateUpdate()
+    {
+        isCurrentFrameTime = false;
+        isCurrentFixedFrameTime = false;
     }
 }

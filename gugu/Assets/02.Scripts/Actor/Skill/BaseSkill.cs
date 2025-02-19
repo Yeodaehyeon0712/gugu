@@ -63,7 +63,7 @@ public abstract class BaseSkill
             }
             else
             {
-                OnUpdate();
+                OnUpdate(deltaTime);
             }
         }
         else if (state == eSkillState.Cooltime)
@@ -92,7 +92,7 @@ public abstract class BaseSkill
     protected virtual void OnRegister() { }
     protected virtual void OnUnRegister(){}
     protected virtual void OnUse() { }
-    protected virtual void OnUpdate() { }
+    protected virtual void OnUpdate(float deltaTime) { }
     protected virtual void OnStop() { }
     protected virtual void OnLevelUp(){}
     #endregion
