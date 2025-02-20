@@ -45,19 +45,25 @@ public abstract class StageFramework
             }
             catch(System.OperationCanceledException)
             {
-                Debug.Log("StageFramework was Canceld");
+                OnStageFrameworkCancel();
             }
             catch(System.Exception ex)
             {
                 Debug.LogError($"Error during stage Framework: {ex.Message}");
+            }
+            finally
+            {
+
             }
         }
     }
     public void StopStageFramework()
     {
         frameworkCTS.Cancel();
-
-        //만약  필요하다면 상단에 bool 값으로 끝나는걸 체크 ..
+    }
+    protected virtual void OnStageFrameworkCancel()
+    {
+        //취소된 경우
     }
     public async UniTask ExitStage(UnityEngine.Events.UnityAction afterAction, float time)
     {

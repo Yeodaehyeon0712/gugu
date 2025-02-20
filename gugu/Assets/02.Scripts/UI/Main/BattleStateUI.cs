@@ -39,4 +39,11 @@ public class BattleStateUI : BaseUI
         //이건 enum 형으로 처리할수도 있음 고민 .
         UIManager.Instance.PausePopUpUI.Enable();
     }
+    public void SetTimerText(float time)
+    {
+        int min = (int)(time / 60);  // 정수로 변환
+        int second = (int)(time % 60);  // 정수로 변환
+
+        text_Timer.text = $"{min}:{second:D2}";  // 0이 붙도록 포맷
+    }
 }

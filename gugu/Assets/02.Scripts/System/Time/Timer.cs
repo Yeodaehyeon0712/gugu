@@ -44,7 +44,8 @@ public class Timer
             if (isFollowMainSpeed) elapsedTime += TimeManager.DeltaTime;
             else elapsedTime += Time.deltaTime;
 
-            onUpdate?.Invoke(targetTime - elapsedTime);
+            //onUpdate?.Invoke(targetTime - elapsedTime);
+            onUpdate?.Invoke(elapsedTime);
 
             if (targetTime > elapsedTime)
                 return true;

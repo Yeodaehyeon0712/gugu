@@ -20,7 +20,7 @@ public class StageManager : TSingletonMono<StageManager>
     {
         stageFrameworkDic = new Dictionary<eStageType, StageFramework>((int)eStageType.End)
         {
-            { eStageType.Normal,new NormalStageFramework()},
+            { eStageType.Normal,new NormalStageFramework2()},
         };
         IsLoad = true;
     }
