@@ -12,25 +12,25 @@ public class NormalStageFramework2 : StageFramework
     Timer timer;
     #endregion
 
-    protected override async UniTask FrameworkProcessAsync(long stageIndex, CancellationToken token)
+    protected override async UniTask ProcessFrameworkAsync(long stageIndex, CancellationToken token)
     {
         timer = new Timer(0, true, onUpdate:(time) => UIManager.Instance.BattleStateUI.SetTimerText(time));
 
         foreach (var waveData in DataManager.StageTable[stageIndex].WaveDataArr)
         {
-            if (currentStageState != eStageResultState.InProgress) break;
+            if (frameworkState != eStageFrameworkState.InProgress) break;
 
             await MainWavePorccess(waveData,timer,token);
             //await BossPorccess(token);
         }
-        currentStageState = eStageResultState.Victory;
+        frameworkState = eStageFrameworkState.Victory;
     }
     
     async UniTask MainWavePorccess(Data.WaveData waveData,Timer timer,CancellationToken token)
     {
         for (int i=0;i<waveData.SubWaveArr.Length;i++)
         {
-            if (currentStageState != eStageResultState.InProgress) break;
+            if (frameworkState != eStageFrameworkState.InProgress) break;
 
             var subWave = waveData.SubWaveArr[i];
             SetSubWaveTimer(timer);
@@ -41,7 +41,7 @@ public class NormalStageFramework2 : StageFramework
     {
         subWaveCount++;
 
-        while (currentStageState == eStageResultState.InProgress && subWaveTimer.IsOverTime == false)
+        while (frameworkState == eStageFrameworkState.InProgress && subWaveTimer.IsOverTime == false)
         {
             elapsedTime += TimeManager.DeltaTime;
 

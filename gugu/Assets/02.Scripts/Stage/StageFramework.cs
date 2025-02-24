@@ -7,38 +7,38 @@ using System.Threading;
 public abstract class StageFramework
 {
     #region Fields
-    protected eStageResultState currentStageState;
-    public eStageResultState CurrentStageStage 
+    protected eStageFrameworkState frameworkState;
+    public eStageFrameworkState CurrentFrameworkState 
     { 
-        get => currentStageState; 
-        set { currentStageState = value; OnStageChange();}
+        get => frameworkState; 
+        set { frameworkState = value; OnStageChange();}
     }
     protected CancellationTokenSource frameworkCTS;
 
     void OnStageChange()
     {
-        switch (currentStageState)
+        switch (frameworkState)
         {
-            case eStageResultState.None:
+            case eStageFrameworkState.None:
                 break;
-            case eStageResultState.SetUp:
+            case eStageFrameworkState.SetUp:
                 break;
-            case eStageResultState.InProgress:
+            case eStageFrameworkState.InProgress:
                 break;
-            case eStageResultState.Victory:
+            case eStageFrameworkState.Victory:
                 break;
-            case eStageResultState.Defeat:
+            case eStageFrameworkState.Defeat:
                 break;
-            case eStageResultState.Clean:
+            case eStageFrameworkState.Clean:
                 break;
         }
     }
     #endregion
 
     #region Stage Process Method
-    public virtual async UniTask SetupStageAsync(long stageIndex)
+    public virtual async UniTask SetupFrameworkAsync(long stageIndex)
     {
-        CurrentStageStage = eStageResultState.SetUp;
+        CurrentFrameworkState = eStageFrameworkState.SetUp;
 
         //Actor
         var actor = await ActorManager.Instance.SpawnCharacter(1, Vector3.zero);
@@ -59,18 +59,18 @@ public abstract class StageFramework
         //Spawn Area
         ActorManager.Instance.RegisterSpawnAreaParent(actor.transform);
     }
-    public async UniTask  StartStageFramework(long stageIndex)
+    public async UniTask  StartFrameworkAsync(long stageIndex)
     {
         using (frameworkCTS = new CancellationTokenSource())
         {
             try
             {
-                CurrentStageStage = eStageResultState.InProgress;
-                await FrameworkProcessAsync(stageIndex, frameworkCTS.Token);
+                CurrentFrameworkState = eStageFrameworkState.InProgress;
+                await ProcessFrameworkAsync(stageIndex, frameworkCTS.Token);
             }
             catch(System.OperationCanceledException)
             {
-                CurrentStageStage = eStageResultState.Cancel;
+                CurrentFrameworkState = eStageFrameworkState.Cancel;
             }
             finally
             {
@@ -79,7 +79,7 @@ public abstract class StageFramework
             }
         }
     }
-    protected abstract UniTask FrameworkProcessAsync(long stageIndex, CancellationToken token);
+    protected abstract UniTask ProcessFrameworkAsync(long stageIndex, CancellationToken token);
     public void ShowResultUI()
     {
         TimeManager.Instance.IsActiveTimeFlow = false;
@@ -88,20 +88,20 @@ public abstract class StageFramework
     #endregion
 
     #region Stage Stop Method
-    public void StopStageFramework()
+    public void StopFramework()
     {
-        if (currentStageState == eStageResultState.InProgress)
+        if (frameworkState == eStageFrameworkState.InProgress)
             frameworkCTS.Cancel();
 
-        CleanStageFramework().Forget();
+        CleanFrameworkAsync().Forget();
     }
 
 
 
-    public async UniTask CleanStageFramework()
+    public async UniTask CleanFrameworkAsync()
     {
-        await UniTask.WaitUntil(() => currentStageState != eStageResultState.InProgress);
-        CurrentStageStage = eStageResultState.Clean;
+        await UniTask.WaitUntil(() => frameworkState != eStageFrameworkState.InProgress);
+        CurrentFrameworkState = eStageFrameworkState.Clean;
         OnCleanFramework();//await 처리 가능성 있음
         await ExitStage(() => Debug.Log("asd"), 3);
     }

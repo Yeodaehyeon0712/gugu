@@ -13,9 +13,9 @@ public class NormalStageFramework : StageFramework
 
 
     #region Framework Method
-    protected override async UniTask FrameworkProcessAsync(long stageIndex, CancellationToken token)
+    protected override async UniTask ProcessFrameworkAsync(long stageIndex, CancellationToken token)
     {
-        currentStageState = eStageResultState.InProgress;
+        frameworkState = eStageFrameworkState.InProgress;
         mainWaveCount = 0;
 
         var mainWaveTimer = new Timer(0,true);
@@ -26,7 +26,7 @@ public class NormalStageFramework : StageFramework
         {
             foreach (var waveData in DataManager.StageTable[stageIndex].WaveDataArr)
             {
-                if (currentStageState != eStageResultState.InProgress) break;
+                if (frameworkState != eStageFrameworkState.InProgress) break;
 
                 ++mainWaveCount;
                 await MainWavePorccess(waveData,mainWaveTimer,subWaveTimer,spawnTimer,token);
@@ -35,11 +35,11 @@ public class NormalStageFramework : StageFramework
 
             await UniTask.Yield(PlayerLoopTiming.Update, token);
 
-            switch (currentStageState)
+            switch (frameworkState)
             {
-                case eStageResultState.Victory:
+                case eStageFrameworkState.Victory:
                     break;
-                case eStageResultState.Defeat:
+                case eStageFrameworkState.Defeat:
                     break;
             }
             ShowVicotry();       
@@ -67,7 +67,7 @@ public class NormalStageFramework : StageFramework
         var subWaveTask = SubWaveProcess(waveData.SubWaveArr.Length,subWaveTimer,token);
         var spawnEnemyTask = SpawnEnemyProcess(waveData.SubWaveArr,spawnTimer,token);
 
-        while (currentStageState == eStageResultState.InProgress && mainWaveTimer.IsOverTime==false)
+        while (frameworkState == eStageFrameworkState.InProgress && mainWaveTimer.IsOverTime==false)
         {
             CheckStageState();
             await UniTask.Yield(PlayerLoopTiming.Update, token);
@@ -78,7 +78,7 @@ public class NormalStageFramework : StageFramework
     {
         subWaveCount = 0;
         float subWaveTime = GameConst.subWaveTime;
-        while (currentStageState == eStageResultState.InProgress&&subWaveCount< waveCount)
+        while (frameworkState == eStageFrameworkState.InProgress&&subWaveCount< waveCount)
         {
             if(timer.IsOverTime)
             {
@@ -91,7 +91,7 @@ public class NormalStageFramework : StageFramework
     async UniTask SpawnEnemyProcess(Data.SubWave[] subWaveArr,Timer timer, CancellationToken token)//10번 반복
     {
         float spawnTime = GameConst.spawnInterval;
-        while (currentStageState == eStageResultState.InProgress)
+        while (frameworkState == eStageFrameworkState.InProgress)
         {
             if (timer.IsOverTime)
             {
@@ -128,7 +128,7 @@ public class NormalStageFramework : StageFramework
         //플레이어의 죽음을 체크한다 .
         if (Player.PlayerCharacter.ActorState == eActorState.Death)
         {
-            currentStageState = eStageResultState.Defeat;
+            frameworkState = eStageFrameworkState.Defeat;
             //StopTimer();
             //break;
         }

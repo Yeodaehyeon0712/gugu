@@ -46,12 +46,12 @@ public class StageManager : TSingletonMono<StageManager>
     {
         try
         {
-            await stageFrameworkDic[_currStage].SetupStageAsync(stageIndex);
+            await stageFrameworkDic[_currStage].SetupFrameworkAsync(stageIndex);
 
             while (LockStage)
                 await UniTask.Yield(cancellationToken:token.Token);
 
-            stageFrameworkDic[_currStage].StartStageFramework(stageIndex).Forget();
+            stageFrameworkDic[_currStage].StartFrameworkAsync(stageIndex).Forget();
         }
         catch (System.OperationCanceledException)
         {
@@ -67,7 +67,11 @@ public class StageManager : TSingletonMono<StageManager>
     //Stop Method
     public void StopStage()
     {
-        stageFrameworkDic[_currStage].StopStageFramework();
+        stageFrameworkDic[_currStage].StopFramework();
+    }
+    public void ExitStage()
+    {
+
     }
     #endregion
 

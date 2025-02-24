@@ -140,7 +140,7 @@ public enum eStageType
     Normal,
     End
 }
-public enum eStageResultState
+public enum eStageFrameworkState
 {
     None,
     SetUp,
