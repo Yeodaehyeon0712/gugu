@@ -142,9 +142,12 @@ public enum eStageType
 }
 public enum eStageResultState
 {
+    None,
+    SetUp,
     InProgress,
     Victory,
     Defeat,
+    Cancel,
 }
 #endregion
 

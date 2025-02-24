@@ -27,6 +27,7 @@ public class StageManager : TSingletonMono<StageManager>
     #endregion
 
     #region Stage Method
+    //Setup Method
     public void SetupStage(eStageType type, long stageIndex)
     {
         if (isChanging) return;
@@ -45,12 +46,12 @@ public class StageManager : TSingletonMono<StageManager>
     {
         try
         {
-            await SetupFrameworkAsync(stageIndex);
+            await stageFrameworkDic[_currStage].SetupStageAsync(stageIndex);
 
             while (LockStage)
                 await UniTask.Yield(cancellationToken:token.Token);
 
-            await StartFrameworkAsync(stageIndex);
+            stageFrameworkDic[_currStage].StartStageFramework(stageIndex).Forget();
         }
         catch (System.OperationCanceledException)
         {
@@ -63,20 +64,10 @@ public class StageManager : TSingletonMono<StageManager>
             isChanging = false;
         }
     }
-    async UniTask SetupFrameworkAsync(long index)
+    //Stop Method
+    public void StopStage()
     {
-        //FadeOn
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1), ignoreTimeScale: false);
-        await stageFrameworkDic[_currStage].SetupStageAsync(index);
-        //해당 프레임 워크의 준비와 Clean을 실행한다 .
-        //FadeOut
-    }
-    async UniTask StartFrameworkAsync(long index)
-    {
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1), ignoreTimeScale: false);
-        //해당 프레임 워크를 실행해준다 .
-        //시간을 흐르게 하고 .. 각종 것들 리스타트..
-        stageFrameworkDic[_currStage].StartStageFramework(index).Forget();
+        stageFrameworkDic[_currStage].StopStageFramework();
     }
     #endregion
 

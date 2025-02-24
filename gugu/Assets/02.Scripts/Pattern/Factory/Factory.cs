@@ -77,5 +77,13 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
         if (obj.ResetParent == true)
             obj.transform.SetParent(instanceRoot);
     }
+    public void Clear()
+    {
+        foreach (var obj in spawnedObjectDic)
+        {
+            obj.Value.Clean(0);
+        }
+        spawnedObjectDic.Clear();
+    }
     #endregion
 }

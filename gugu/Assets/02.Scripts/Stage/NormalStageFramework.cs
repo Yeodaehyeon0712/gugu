@@ -138,5 +138,10 @@ public class NormalStageFramework : StageFramework
         TimeManager.Instance.IsActiveTimeFlow = false;
         Debug.Log("tm");
     }
+
+    protected override void OnCleanFramework()
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 }

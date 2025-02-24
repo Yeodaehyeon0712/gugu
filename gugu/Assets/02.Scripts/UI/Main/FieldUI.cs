@@ -18,7 +18,7 @@ public class FieldUI : MonoBehaviour
     #endregion
 
     #region Field UI Method
-    T FindFieldUI<T>(eFieldUI type) where T : BaseFieldUI
+    public T FindFieldUI<T>(eFieldUI type) where T : BaseFieldUI
     {
         T ui = memoryPoolDic[type].GetItem() as T;
         if (ui != null)

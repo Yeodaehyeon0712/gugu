@@ -41,10 +41,10 @@ public class PausePopUpUI : PopUpUI
 
         var panel_Bottom = transform.Find("Panel_Bottom");
         btn_Continue = panel_Bottom.Find("Btn_Continue").GetComponent<Button>();
-        btn_Continue.onClick.AddListener(() => Continue());
+        btn_Continue.onClick.AddListener(() => Disable());
         text_Continue = btn_Continue.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
         btn_Exit = panel_Bottom.Find("Btn_Exit").GetComponent<Button>();
-        //btn_Exit.onClick.AddListener(() => Continue());
+        btn_Exit.onClick.AddListener(() => StageManager.Instance.StopStage());
         text_Exit = btn_Exit.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
     }
     protected override void OnRefresh()
@@ -60,12 +60,12 @@ public class PausePopUpUI : PopUpUI
     public override void Enable()
     {
         base.Enable();
-        //시간 멈추는 로직
+        TimeManager.Instance.IsActiveTimeFlow = false;
     }
-    void Continue()
+    public override void Disable()
     {
-        Disable();
-        //게임 재시작 로직
+        base.Disable();
+        TimeManager.Instance.IsActiveTimeFlow = true;
     }
     #endregion
 

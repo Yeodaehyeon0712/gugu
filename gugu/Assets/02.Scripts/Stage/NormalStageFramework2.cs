@@ -29,6 +29,8 @@ public class NormalStageFramework2 : StageFramework
     {
         for (int i=0;i<waveData.SubWaveArr.Length;i++)
         {
+            if (currentStageState != eStageResultState.InProgress) break;
+
             var subWave = waveData.SubWaveArr[i];
             SetSubWaveTimer(timer);
             await SubWaveProcess(subWave,timer,token);
@@ -71,8 +73,9 @@ public class NormalStageFramework2 : StageFramework
         float targetTime = subWaveTime * subWaveCount;
         subWaveTimer.StartTimer(targetTime, startTime);      
     }
-    protected override void OnStageFrameworkCancel()
+    protected override void OnCleanFramework()
     {
+        base.OnCleanFramework();
         TimeManager.Instance.RemoveTimer = timer;
         timer = null;
         subWaveCount = 1;
