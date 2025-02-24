@@ -29,7 +29,7 @@ public abstract class StageFramework
                 break;
             case eStageResultState.Defeat:
                 break;
-            case eStageResultState.Cancel:
+            case eStageResultState.Clean:
                 break;
         }
     }
@@ -90,18 +90,19 @@ public abstract class StageFramework
     #region Stage Stop Method
     public void StopStageFramework()
     {
-        //await로 cts가 null이 되는걸 기다리는 것도 고려 .
         if (currentStageState == eStageResultState.InProgress)
             frameworkCTS.Cancel();
 
         CleanStageFramework().Forget();
     }
+
+
+
     public async UniTask CleanStageFramework()
     {
-        //Wait for all progress is Stop . this is for cancel Stage
         await UniTask.WaitUntil(() => currentStageState != eStageResultState.InProgress);
-
-        OnCleanFramework();
+        CurrentStageStage = eStageResultState.Clean;
+        OnCleanFramework();//await 처리 가능성 있음
         await ExitStage(() => Debug.Log("asd"), 3);
     }
     protected virtual void OnCleanFramework()

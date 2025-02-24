@@ -23,6 +23,7 @@ public class NormalStageFramework2 : StageFramework
             await MainWavePorccess(waveData,timer,token);
             //await BossPorccess(token);
         }
+        currentStageState = eStageResultState.Victory;
     }
     
     async UniTask MainWavePorccess(Data.WaveData waveData,Timer timer,CancellationToken token)

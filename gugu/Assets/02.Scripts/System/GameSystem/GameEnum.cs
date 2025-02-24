@@ -148,6 +148,7 @@ public enum eStageResultState
     Victory,
     Defeat,
     Cancel,
+    Clean,
 }
 #endregion
 
