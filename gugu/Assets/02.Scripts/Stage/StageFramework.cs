@@ -42,22 +42,13 @@ public abstract class StageFramework
 
         //Actor
         var actor = await ActorManager.Instance.SpawnCharacter(1, Vector3.zero);
-        Player.PlayerCharacter = actor;
-        Player.RegisterSkill(DataManager.CharacterTable[Player.PlayerCharacter.Index].DefaultSkillKey);
+        Player.RegisterPlayer(actor);
 
         //Bg
         BackgroundManager.Instance.ShowBackgroundByStage(DataManager.StageTable[stageIndex].BackgroundPath);
 
         //UI
-        UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.BattleState);
-        UIManager.Instance.ControllerUI.AddObserver(actor.Controller as CharacterControllerComponent);
-        UIManager.Instance.FieldUI.SetHPBar(actor);
-
-        //Camera
-        CameraManager.Instance.RegisterFollowTarget(actor.transform);
-
-        //Spawn Area
-        ActorManager.Instance.RegisterSpawnAreaParent(actor.transform);
+        UIManager.Instance.GameUI.OpenUIByFlag(eUI.Controller | eUI.BattleState);        
     }
     public async UniTask  StartFrameworkAsync(long stageIndex)
     {
@@ -108,18 +99,12 @@ public abstract class StageFramework
     protected virtual void OnCleanFramework()
     {
         //Player
-        Player.PlayerCharacter.Clean(0);
-        Player.PlayerCharacter = null;
+        Player.UnRegisterPlayer();
 
-        //UI
-        UIManager.Instance.FieldUI.FindFieldUI<FieldUI_HPBar>(eFieldUI.HPBar).Disable();//이것도 수정
+        //BG
+        BackgroundManager.Instance.HideBackground();
 
-        //Camera
-        CameraManager.Instance.RegisterFollowTarget(null);
-
-        //SpawnArea
-        ActorManager.Instance.RegisterSpawnAreaParent(null);
-
+        
     }
     public async UniTask ExitStage(UnityEngine.Events.UnityAction afterAction, float time)
     {

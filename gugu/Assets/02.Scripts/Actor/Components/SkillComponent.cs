@@ -11,18 +11,15 @@ public class SkillComponent : BaseComponent
     #region Component Method
     public SkillComponent(Actor owner) : base(owner, eComponent.SkillComponent)
     {
-
     }
-    //컴포넌트 초기화 직후 불린다 .
     protected override void OnComponentActive()
     {
-        
+        Player.RegisterSkill(DataManager.CharacterTable[owner.Index].DefaultSkillKey);
     }
     protected override void OnComponentInactive()
     {
         Player.ResetSkills();
     }
-    //리스트로 변경하는거 고민해봐 .. 
     protected override void OnComponentUpdate(float deltaTime)
     {
         if (Player.IngameSkillDic.Count < 1) return;

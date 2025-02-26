@@ -71,10 +71,10 @@ public abstract class Actor : PoolingObject
         ActorState = eActorState.Battle;
         base.Spawn(worldID, position);
     }
-    public virtual void Death()
+    public virtual void Death(float time=2.5f)
     {
         ActorState = eActorState.Death;   
-        Clean(2.5f);
+        Clean(time);
     }
     protected override void OnClean()
     {
