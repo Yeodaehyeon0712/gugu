@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class SceneManager : TSingletonMono<SceneManager>
 {
+    BaseScene prevScene;
+    BaseScene currentScene;
     protected override void OnInitialize()
     {
         IsLoad = true;
@@ -14,6 +16,7 @@ public class SceneManager : TSingletonMono<SceneManager>
     {
         try
         {
+            prevScene = currentScene;
             await UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(typeof(T).Name).ToUniTask();
         }
         catch (System.Exception e)
@@ -23,8 +26,10 @@ public class SceneManager : TSingletonMono<SceneManager>
         finally
         {
             await UniTask.Yield();
-            GameObject.Find(typeof(T).Name).GetComponent<T>().StartScene();
-            DestroyImmediate(gameObject);
+            var loadScene = GameObject.Find(typeof(T).Name).GetComponent<T>();
+            currentScene = loadScene;
+            currentScene.StartScene();
+            prevScene?.StopScene();
         }
     }
 }
