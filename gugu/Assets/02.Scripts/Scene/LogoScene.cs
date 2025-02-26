@@ -11,16 +11,19 @@ public class LogoScene : BaseScene
     private void Awake()
     {
         _logo.color = new Color(1, 1, 1, 0);
-        InitializeApplicationSystem();
+        InitializeApplicationSystem().Forget();
+
+    }
+    async UniTask InitializeApplicationSystem()
+    {
+        SceneManager.Instance.Initialize();
+        await UniTask.WaitUntil(() => SceneManager.Instance.IsLoad);
+        GameConst.Initialize();
         StartScene();
     }
     public override void StartScene()
     {
         DontDestroyOnLoad(gameObject);
-        _logo.DOFade(1f, 2f).SetEase(_fadeCurve).OnComplete(() => AsyncSceneChange<TitleScene>().Forget());
-    }
-    void InitializeApplicationSystem()
-    {
-        GameConst.Initialize();
+        _logo.DOFade(1f, 2f).SetEase(_fadeCurve).OnComplete(() => SceneManager.Instance.AsyncSceneChange<TitleScene>().Forget());
     }
 }

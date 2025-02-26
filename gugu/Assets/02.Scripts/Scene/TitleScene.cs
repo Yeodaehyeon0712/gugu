@@ -68,8 +68,8 @@ public class TitleScene : BaseScene
     void SceneChange()
     {
         if (isTestMode)
-            AsyncSceneChange<TestScene>().Forget();
+            SceneManager.Instance.AsyncSceneChange<TestScene>().Forget();
         else
-            AsyncSceneChange<MainScene>().Forget();
+            SceneManager.Instance.AsyncSceneChange<MainScene>().Forget();
     }
 }
