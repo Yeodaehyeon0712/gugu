@@ -51,7 +51,7 @@ GameObject:
   - component: {fileID: 8498316127908801536}
   - component: {fileID: 8498316127908801537}
   m_Layer: 5
-  m_Name: Text_State
+  m_Name: Text_Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,8 +397,9 @@ GameObject:
   - component: {fileID: 8498316129658293757}
   - component: {fileID: 8498316129658293754}
   - component: {fileID: 8498316129658293755}
+  - component: {fileID: 6140454647696336594}
   m_Layer: 5
-  m_Name: Button_LevelUp
+  m_Name: LevelUpElementUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -508,6 +509,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6140454647696336594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8498316129658293753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef54346ff1eb3ae46a88efd58ac57d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8498316129723988074
 GameObject:
   m_ObjectHideFlags: 0

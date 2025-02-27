@@ -189,6 +189,7 @@ public enum eUI
     BattlePausePopUp = 1 << 2,
     AlramPopUp = 1 << 3,
     SettingPopUp=1<<4,
+    LevelUpPopUp=1<<5,
 }
 public enum eMovableUIDir
 {

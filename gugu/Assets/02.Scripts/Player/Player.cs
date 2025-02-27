@@ -8,8 +8,8 @@ public static class Player
     public static Actor PlayerCharacter;
     //추후 하나의 데이터 혹은 클래스로 묶을 것들
     public static Dictionary<long,BaseSkill> IngameSkillDic = new Dictionary<long, BaseSkill>();
-    static List<long> availableSkillList;
-    static HashSet<long> selectedSkillSet;
+    static List<long> availableSkillList=new List<long>();
+    static HashSet<long> selectedSkillSet=new HashSet<long>();
     #endregion
 
     #region Init Method
@@ -39,7 +39,7 @@ public static class Player
         //UI
         UIManager.Instance.FieldUI.FindFieldUI<FieldUI_HPBar>(eFieldUI.HPBar).Disable();//이것도 수정
 
-
+        //이것도 고민해바 , 이미 죽었다면 ?
         PlayerCharacter.Death(0f);
         PlayerCharacter = null;
     }
@@ -97,6 +97,20 @@ public static class Player
 
         availableSkillList.Clear();
         selectedSkillSet.Clear();
+    }
+    #endregion
+
+    #region LevelUp
+    static float exp;
+    public static void Eat()
+    {
+        var targetExp = 3;
+        if (exp < targetExp)
+            LevelUp();
+    }
+    public static void LevelUp()
+    {
+        UIManager.Instance.LevelUpPopUpUI.Enable();
     }
     #endregion
 }

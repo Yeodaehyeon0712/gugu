@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5403579076922175841}
   - component: {fileID: 5403579076922175840}
   m_Layer: 5
-  m_Name: Text_Description
+  m_Name: Text_Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -213,7 +213,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 5403579078570563270}
   m_HandleRect: {fileID: 0}
@@ -221,7 +221,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.785
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -458,6 +458,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5403579078109482182}
   - component: {fileID: 5403579078109482183}
+  - component: {fileID: 1125876836453981401}
   m_Layer: 5
   m_Name: LevelUpPopUpUI
   m_TagString: Untagged
@@ -495,6 +496,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5403579078109482181}
   m_CullTransparentMesh: 1
+--- !u!114 &1125876836453981401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5403579078109482181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 320ee4fc610bfba488773c1a22b018ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5403579078313293166
 GameObject:
   m_ObjectHideFlags: 0

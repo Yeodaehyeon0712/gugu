@@ -13,6 +13,7 @@ public class GameUI : MonoBehaviour
 
     //PopUp UI
     public PausePopUpUI PausePopUp;
+    public LevelUpPopUpUI LevelUpPopUp;
 
     //OverPopUp UI
     public SettingPopUpUI SettingPopUp;
@@ -35,6 +36,8 @@ public class GameUI : MonoBehaviour
         var groupPopUp = safeArea.Find("Group_PopUp");
         PausePopUp = groupPopUp.Find("PausePopUpUI").GetComponent<PausePopUpUI>();
         uiDic.Add(eUI.BattlePausePopUp,PausePopUp.Initialize());
+        LevelUpPopUp= groupPopUp.Find("LevelUpPopUpUI").GetComponent<LevelUpPopUpUI>();
+        uiDic.Add(eUI.LevelUpPopUp, LevelUpPopUp.Initialize());
 
         //OverPopUp UI
         var groupOverPopUp = safeArea.Find("Group_OverPopUp");

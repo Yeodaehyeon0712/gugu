@@ -17,6 +17,7 @@ public class UIManager : TSingletonMono<UIManager>
 
     //PopUp UI
     public PausePopUpUI PausePopUpUI => _gameUI.PausePopUp;
+    public LevelUpPopUpUI LevelUpPopUpUI => _gameUI.LevelUpPopUp;
 
     //Over PopUp UI
     public SettingPopUpUI SettingPopUpUI => _gameUI.SettingPopUp;
