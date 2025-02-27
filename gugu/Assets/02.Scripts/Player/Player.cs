@@ -8,8 +8,11 @@ public static class Player
     public static Actor PlayerCharacter;
     //추후 하나의 데이터 혹은 클래스로 묶을 것들
     public static Dictionary<long,BaseSkill> IngameSkillDic = new Dictionary<long, BaseSkill>();
+    static List<long> availableSkillList;
+    static HashSet<long> selectedSkillSet;
     #endregion
 
+    #region Init Method
     public static void Initialize()
     {
         //여기서 기본 가지고 있는 데이터를 받는다 .
@@ -36,11 +39,33 @@ public static class Player
         //UI
         UIManager.Instance.FieldUI.FindFieldUI<FieldUI_HPBar>(eFieldUI.HPBar).Disable();//이것도 수정
 
+
         PlayerCharacter.Death(0f);
         PlayerCharacter = null;
     }
+    #endregion
 
     #region Skill
+    public static void SetAvailableSkillList()
+    {
+        foreach (var skill in DataManager.SkillTable.GetSkillDic.Values)
+        {
+            //만약 스킬이 잠겨있다면 더하기 않는다 
+            availableSkillList.Add(skill.Index);
+        }
+    }
+    public static HashSet<long> GetRandomSkillSet(int count)
+    {
+        selectedSkillSet.Clear();
+        int targetSkillCount = Mathf.Min(count, availableSkillList.Count);
+
+        while (selectedSkillSet.Count < targetSkillCount)
+        {
+            int randomIndex = Random.Range(0, availableSkillList.Count);
+            selectedSkillSet.Add(availableSkillList[randomIndex]);
+        }
+        return selectedSkillSet;
+    }
     public static void RegisterSkill(long index)
     {
         if (IngameSkillDic.ContainsKey(index) || PlayerCharacter == null) return;
@@ -51,7 +76,10 @@ public static class Player
     public static void LevelUpSkill(long index)
     {
         if (IngameSkillDic.TryGetValue(index, out var skill) == false || skill.isMaxLevel) return;       
-        skill.LevelUpSkill();      
+        skill.LevelUpSkill();
+
+        if (skill.isMaxLevel&&availableSkillList.Contains(skill.Index))
+            availableSkillList.Remove(skill.Index);
     }
     public static void ResetSkills()
     {
@@ -66,6 +94,9 @@ public static class Player
         {
             IngameSkillDic.Remove(key);
         }
+
+        availableSkillList.Clear();
+        selectedSkillSet.Clear();
     }
     #endregion
 }
