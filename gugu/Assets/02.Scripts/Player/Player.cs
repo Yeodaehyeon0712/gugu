@@ -21,6 +21,9 @@ public static class Player
     public static void RegisterPlayer(Actor actor)
     {
         PlayerCharacter = actor;
+        //일단 이거 위치 고민
+        SetAvailableSkillList();
+        RegisterSkill(DataManager.CharacterTable[actor.ObjectID].DefaultSkillKey);
         //Camera
         CameraManager.Instance.RegisterFollowTarget(PlayerCharacter.transform);
         //Spawn Area

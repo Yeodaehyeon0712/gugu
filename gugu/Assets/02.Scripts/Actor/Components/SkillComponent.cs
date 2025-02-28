@@ -14,8 +14,7 @@ public class SkillComponent : BaseComponent
     }
     protected override void OnComponentActive()
     {
-        Player.SetAvailableSkillList();
-        Player.RegisterSkill(DataManager.CharacterTable[owner.ObjectID].DefaultSkillKey);
+       
     }
     protected override void OnComponentInactive()
     {
