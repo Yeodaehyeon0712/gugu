@@ -176,6 +176,14 @@ public enum ePreference
 #endregion
 #endregion
 
+#region Item
+public enum eItemType
+{
+    Gem,
+    Heart,
+}
+#endregion
+
 #region UI
 [System.Flags]//31 is Maximum Value
 public enum eUI
