@@ -5,10 +5,6 @@ using UnityEngine;
 public class BaseEffect : PoolingObject<eEffectType>
 {
     #region Fields
-    //Effect Fields
-    public long Index => index;
-    [SerializeField] protected long index;
-
     //Builder Fields
     [Space]
     [Header("Builder Attribute")]
@@ -38,12 +34,10 @@ public class BaseEffect : PoolingObject<eEffectType>
     {
         EffectManager.Instance.RegisterToEffectPool(worldID,type, objectID);
     }
-    public virtual BaseEffect Initialize(eEffectType type,long index, int objectID)
+    public override void Initialize(eEffectType type,int objectID)
     {
         base.Initialize(type,objectID);
         this.type = type;
-        this.index = index;
-        return this;
     }
     public override void Spawn(uint worldID,Vector2 position)
     {
