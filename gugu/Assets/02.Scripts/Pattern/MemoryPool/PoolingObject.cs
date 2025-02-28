@@ -46,10 +46,10 @@ public abstract class PoolingObject<TType> : MonoBehaviour where TType : System.
     }
     protected virtual void OnClean()
     {
+        ReturnToPool();
         isClean = true;
         resetParent = false;
         gameObject.SetActive(false);
-        ReturnToPool();
     }
     protected abstract void ReturnToPool();
     #endregion
