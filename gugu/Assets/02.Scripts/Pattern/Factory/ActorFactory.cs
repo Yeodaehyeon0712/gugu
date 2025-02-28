@@ -22,34 +22,19 @@ public class ActorFactory : Factory<Actor,eActorType>
         };
     }
 
-    protected override (string prefabPath, int objectID) GetResourcePath(eActorType type, long index)
+    protected override string  GetResourcePath(eActorType type,int objectID)
     {
-        string resourcePath = null;
-        int pathHash = 0;
-
-        switch (type)
+        return type switch
         {
-            case eActorType.Character:
-                {
-                    var table = DataManager.CharacterTable[index];
-                    resourcePath = table.ResourcePath;
-                    pathHash = table.PathHash;
-                    break;
-                }
-            case eActorType.Enemy:
-                {
-                    var table = DataManager.EnemyTable[index];
-                    resourcePath = table.ResourcePath;
-                    pathHash = table.PathHash;
-                    break;
-                }
-        }
-        return (resourcePath,pathHash);
+            eActorType.Character => DataManager.CharacterTable[objectID].ResourcePath,
+            eActorType.Enemy=>DataManager.EnemyTable[objectID].ResourcePath,
+            _=>"",
+        };
     }
 
-    protected override void InitializeObject(Actor obj, eActorType type, long index, int objectID)
+    protected override void InitializeObject(Actor obj, eActorType type,int objectID)
     {
-        obj.Initialize(type, index, objectID);
+        obj.Initialize(type, objectID);
     }
 
     protected override void SpawnObject(Actor obj, uint worldID, Vector2 position)

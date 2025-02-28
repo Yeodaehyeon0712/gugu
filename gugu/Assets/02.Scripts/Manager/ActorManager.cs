@@ -36,8 +36,8 @@ public class ActorManager : TSingletonMono<ActorManager>
     #endregion
 
     #region Spawn Method
-    public async UniTask<Character> SpawnCharacter(long index, Vector3 position) => await actorFactory.SpawnObjectAsync(eActorType.Character, index, position) as Character;
-    public async UniTask<Enemy> SpawnEnemy(long index, Vector3 position)  => await actorFactory.SpawnObjectAsync(eActorType.Enemy, index, position) as Enemy;
+    public async UniTask<Character> SpawnCharacter(int objectID, Vector3 position) => await actorFactory.SpawnObjectAsync(eActorType.Character, objectID, position) as Character;
+    public async UniTask<Enemy> SpawnEnemy(int objectID, Vector3 position)  => await actorFactory.SpawnObjectAsync(eActorType.Enemy, objectID, position) as Enemy;
     public void RegisterActorPool(uint worldID, eActorType type, int pathHash) => actorFactory.RegisterToObjectPool(worldID, type, pathHash);
     public Dictionary<uint, Actor> GetSpawnedActors => actorFactory.GetSpawnedObjects;
     #endregion

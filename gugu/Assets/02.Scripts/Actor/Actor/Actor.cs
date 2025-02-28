@@ -5,8 +5,6 @@ public abstract class Actor : PoolingObject<eActorType>
 {
     #region Fields
     //Fields
-    public long Index => index;
-    protected long index;
     public eActorState ActorState
     {
         get => state;
@@ -35,11 +33,9 @@ public abstract class Actor : PoolingObject<eActorType>
     #endregion
 
     #region Init Method
-    public virtual void Initialize(eActorType type, long index, int objectID)
+    public override void Initialize(eActorType type,int objectID)
     {
         base.Initialize(type,objectID);
-        this.type = type;
-        this.index = index;
         attachment = GetComponentInChildren<Attachment>();
         attachment.Initialize();
         InitializeComponent();

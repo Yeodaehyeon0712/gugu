@@ -17,27 +17,14 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
         };
     }
 
-    protected override (string prefabPath, int objectID) GetResourcePath(eEffectType type, long index)
+    protected override string  GetResourcePath(eEffectType type, int objectID)
     {
-        string resourcePath = null;
-        int objectID = 0;
-
-        switch (type)
-        {
-            default:
-                {
-                    var table = DataManager.EffectTable[index];
-                    resourcePath = table.ResourcePath;
-                    objectID = (int)index;
-                    break;
-                }
-        }
-        return (resourcePath, objectID);
+        return DataManager.EffectTable[objectID].ResourcePath;
     }
 
-    protected override void InitializeObject(BaseEffect obj, eEffectType type, long index, int objectID)
+    protected override void InitializeObject(BaseEffect obj, eEffectType type, int objectID)
     {
-        obj.Initialize(type,(int)index,objectID);
+        obj.Initialize(type,objectID);
     }
 
     protected override void SpawnObject(BaseEffect obj,uint worldID, Vector2 position)

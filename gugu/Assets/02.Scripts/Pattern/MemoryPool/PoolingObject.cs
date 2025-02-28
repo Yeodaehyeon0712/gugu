@@ -18,7 +18,7 @@ public abstract class PoolingObject<TType> : MonoBehaviour where TType : System.
     #endregion
 
     #region Pooling Method
-    protected void Initialize(TType type, int objectID)
+    public virtual void Initialize(TType type, int objectID)
     {
         this.type = type;
         this.objectID = objectID;

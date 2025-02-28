@@ -31,20 +31,19 @@ public abstract class Factory<T,TType> where T : PoolingObject<TType> where TTyp
     #endregion
 
     #region Spawn Method
-    public async UniTask<T> SpawnObjectAsync(TType type, long index, Vector2 position,Transform parent=null)
+    public async UniTask<T> SpawnObjectAsync(TType type,int objectID, Vector2 position,Transform parent=null)
     {
         ++currentWorldID;
         uint snapshotID = currentWorldID;
-        var resourceTuple = GetResourcePath(type, index);
-        CheckObjectPool(type, resourceTuple.objectID);
+        CheckObjectPool(type, objectID);
 
-        T spawnObject = GetFromObjectPool(type, resourceTuple.objectID);
+        T spawnObject = GetFromObjectPool(type, objectID);
 
         if(spawnObject==null)
         {
-            T originalAsset = await DataManager.AddressableSystem.LoadAssetAsync<T>(resourceTuple.prefabPath);
+            T originalAsset = await DataManager.AddressableSystem.LoadAssetAsync<T>(GetResourcePath(type, objectID));
             spawnObject = Object.Instantiate(originalAsset, instanceRoot);
-            InitializeObject(spawnObject,type,index,resourceTuple.objectID);
+            InitializeObject(spawnObject,type,objectID);
         }
         if (parent != null) 
             spawnObject.SetParent(parent);
@@ -53,9 +52,9 @@ public abstract class Factory<T,TType> where T : PoolingObject<TType> where TTyp
         spawnedObjectDic.Add(snapshotID, spawnObject);
         return spawnObject;
     }
-    protected abstract void InitializeObject(T obj,TType type,long index,int objectID);
+    protected abstract void InitializeObject(T obj,TType type,int objectID);
     protected abstract void SpawnObject(T obj,uint worldID,Vector2 position);
-    protected abstract (string prefabPath, int objectID) GetResourcePath(TType type,long index);
+    protected abstract string GetResourcePath(TType type,int objectID);
 
     #endregion
 

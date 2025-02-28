@@ -12,16 +12,16 @@ public class Enemy : Actor,IRepositionObject
     #endregion
 
     #region EnemyMethod
-    public override void Initialize(eActorType type, long index, int objectID)
+    public override void Initialize(eActorType type, int objectID)
     {
-        base.Initialize(type, index, objectID);
+        base.Initialize(type,objectID);
         SetRepositionArea(ActorManager.Instance.SpawnArea.transform);
     }
     #endregion
     protected override void InitializeComponent()
     {
         //Default Component
-        skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.EnemyTable[index].AnimatorPath));
+        skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.EnemyTable[objectID].AnimatorPath));
         statusComponent = new EnemyStatusComponent(this);
         controllerComponent = new EnemyControllerComponent(this);
 

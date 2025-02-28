@@ -28,7 +28,7 @@ public class EnemyStatusComponent : StatusComponent
 
     public override void SetDefaultStatus()
     {
-        status = DataManager.EnemyTable[owner.Index].EnemyStatus;
+        status = DataManager.EnemyTable[owner.ObjectID].EnemyStatus;
     }
 
 }

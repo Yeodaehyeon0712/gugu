@@ -13,21 +13,21 @@ public class Character : Actor
     #endregion
 
     #region Character Method
-    public override void Initialize(eActorType type, long index, int objectID)
+    public override void Initialize(eActorType type,int objectID)
     {
-        base.Initialize(type,index,objectID);
+        base.Initialize(type,objectID);
         targetLayer = 1<< LayerMask.NameToLayer("Enemy");      
     }
     protected override void InitializeComponent()
     {
         //Default Component
-        skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.CharacterTable[index].AnimatorPath));
+        skinComponent = new SkinComponent(this, AddressableSystem.GetAnimator(DataManager.CharacterTable[objectID].AnimatorPath));
         statusComponent = new CharacterStatusComponent(this);
         controllerComponent = new CharacterControllerComponent(this);
 
         //Character Component
         skillComponent = new SkillComponent(this);
-        characterData = DataManager.CharacterTable[index];
+        characterData = DataManager.CharacterTable[objectID];
     }
     void CheckCollisionState(bool isCollisonEnter)
     {
