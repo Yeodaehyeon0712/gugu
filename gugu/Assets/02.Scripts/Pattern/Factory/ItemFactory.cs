@@ -12,13 +12,13 @@ public class ItemFactory : Factory<BaseItem, eItemType>
     {
         return type switch
         {
-            _ => 10,
+            _ => 1000,
         };
     }
 
     protected override string GetResourcePath(eItemType type, int objectID)
     {
-        return "";//이건 아이템 테이블을 만들어야 해 ..
+        return "Item/Gem_S.prefab";//이건 아이템 테이블을 만들어야 해 ..
     }
 
     protected override void InitializeObject(BaseItem obj, eItemType type, int objectID)

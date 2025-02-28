@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +27,11 @@ public class Enemy : Actor,IRepositionObject
         controllerComponent = new EnemyControllerComponent(this);
 
         //Enemy Component
+    }
+    public override void Death(float time = 2.5F)
+    {
+        ItemManager.Instance.SpawnItem(1, transform.position).Forget();
+        base.Death(time);
     }
 
     #region Reposition Method
