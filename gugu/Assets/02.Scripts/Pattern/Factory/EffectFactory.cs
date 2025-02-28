@@ -8,11 +8,6 @@ public class EffectFactory : Factory<BaseEffect,eEffectType>
     {
     }
 
-    protected override void CreateObjectPoolDic()
-    {
-        for (eEffectType i = eEffectType.None+1; i < eEffectType.End; ++i)
-            objectPool[i] = new Dictionary<int, MemoryPool<BaseEffect>>();
-    }
 
     protected override int GetPoolCapacity(eEffectType type)
     {

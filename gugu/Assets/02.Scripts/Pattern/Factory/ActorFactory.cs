@@ -10,11 +10,7 @@ public class ActorFactory : Factory<Actor,eActorType>
         
     }
 
-    protected override void CreateObjectPoolDic()
-    {
-        for (eActorType i = eActorType.None; i < eActorType.End; ++i)
-            objectPool[i] = new Dictionary<int, MemoryPool<Actor>>();
-    }
+
 
     protected override int GetPoolCapacity(eActorType type)
     {

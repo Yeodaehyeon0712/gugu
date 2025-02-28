@@ -3,14 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Factory<T,TType> where T : PoolingObject where TType:System.Enum
+public abstract class Factory<T,TType> where T : PoolingObject<TType> where TType:System.Enum
 {
     #region Fields
-    Transform instanceRoot;
-    uint currentWorldID;
-    protected Dictionary<uint, T> spawnedObjectDic = new Dictionary<uint, T>();
     protected  Dictionary<TType ,Dictionary<int, MemoryPool<T>>> objectPool = new Dictionary<TType, Dictionary<int, MemoryPool<T>>>();
     public Dictionary<uint, T> GetSpawnedObjects => spawnedObjectDic;
+    protected Dictionary<uint, T> spawnedObjectDic = new Dictionary<uint, T>();
+
+    Transform instanceRoot;
+    uint currentWorldID;
     #endregion
 
     #region Factory Method
@@ -18,7 +19,14 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     {
         this.instanceRoot = instanceRoot;
         currentWorldID = 0;
-        CreateObjectPoolDic();
+        CreateObjectPool();
+    }
+    void CreateObjectPool()
+    {
+        foreach (TType type in System.Enum.GetValues(typeof(TType)))
+        {
+            objectPool[type] = new Dictionary<int, MemoryPool<T>>();
+        }
     }
     #endregion
 
@@ -52,7 +60,7 @@ public abstract class Factory<T,TType> where T : PoolingObject where TType:Syste
     #endregion
 
     #region Pooling Method
-    protected abstract void CreateObjectPoolDic();
+
     protected abstract int GetPoolCapacity(TType type);
 
     void CheckObjectPool(TType type,int objectID)

@@ -1,14 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Actor : PoolingObject
+public abstract class Actor : PoolingObject<eActorType>
 {
     #region Fields
     //Fields
     public long Index => index;
     protected long index;
-    public eActorType ActorType => type;
-    protected eActorType type;
     public eActorState ActorState
     {
         get => state;
@@ -39,7 +37,7 @@ public abstract class Actor : PoolingObject
     #region Init Method
     public virtual void Initialize(eActorType type, long index, int objectID)
     {
-        base.Initialize(objectID);
+        base.Initialize(type,objectID);
         this.type = type;
         this.index = index;
         attachment = GetComponentInChildren<Attachment>();

@@ -2,13 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PoolingObject : MonoBehaviour
+public abstract class PoolingObject<TType> : MonoBehaviour where TType : System.Enum
 {
     #region Fields
-    public uint WorldID=>worldID;
-    protected uint worldID;
-    public int ObjectID { get=>objectID; set=>objectID=value; }
+    public TType Type => type;
+    protected TType type;
+    public int ObjectID => objectID;
     protected int objectID;
+    public uint WorldID => worldID;
+    protected uint worldID;
     public bool ResetParent => resetParent;
     protected bool resetParent;
 
@@ -16,11 +18,12 @@ public abstract class PoolingObject : MonoBehaviour
     #endregion
 
     #region Pooling Method
-    protected void Initialize(int objectID)
+    protected void Initialize(TType type, int objectID)
     {
+        this.type = type;
         this.objectID = objectID;
     }
-    public virtual void Spawn(uint worldID,Vector2 position)
+    public virtual void Spawn(uint worldID, Vector2 position)
     {
         this.worldID = worldID;
         transform.position = position;

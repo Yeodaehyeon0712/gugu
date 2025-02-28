@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
  
-public class BaseEffect : PoolingObject
+public class BaseEffect : PoolingObject<eEffectType>
 {
     #region Fields
     //Effect Fields
     public long Index => index;
     [SerializeField] protected long index;
-    public eEffectType EffectType=>type;
-    [SerializeField]protected eEffectType type;
 
     //Builder Fields
     [Space]
@@ -42,7 +40,7 @@ public class BaseEffect : PoolingObject
     }
     public virtual BaseEffect Initialize(eEffectType type,long index, int objectID)
     {
-        base.Initialize(objectID);
+        base.Initialize(type,objectID);
         this.type = type;
         this.index = index;
         return this;
@@ -89,7 +87,7 @@ public class BaseEffect : PoolingObject
         if ((builderAttribute & eEffectAttribute.Overlap) == 0) return;
 
         var actor = collision.GetComponentInParent<Actor>();
-        if (actor == null || actor.ActorType != overlapTargetType || actor.ActorState == eActorState.Death)
+        if (actor == null || actor.Type != overlapTargetType || actor.ActorState == eActorState.Death)
             return;
 
         AttackHandler attackHandler = new AttackHandler(casterID, actor.WorldID, damage, isCritical);
