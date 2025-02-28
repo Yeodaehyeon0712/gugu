@@ -2,10 +2,8 @@
 #region Actor
 public enum eActorType:uint
 {
-    None,
     Character,
     Enemy,
-    End
 }
 public enum eActorState
 {
@@ -96,11 +94,9 @@ public enum eLanguage
 #region Effect
 public enum eEffectType
 {
-    None,
     Projectile,
     Crash,
     Shape,//To Do :추후 더 좋은 이름으로 변경 하자 
-    End
 }
 public enum eEffectChainCondition
 {
