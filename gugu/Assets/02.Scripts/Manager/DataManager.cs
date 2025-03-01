@@ -14,6 +14,8 @@ public class DataManager : TSingletonMono<DataManager>
     public static SkillTable SkillTable;
     public static EffectTable EffectTable;
     public static StatusTable StatusTable;
+    public static ItemTable ItemTable;
+
 
     protected override void OnInitialize()
     {
@@ -33,6 +35,8 @@ public class DataManager : TSingletonMono<DataManager>
         EffectTable.Reload();
         StatusTable = LoadTable<StatusTable>(eTableName.StatusTable);
         StatusTable.Reload();
+        ItemTable = LoadTable<ItemTable>(eTableName.ItemTable);
+        ItemTable.Reload();
         IsLoad = true;      
     }
     public void InitAddressableSystem()

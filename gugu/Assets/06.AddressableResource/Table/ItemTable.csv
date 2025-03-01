@@ -1,0 +1,4 @@
+Index,Name,ItemType,ItemValue,NameKey,DurationTime,ResourcePath,IconPath
+1,BlueGem,Gem,1|4,1,200,Item/BlueGem.prefab,Icon/Status/BlueGem.png
+2,GreenGem,Gem,5|10,1,200,Item/GreenGem.prefab,Icon/Status/GreenGem.png
+3,RedGem,Gem,20|30,1,200,Item/RedGem.prefab,Icon/Status/RedGem.png

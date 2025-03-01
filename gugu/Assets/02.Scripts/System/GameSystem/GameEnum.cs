@@ -65,6 +65,7 @@ public enum eTableName
     SkillTable=1<<5,
     EffectTable=1<<6,
     StatusTable=1<<7,
+    ItemTable = 1 << 8,
     All = ~0,
 }
 

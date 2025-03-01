@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ItemFactory : Factory<BaseItem, eItemType>
 {
+    Dictionary<long,Data.ItemData> itemDic;
     public ItemFactory(Transform instanceRoot) : base(instanceRoot)
     {
-
+        itemDic = DataManager.ItemTable.GetItemDic;
     }
     protected override int GetPoolCapacity(eItemType type)
     {
@@ -18,7 +19,8 @@ public class ItemFactory : Factory<BaseItem, eItemType>
 
     protected override string GetResourcePath(eItemType type, int objectID)
     {
-        return "Item/Gem_S.prefab";//이건 아이템 테이블을 만들어야 해 ..
+        return itemDic[objectID].ResourcePath;
+        //return DataManager.ItemTable[objectID].ResourcePath;
     }
 
     protected override void InitializeObject(BaseItem obj, eItemType type, int objectID)

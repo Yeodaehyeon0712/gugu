@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5353375352532220369}
   - component: {fileID: 5353375352532220368}
   m_Layer: 12
-  m_Name: Gem_S
+  m_Name: BlueGem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

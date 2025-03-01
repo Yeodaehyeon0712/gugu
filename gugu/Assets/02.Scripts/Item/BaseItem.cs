@@ -5,26 +5,39 @@ using UnityEngine;
 public class BaseItem : PoolingObject<eItemType>
 {
     #region Fields
-    [Space]
-    [Header("Duration")]
-    [SerializeField] protected float durationTime;
-    [SerializeField] float elapsedTime;
+    Data.ItemData itemData;
+    bool isActive;
+    float durationTime;
+    float elapsedTime;
+    #endregion
+
+    #region Pooling Method
+    public override void Initialize(eItemType type, int objectID)
+    {
+        base.Initialize(type, objectID);
+        itemData = DataManager.ItemTable[objectID];
+    }
+    public override void Spawn(uint worldID, Vector2 position)
+    {
+        base.Spawn(worldID, position);
+        isActive = true;
+        durationTime = itemData.DurationTime;
+    }
+    protected override void ReturnToPool()
+    {
+        ItemManager.Instance.RegisterToItemPool(worldID, type, objectID);
+    }
     #endregion
 
     #region Item Method
-    protected override void ReturnToPool()
-    {
-        ItemManager.Instance.RegisterToItemPool(worldID, type,objectID);
-    }
     void OnItemEffect()
     {
         switch (type)
         {
             case eItemType.Gem:
-                //플레이어의 경험치 증진
+                Debug.Log(itemData.GetValue()+"만큼 섭취");
                 break;
             case eItemType.Heart:
-                //캐릭터의 체력 회복     
                 break;
         }
         Clean(0);
@@ -32,14 +45,17 @@ public class BaseItem : PoolingObject<eItemType>
     #endregion
 
     #region Unity API
-    //protected virtual void Update()
-    //{
-    //    elapsedTime += Time.deltaTime;
-    //    if (elapsedTime > durationTime)
-    //        Clean(0);
-    //}
+    protected virtual void Update()
+    {
+        if (isActive == false) return;
+
+        elapsedTime += TimeManager.DeltaTime;
+        if (elapsedTime > durationTime)
+            Clean(0);
+    }
     protected override void OnClean()
     {
+        isActive = false;
         durationTime = 0;
         elapsedTime = 0;
         base.OnClean();
@@ -51,11 +67,7 @@ public class BaseItem : PoolingObject<eItemType>
         if (actor == null || actor.Type != eActorType.Character || actor.ActorState == eActorState.Death)
             return;
 
-        Debug.Log("아이템 섭취");
-
-        Clean(0);
+        OnItemEffect();
     }
     #endregion
-
-
 }
