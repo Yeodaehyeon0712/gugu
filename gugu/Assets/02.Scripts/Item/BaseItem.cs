@@ -35,7 +35,7 @@ public class BaseItem : PoolingObject<eItemType>
         switch (type)
         {
             case eItemType.Gem:
-                Debug.Log(itemData.GetValue()+"∏∏≈≠ º∑√Î");
+                Player.GetExp(itemData.GetValue());
                 break;
             case eItemType.Heart:
                 break;

@@ -104,16 +104,27 @@ public static class Player
     #endregion
 
     #region LevelUp
-    static float exp;
-    public static void Eat()
+    static float currentExp;
+    static float nextLevelExp;
+    static float currentLevel;
+    public static float Level => currentLevel;
+
+    public static void GetExp(float exp)
     {
-        var targetExp = 3;
-        if (exp < targetExp)
+        currentExp += exp;
+        if (currentExp < nextLevelExp)
             LevelUp();
     }
     public static void LevelUp()
     {
+        currentLevel++;
+        SetNextLevelExp();
         UIManager.Instance.LevelUpPopUpUI.Enable();
+    }
+    public static void SetNextLevelExp()
+    {
+        var nextLevel = currentLevel + 1;
+        nextLevelExp = 10 + 5*(nextLevel - 1);
     }
     #endregion
 }
