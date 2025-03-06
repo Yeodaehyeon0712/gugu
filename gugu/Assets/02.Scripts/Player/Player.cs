@@ -22,6 +22,9 @@ public static class Player
     {
         PlayerCharacter = actor;
         //일단 이거 위치 고민
+        currentLevel = 1;
+        currentExp = 0;
+        SetNextLevelExp();
         SetAvailableSkillList();
         RegisterSkill(DataManager.CharacterTable[actor.ObjectID].DefaultSkillKey);
         //Camera
@@ -112,7 +115,7 @@ public static class Player
     public static void GetExp(float exp)
     {
         currentExp += exp;
-        if (currentExp < nextLevelExp)
+        if (currentExp >= nextLevelExp)
             LevelUp();
     }
     public static void LevelUp()
