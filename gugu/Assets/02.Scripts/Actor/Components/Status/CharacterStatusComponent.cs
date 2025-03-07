@@ -45,16 +45,18 @@ public class CharacterStatusComponent : StatusComponent
     }
     public void RecomputeStat(eStatusType type)
     {
-        var value = DataManager.StatusTable[type].DefaultValue;
-        if(DataManager.StatusTable[type].CalculateType==eCalculateType.Percentage)
+        var statusData = DataManager.StatusTable[type];
+
+        float defaultValue = statusData.DefaultValue;
+        float enforceValue = statusData.GetValue(Player.snapShot.GetStatusLevel(type));
+        float equipmentValue = 1;
+
+        computedStatusDic[type] = statusData.CalculateType switch
         {
-            value *= DataManager.StatusTable[type].GetValue(Player.snapShot.GetStatusLevel(type));
-        }
-        else
-        {
-            value += DataManager.StatusTable[type].GetValue(Player.snapShot.GetStatusLevel(type));
-        }
-        computedStatusDic[type] = value;
+            eCalculateType.Flat => defaultValue + enforceValue + equipmentValue,
+            eCalculateType.Percentage => defaultValue * (1 + (0.01f * enforceValue)) * equipmentValue,
+            _ => defaultValue
+        };
     }
     #endregion
 }
