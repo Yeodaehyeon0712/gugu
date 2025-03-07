@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class Player 
 {
+    public static SnapShotDataProperty snapShot;
     #region Fields
     public static Actor PlayerCharacter;
     //추후 하나의 데이터 혹은 클래스로 묶을 것들
