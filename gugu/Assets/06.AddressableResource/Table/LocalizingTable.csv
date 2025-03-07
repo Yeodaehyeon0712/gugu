@@ -33,8 +33,34 @@ Key,EN,KR
 1201,Summons {0} blades that rotate around,주위를 회전하는 \n{0}개의 회전칼날을 소환
 1202,"Fire Arrow ,,",불화살을 전방으로 발사
 1301,MaxHP,최대 체력
-1302,MoveSpeed,이동 속도
-1303,Attack Damage,공격력
-1331,MaxHP Explanation{0},최대 체력 설명
-1332,MoveSpeed Exp,이동 속도 설명
-1333,AttackDamage Exp,공격력 설명
+1302,Recovery,회복
+1303,Armor,방어력
+1304,MoveSpeed,이동속도
+1305,Might,피해량
+1306,AttackSpeed,투사체 속도
+1307,Duration,지속시간
+1308,Area,공격 범위
+1309,CoolTime,쿨타임
+1310,Amount,투사체 수
+1311,Revival,부활
+1312,Magnet,자석
+1313,Luck,운
+1314,Growth,성장
+1315,Greed,탐욕
+1316,Curse,저주
+1321,Increases maximum HP by 10% per rank,랭크당 최대 체력이 10% 증가한다
+1322,Increases HP recovery by 0.1 per second per rank,랭크당 초당 체력 회복량이 0.1 증가한다
+1323,Reduces damage taken by 1 per rank,랭크당 피격 피해량이 1 줄어든다
+1324,Increases movement speed by 5% per rank,랭크당 이동 속도가 5% 빨라진다
+1325,Increases damage dealt by 5% per rank,랭크당 피해량이 5% 증가한다
+1326,Increases projectile speed by 10% per rank,랭크당 투사체가 10% 빨라진다
+1327,Extends weapon effect duration by 15% per rank,랭크당 무기의 효과 지속 시간이 15% 연장된다
+1328,Increases attack range by 5% per rank,랭크당 공격 범위가 5% 증가한다
+1329,Reduces weapon cooldown by 2.5% per rank,랭크당 무기 쿨타임이 2.5% 감소한다
+1330,Fires 1 additional projectile,투사체를 1개 더 발사한다
+1331,Revives once at 50% HP,50%의 체력으로 1회 부활한다
+1332,Increases item pickup range by 25% per rank,랭크당 아이템 획득 범위가 25% 증가한다
+1333,Increases luck by 10% per rank,랭크당 행운이 10% 증가한다
+1334,Grants an additional 3% experience per rank,랭크당 3%의 추가 경험치를 획득한다
+1335,Grants an additional 10% gold per rank,랭크당 10%의 추가 골드를 획득한다
+1336,"Increases enemy speed, HP, quantity, and spawn rate by 10% per rank","랭크당 10%씩 적들의 속도, 체력, 개체수, 스폰율이 증가한다"
