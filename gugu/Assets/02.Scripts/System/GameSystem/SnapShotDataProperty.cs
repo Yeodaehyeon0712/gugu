@@ -10,12 +10,17 @@ public class SnapShotData
 }
 public class SnapShotDataProperty : JsonSerializableData<SnapShotData, SnapShotDataProperty>
 {
+    public SnapShotDataProperty InitializeSnapShot()
+    {
+        base.Initialize();
+        return this;
+    }
     protected override void SetDefaultValue()
     {
         data = new SnapShotData();
-        for (eStatusType type = eStatusType.None+1; type < eStatusType.End; type++)
+        foreach(eStatusType a in System.Enum.GetValues(typeof(eStatusType)))
         {
-            data.statusLevelDic[type] = 0;
+            data.statusLevelDic[a] = 0;
         }
     }
     public int GetStatusLevel(eStatusType type)

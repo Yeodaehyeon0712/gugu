@@ -15,15 +15,11 @@ public class CharacterStatusComponent : StatusComponent
     }
     public override void SetDefaultStatus()
     {
-        for(eStatusType i=eStatusType.None+1;i<eStatusType.End;++i)
+        foreach (eStatusType type in System.Enum.GetValues(typeof(eStatusType)))
         {
-            RecomputeStat(i);
+            RecomputeStat(type);
         }
     }
-
-    //1. 디폴트 벨류를 산출한다 .
-    //2 . 먼저 스탯의 배율을 곱한다 .
-    //3 . 다음은 캐릭터의 배율을 곱한다 . ->근데 여기까지는 초기화 부분에서 가능한거잖아 .
     public void LevelUpItem(eStatusType type)
     {
         //if (itemLevelDic.TryGetValue(type, out var level))
@@ -48,7 +44,7 @@ public class CharacterStatusComponent : StatusComponent
         var statusData = DataManager.StatusTable[type];
 
         float defaultValue = statusData.DefaultValue;
-        float enforceValue = statusData.GetValue(Player.snapShot.GetStatusLevel(type));
+        float enforceValue = statusData.GetValue(Player.SnapShot.GetStatusLevel(type));
         float equipmentValue = 1;
 
         computedStatusDic[type] = statusData.CalculateType switch

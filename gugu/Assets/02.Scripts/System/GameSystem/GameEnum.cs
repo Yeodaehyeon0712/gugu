@@ -35,11 +35,22 @@ public enum eSkillState
 }
 public enum eStatusType
 {
-    None,
     MaxHP,
+    Recovery,
+    Armor,
     MoveSpeed,
-    AttackDamage,
-    End
+    Might,
+    AttackSpeed,
+    Duration,
+    Area,
+    CoolTime,
+    Amount,
+    Revival,
+    Magnet,
+    Luck,
+    Growth,
+    Greed,
+    Curse,
 }
 public enum eCalculateType
 {

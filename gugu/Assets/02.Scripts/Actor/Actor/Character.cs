@@ -58,7 +58,9 @@ public class Character : Actor
         if (CheckTargetLayer(collision.gameObject.layer)==false /*|| hasDamagedThisFrame*/) return;
 
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        var damage = enemy.Status.GetStatus(eStatusType.AttackDamage);
+        var damage = enemy.Status.GetStatus(eStatusType.Might);
+        //To Do : 이 부분 수정
+
 
         Hit(TimeManager.DeltaTime * damage);
         //hasDamagedThisFrame = true;

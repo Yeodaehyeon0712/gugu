@@ -4,8 +4,11 @@ using UnityEngine;
 
 public static class Player 
 {
-    public static SnapShotDataProperty snapShot;
+    public static SnapShotDataProperty SnapShot => snapShotDataProperty;
+    static SnapShotDataProperty snapShotDataProperty;
+
     #region Fields
+    public static bool IsLoad = false;
     public static Actor PlayerCharacter;
     //추후 하나의 데이터 혹은 클래스로 묶을 것들
     public static Dictionary<long,BaseSkill> IngameSkillDic = new Dictionary<long, BaseSkill>();
@@ -16,8 +19,8 @@ public static class Player
     #region Init Method
     public static void Initialize()
     {
-        //여기서 기본 가지고 있는 데이터를 받는다 .
-        
+        snapShotDataProperty = SnapShotDataProperty.Instance.InitializeSnapShot();
+        IsLoad = true;
     }
     public static void RegisterPlayer(Actor actor)
     {

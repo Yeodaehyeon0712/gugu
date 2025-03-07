@@ -31,10 +31,6 @@ public class TitleScene : BaseScene
         SnapShotDataProperty.Instance.Initialize();
         await UniTask.WaitUntil(() => SnapShotDataProperty.Instance.IsLoad);
 
-        //이건 위치 변경 필요
-        Player.Initialize();
-        Player.snapShot = SnapShotDataProperty.Instance;
-
         TimeManager.Instance.Initialize();
         await UniTask.WaitUntil(() => TimeManager.Instance.IsLoad);
 
@@ -68,8 +64,8 @@ public class TitleScene : BaseScene
         ItemManager.Instance.Initialize();
         await UniTask.WaitUntil(() => ItemManager.Instance.IsLoad);
 
-
-
+        Player.Initialize();
+        await UniTask.WaitUntil(() =>Player.IsLoad);
 
         text_Description.text = "Complete";
         button_NextScene.gameObject.SetActive(true);
