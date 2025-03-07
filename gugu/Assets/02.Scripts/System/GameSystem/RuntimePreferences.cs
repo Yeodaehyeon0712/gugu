@@ -22,56 +22,14 @@ public class Preference
         return (Preference)MemberwiseClone();
     }
 }
-public class RuntimePreference : TSingletonMono<RuntimePreference>
+public class RuntimePreference : JsonSerializableData<Preference,RuntimePreference>
 {
     #region Fields
-    [SerializeField]
-    Preference preference;
-    public static Preference Preference => Instance.preference;
     #endregion
-    public bool GetPreference(ePreference preferenceType)
-    {
-        return preferenceType switch
-        {
-            ePreference.BGM => preference.BGM,
-            ePreference.SFX => preference.SFX,
-            ePreference.Alram => preference.Alram,
-            ePreference.JoyStick => preference.JoyStick,
-            ePreference.Vibration => preference.Vibration,
-            ePreference.Effect => preference.Effect,
-            _ =>false,
-        };
-    }
-    public void TogglePreference(ePreference preferenceType)
-    {
-        switch (preferenceType)
-        {
-            case ePreference.BGM:
-                preference.BGM = !preference.BGM; break;
-            case ePreference.SFX:
-                preference.SFX = !preference.SFX; break;
-            case ePreference.Alram:
-                preference.Alram = !preference.Alram; break;
-            case ePreference.JoyStick:
-                preference.JoyStick = !preference.JoyStick; break;
-            case ePreference.Vibration:
-                preference.Vibration = !preference.Vibration; break;
-            case ePreference.Effect:
-                preference.Effect = !preference.Effect; break;
-        }
-    }
-    protected override void OnInitialize()
-    {
-        if (LoadPreference()==false)
-        {
-            DefaultSetting();
-            SavePreference();
-        }
-        IsLoad = true;
-    }
 
+    #region Preference Method
     //언어 추가 시 LocalizingManager에서 추가 후 DefaultSetting 메소드에서도 추가
-    void DefaultSetting()
+    protected override void SetDefaultValue()
     {
         eLanguage language = eLanguage.EN;
         switch (Application.systemLanguage)
@@ -80,7 +38,7 @@ public class RuntimePreference : TSingletonMono<RuntimePreference>
                 language = eLanguage.KR;
                 break;
         }
-        preference = new Preference()
+        data = new Preference()
         {
             BGM = true,
             SFX = true,
@@ -91,52 +49,36 @@ public class RuntimePreference : TSingletonMono<RuntimePreference>
             Language = language,
         };
     }
-    public bool LoadPreference()
+    public bool GetPreference(ePreference preferenceType)
     {
-        if (File.Exists(GameConst.CacheDirectoryPath + "Preference.json")==false)
-            return false;
-
-        FileStream fs = new FileStream(GameConst.CacheDirectoryPath + "Preference.json", FileMode.Open);
-        byte[] byteArr = new byte[fs.Length];
-        try {
-            fs.Read(byteArr, 0, (int)fs.Length);
-        }
-        catch(IOException e) {
-            Debug.LogWarning(e);
-            fs.Close();
-            return false;
-        }
-        string str = null;
-        try {
-            str = Encoding.UTF8.GetString(byteArr);
-        }
-        catch {
-            Debug.LogWarning("Encoding Error");
-            fs.Close();
-            return false;
-        }
-        Preference preference = null;
-        try {
-            preference = JsonConvert.DeserializeObject<Preference>(str);
-        }
-        catch(JsonException e) {
-            Debug.LogWarning(e);
-            fs.Close();
-            return false;
-        }
-        if (preference != null)
+        return preferenceType switch
         {
-            this.preference = preference;
-        }
-        fs.Close();
-        return true;
+            ePreference.BGM => data.BGM,
+            ePreference.SFX => data.SFX,
+            ePreference.Alram => data.Alram,
+            ePreference.JoyStick => data.JoyStick,
+            ePreference.Vibration => data.Vibration,
+            ePreference.Effect => data.Effect,
+            _ =>false,
+        };
     }
-    public void SavePreference()
+    public void TogglePreference(ePreference preferenceType)
     {
-        FileStream fs = new FileStream(GameConst.CacheDirectoryPath + "Preference.json", FileMode.Create);
-        string json = JsonConvert.SerializeObject(preference, Formatting.None);
-        byte[] byteArray = Encoding.UTF8.GetBytes(json);
-        fs.Write(byteArray, 0, byteArray.Length);
-        fs.Close();
+        switch (preferenceType)
+        {
+            case ePreference.BGM:
+                data.BGM = !data.BGM; break;
+            case ePreference.SFX:
+                data.SFX = !data.SFX; break;
+            case ePreference.Alram:
+                data.Alram = !data.Alram; break;
+            case ePreference.JoyStick:
+                data.JoyStick = !data.JoyStick; break;
+            case ePreference.Vibration:
+                data.Vibration = !data.Vibration; break;
+            case ePreference.Effect:
+                data.Effect = !data.Effect; break;
+        }
     }
+    #endregion
 }

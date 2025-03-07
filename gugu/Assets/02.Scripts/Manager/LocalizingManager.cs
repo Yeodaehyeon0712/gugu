@@ -7,7 +7,7 @@ public class LocalizingManager : TSingletonMono<LocalizingManager>,ISubject<eLan
 {
     private List<IObserver<eLanguage>> observers = new List<IObserver<eLanguage>>();
     public static bool IsBeingDestroyed = false;
-    public eLanguage CurrentLanguage=> RuntimePreference.Preference.Language;
+    public eLanguage CurrentLanguage=> RuntimePreference.Data.Language;
 
     #region AbstractMethod
     protected override void OnInitialize()
@@ -35,16 +35,16 @@ public class LocalizingManager : TSingletonMono<LocalizingManager>,ISubject<eLan
     }  
     public void SetLanguage(eLanguage language)
     {
-        if (RuntimePreference.Preference.Language == language)
+        if (RuntimePreference.Data.Language == language)
             return;
 
-        RuntimePreference.Preference.Language = language;
-        RuntimePreference.Instance.SavePreference();
+        RuntimePreference.Data.Language = language;
+        RuntimePreference.Instance.SaveData();
         OnLanguageChanged();
     }
     void OnLanguageChanged()
     {
-        Notify(RuntimePreference.Preference.Language);
+        Notify(RuntimePreference.Data.Language);
     }
     #endregion  
 

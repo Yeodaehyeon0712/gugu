@@ -33,7 +33,7 @@ namespace Data
 
         void RecomputeLevel(long level)
         {
-            _currentLanguage = RuntimePreference.Preference.Language;
+            _currentLanguage = RuntimePreference.Data.Language;
             _lastComputeLevel = level;
             _lastFormatExplanation = LocalizingManager.Instance.GetLocalizing(ExplanationKey, _coefficientFormula.GetValue(level).ToString());          
         }
@@ -43,9 +43,9 @@ namespace Data
             {
                 RecomputeLevel(level);
             }
-            if (_currentLanguage != RuntimePreference.Preference.Language)
+            if (_currentLanguage != RuntimePreference.Data.Language)
             {
-                _currentLanguage = RuntimePreference.Preference.Language;              
+                _currentLanguage = RuntimePreference.Data.Language;              
                 _lastFormatExplanation = LocalizingManager.Instance.GetLocalizing(ExplanationKey, _coefficientFormula.GetValue(level).ToString());
             }
             return _lastFormatExplanation;

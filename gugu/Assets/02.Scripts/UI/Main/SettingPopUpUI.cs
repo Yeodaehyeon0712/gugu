@@ -14,7 +14,7 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
 
     //Preference
     Dictionary<ePreference, SlideToggle> preferenceToggleDic=new Dictionary<ePreference, SlideToggle>();
-    Preference Preference => RuntimePreference.Preference;
+    Preference Preference => RuntimePreference.Data;
     bool isDirty;
     SlideToggle bgmToggle;
     TextMeshProUGUI text_bgm;
@@ -96,7 +96,7 @@ public class SettingPopUpUI : PopUpUI//, IObserver<eLanguage>
     {
         if (isDirty)
         {
-            RuntimePreference.Instance.SavePreference();
+            RuntimePreference.Instance.SaveData();
             isDirty = false;
         }
         base.Disable();

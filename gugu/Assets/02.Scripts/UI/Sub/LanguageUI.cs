@@ -32,7 +32,7 @@ public class LanguageUI : PopUpUI
             btn_language.onClick.AddListener(() => OnClickLanguage(currentLanguage));
             languageButtonDic.Add(currentLanguage, btn_language);
             btn_language.GetComponentInChildren<TextMeshProUGUI>(true).text = LocalizingManager.Instance.GetLocalizing(201+(int)i);
-            btn_language.SetImage(currentLanguage == RuntimePreference.Preference.Language);
+            btn_language.SetImage(currentLanguage == RuntimePreference.Data.Language);
         }
     }
     protected override void OnRefresh()
@@ -41,11 +41,11 @@ public class LanguageUI : PopUpUI
     }
     void OnClickLanguage(eLanguage language)
     {
-        if (RuntimePreference.Preference.Language == language)
+        if (RuntimePreference.Data.Language == language)
             return;
-        languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: false);
+        languageButtonDic[RuntimePreference.Data.Language].SetImage(isOn: false);
         LocalizingManager.Instance.SetLanguage(language);
-        languageButtonDic[RuntimePreference.Preference.Language].SetImage(isOn: true);
+        languageButtonDic[RuntimePreference.Data.Language].SetImage(isOn: true);
         UIManager.Instance.SettingPopUpUI.SubUI = SettingPopUpUI.eSubUI.None;
     }
     

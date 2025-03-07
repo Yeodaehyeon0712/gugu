@@ -34,7 +34,7 @@ public class ControllerUI : BaseUI,IPointerDownHandler, IPointerUpHandler, IDrag
 
         controllerStartPos = controllerRect.anchoredPosition;
         joyStickStartPos = joyStickRect.anchoredPosition;
-        SetControllerAlpha(RuntimePreference.Preference.JoyStick ? 1 : 0);
+        SetControllerAlpha(RuntimePreference.Data.JoyStick ? 1 : 0);
     }
 
     protected override void OnRefresh()

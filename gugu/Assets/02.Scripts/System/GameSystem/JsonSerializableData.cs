@@ -3,10 +3,10 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
-public abstract class JsonSerializableData<T> : TSingletonMono<JsonSerializableData<T>> where T:class
+public abstract class JsonSerializableData<T,U> : TSingletonMono<U> where T:class where U: JsonSerializableData<T, U>
 {
     #region Fields
-    [SerializeField] T data;
+    [SerializeField] protected T data;
     public static T Data => Instance.data;
     #endregion
     protected override void OnInitialize()
