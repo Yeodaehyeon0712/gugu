@@ -77,6 +77,7 @@ public enum eTableName
     EffectTable=1<<6,
     StatusTable=1<<7,
     ItemTable = 1 << 8,
+    EquipmentTable=1<<9,
     All = ~0,
 }
 
