@@ -9,11 +9,7 @@ public static class Player
 
     #region Fields
     public static bool IsLoad = false;
-    public static Actor PlayerCharacter;
-    //추후 하나의 데이터 혹은 클래스로 묶을 것들
-    public static Dictionary<long,BaseSkill> IngameSkillDic = new Dictionary<long, BaseSkill>();
-    static List<long> availableSkillList=new List<long>();
-    static HashSet<long> selectedSkillSet=new HashSet<long>();
+    public static Character PlayerCharacter;
     #endregion
 
     #region Init Method
@@ -22,15 +18,13 @@ public static class Player
         snapShotDataProperty = SnapShotDataProperty.Instance.InitializeSnapShot();
         IsLoad = true;
     }
-    public static void RegisterPlayer(Actor actor)
+    public static void RegisterPlayer(Character actor)
     {
         PlayerCharacter = actor;
         //일단 이거 위치 고민
         currentLevel = 1;
         currentExp = 0;
-        SetNextLevelExp();
-        SetAvailableSkillList();
-        RegisterSkill(DataManager.CharacterTable[actor.ObjectID].DefaultSkillKey);
+        SetNextLevelExp();      
         //Camera
         CameraManager.Instance.RegisterFollowTarget(PlayerCharacter.transform);
         //Spawn Area
@@ -52,61 +46,6 @@ public static class Player
         //이것도 고민해바 , 이미 죽었다면 ?
         PlayerCharacter.Death(0f);
         PlayerCharacter = null;
-    }
-    #endregion
-
-    #region Skill
-    public static void SetAvailableSkillList()
-    {
-        foreach (var skill in DataManager.SkillTable.GetSkillDic.Values)
-        {
-            //만약 스킬이 잠겨있다면 더하기 않는다 
-            availableSkillList.Add(skill.Index);
-        }
-    }
-    public static HashSet<long> GetRandomSkillSet(int count)
-    {
-        selectedSkillSet.Clear();
-        int targetSkillCount = Mathf.Min(count, availableSkillList.Count);
-
-        while (selectedSkillSet.Count < targetSkillCount)
-        {
-            int randomIndex = Random.Range(0, availableSkillList.Count);
-            selectedSkillSet.Add(availableSkillList[randomIndex]);
-        }
-        return selectedSkillSet;
-    }
-    public static void RegisterSkill(long index)
-    {
-        if (IngameSkillDic.ContainsKey(index) || PlayerCharacter == null) return;
-
-        var skill = DataManager.SkillTable[index];
-        IngameSkillDic.Add(index,skill.RegisterSkill(PlayerCharacter));
-    }
-    public static void LevelUpSkill(long index)
-    {
-        if (IngameSkillDic.TryGetValue(index, out var skill) == false || skill.isMaxLevel) return;       
-        skill.LevelUpSkill();
-
-        if (skill.isMaxLevel&&availableSkillList.Contains(skill.Index))
-            availableSkillList.Remove(skill.Index);
-    }
-    public static void ResetSkills()
-    {
-        var keysToRemove = new List<long>(); 
-        foreach (var item in IngameSkillDic)
-        {
-            item.Value.UnregisterSkill();
-            keysToRemove.Add(item.Key); 
-        }
-
-        foreach (var key in keysToRemove)
-        {
-            IngameSkillDic.Remove(key);
-        }
-
-        availableSkillList.Clear();
-        selectedSkillSet.Clear();
     }
     #endregion
 
