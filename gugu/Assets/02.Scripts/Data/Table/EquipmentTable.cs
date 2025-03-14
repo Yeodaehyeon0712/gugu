@@ -27,6 +27,7 @@ public class EquipmentTable : TableBase
 {
     Dictionary<long, Data.EquipmentData> equipmentDic = new Dictionary<long, Data.EquipmentData>();
     public Dictionary<long, Data.EquipmentData> GetEquipmentDic => equipmentDic;
+    Dictionary<eStatusType, long> equipmentStatusDic;
     public Data.EquipmentData this[long index]
     {
         get
@@ -39,7 +40,15 @@ public class EquipmentTable : TableBase
     protected override void OnLoad()
     {
         LoadData(_tableName);
-        foreach (var contents in _dataDic)        
-            equipmentDic.Add(contents.Key, new Data.EquipmentData(contents.Key,contents.Value));
+        foreach (var contents in _dataDic)
+        {
+            var data = new Data.EquipmentData(contents.Key, contents.Value);
+            equipmentDic.Add(contents.Key, data);
+            equipmentStatusDic.Add(data.TargetStatus, data.Index);
+        }
+    }
+    public long GetEquipmentByStatus(eStatusType type)
+    {
+        return equipmentStatusDic.TryGetValue(type, out long index) ? index : 0;
     }
 }

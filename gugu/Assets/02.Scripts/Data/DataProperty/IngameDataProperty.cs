@@ -12,15 +12,25 @@ public class IngameData
     public List<long> AvailableSkillList;
     public HashSet<long> SelectedSkillSet;
     public Dictionary<long, BaseSkill> OwnedSkillDic;//List로 바꿀지도 ?
+
+    //Equipment
+    public List<long> AvailableEquipmentList;
+    public HashSet<long> SelectedEquipmentSet;
+    public Dictionary<long, long> OwnedEquipmentDic;
     #endregion
 
     public IngameData()
     {
         KillCount = 0;
         GoldCount = 0;
+        //Skill
         AvailableSkillList = new List<long>();
         SelectedSkillSet = new HashSet<long>();
         OwnedSkillDic = new Dictionary<long, BaseSkill>();
+        //Equipment
+        AvailableEquipmentList = new List<long>();
+        SelectedEquipmentSet = new HashSet<long>();
+        OwnedEquipmentDic = new Dictionary<long, long>();//Composed with Index,Level
     }
 }
 public class IngameDataProperty 
@@ -96,6 +106,60 @@ public class IngameDataProperty
         data.OwnedSkillDic.Clear();
         data.AvailableSkillList.Clear();
         data.SelectedSkillSet.Clear();
+    }
+    #endregion
+
+    #region Equipment Method
+    public void SetAvaiableEquipmentList()
+    {
+        var equipmentDic = DataManager.EquipmentTable.GetEquipmentDic;
+
+        foreach (var equipment in equipmentDic.Values)
+            data.AvailableEquipmentList.Add(equipment.Index);
+    }
+    public HashSet<long> GetRandomEquipmentSet(int count)//이건 고민 . 무한대로 뽑을 수도 있기에.
+    {
+        data.SelectedEquipmentSet.Clear();
+        int targetEquipmentCount = Mathf.Min(count, data.AvailableEquipmentList.Count);
+
+        while (data.SelectedEquipmentSet.Count < targetEquipmentCount)
+        {
+            int randomIndex = Random.Range(0, data.AvailableEquipmentList.Count);
+            data.SelectedEquipmentSet.Add(data.AvailableEquipmentList[randomIndex]);
+        }
+        return data.SelectedEquipmentSet;
+    }
+    public void SelectEquipment
+        (long index)
+    {
+        if (data.OwnedEquipmentDic.ContainsKey(index) == false)
+            RegisterEquipment(index);
+        else
+            LevelUpEquipment(index);
+    }
+    void RegisterEquipment(long index)
+    {
+        var skill = DataManager.EquipmentTable[index];
+        data.OwnedEquipmentDic.Add(index, 1);
+    }
+    void LevelUpEquipment(long index)
+    {
+        var level = data.OwnedEquipmentDic[index];
+        data.OwnedEquipmentDic[index]= level++;
+
+        if(level>=6)
+            data.AvailableSkillList.Remove(index);
+    }
+    public void ResetEquipment()
+    {
+        data.OwnedEquipmentDic.Clear();
+        data.AvailableEquipmentList.Clear();
+        data.SelectedEquipmentSet.Clear();
+    }
+    public float GetEquipmentValue(eStatusType type)
+    {
+        var key = DataManager.EquipmentTable.GetEquipmentByStatus(type);
+        return data.OwnedEquipmentDic.TryGetValue(key, out long level)? DataManager.EquipmentTable[key].GetValue(level):1f;
     }
     #endregion
 }
