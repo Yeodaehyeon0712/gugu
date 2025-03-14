@@ -4,8 +4,11 @@ using UnityEngine;
 
 public static class Player 
 {
-    public static SnapShotDataProperty SnapShot => snapShotDataProperty;
+    //Data
+    public static SnapShotDataProperty SnapShotData => snapShotDataProperty;
     static SnapShotDataProperty snapShotDataProperty;
+    public static IngameDataProperty InGameData => ingameDataProperty;
+    static IngameDataProperty ingameDataProperty;
 
     #region Fields
     public static bool IsLoad = false;
@@ -16,11 +19,13 @@ public static class Player
     public static void Initialize()
     {
         snapShotDataProperty = SnapShotDataProperty.Instance.InitializeSnapShot();
+        ingameDataProperty = new IngameDataProperty();
         IsLoad = true;
     }
     public static void RegisterPlayer(Character actor)
     {
         PlayerCharacter = actor;
+        ingameDataProperty.InitializeIngameData();
         //일단 이거 위치 고민
         currentLevel = 1;
         currentExp = 0;

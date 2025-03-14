@@ -55,7 +55,7 @@ public class LevelUpPopUpUI : PopUpUI
     void EnableLevelUpElement()
     {
         int elementCount = 1;
-        using (var enumerator = Player.PlayerCharacter.Skill.GetRandomSkillSet(elementCount).GetEnumerator())
+        using (var enumerator = Player.InGameData.GetRandomSkillSet(elementCount).GetEnumerator())
         {
             for (int i = 0; i < elementCount && enumerator.MoveNext(); i++)
             {

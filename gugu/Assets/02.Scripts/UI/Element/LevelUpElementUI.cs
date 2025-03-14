@@ -42,7 +42,7 @@ public class LevelUpElementUI : BaseUI
         //image_Icon.sprite=DataManager.AddressableSystem.//어드레서블 먼저 처리하기 .
         text_Title.text = LocalizingManager.Instance.GetLocalizing(skillData.NameKey);
         text_Description.text = LocalizingManager.Instance.GetLocalizing(skillData.ExplanationKey);
-        btn_LevelUp.onClick.AddListener(() => Player.PlayerCharacter.Skill.RegisterSkill(skill.Index));
+        btn_LevelUp.onClick.AddListener(() => Player.InGameData.SelectSkill(skill.Index));
     }
     public void InitStatusElement()
     {
