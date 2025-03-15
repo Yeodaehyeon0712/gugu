@@ -27,7 +27,7 @@ public class EquipmentTable : TableBase
 {
     Dictionary<long, Data.EquipmentData> equipmentDic = new Dictionary<long, Data.EquipmentData>();
     public Dictionary<long, Data.EquipmentData> GetEquipmentDic => equipmentDic;
-    Dictionary<eStatusType, long> equipmentStatusDic;
+    Dictionary<eStatusType, long> equipmentStatusDic=new Dictionary<eStatusType, long>();
     public Data.EquipmentData this[long index]
     {
         get
