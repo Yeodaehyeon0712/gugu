@@ -8,7 +8,8 @@ public enum eActorType:uint
 public enum eActorState
 {
     None,
-    Battle,
+    Spawn,
+    Active,
     Death,
     Clean,
 }

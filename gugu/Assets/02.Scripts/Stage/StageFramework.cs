@@ -57,6 +57,7 @@ public abstract class StageFramework
             try
             {
                 CurrentFrameworkState = eStageFrameworkState.InProgress;
+                Player.PlayerCharacter.ActiveActor();
                 await ProcessFrameworkAsync(stageIndex, frameworkCTS.Token);
             }
             catch(System.OperationCanceledException)

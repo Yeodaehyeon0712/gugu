@@ -49,12 +49,12 @@ public abstract class Actor : PoolingObject<eActorType>
     #region Unity API
     protected virtual void Update()
     {
-        if (state != eActorState.Battle) return;
+        if (state != eActorState.Active) return;
         UpdateComponent(TimeManager.DeltaTime);
     }
     protected virtual void FixedUpdate()
     {
-        if (controllerComponent == null||state != eActorState.Battle) return;
+        if (controllerComponent == null||state != eActorState.Active) return;
         controllerComponent.FixedComponentUpdate(TimeManager.FixedDeltaTime);
     }
     #endregion
@@ -62,8 +62,12 @@ public abstract class Actor : PoolingObject<eActorType>
     #region Actor Method
     public override void Spawn(uint worldID, Vector2 position)
     {
-        ActorState = eActorState.Battle;
+        ActorState = eActorState.Spawn;
         base.Spawn(worldID, position);
+    }
+    public virtual void ActiveActor()
+    {
+        ActorState = eActorState.Active;
     }
     public virtual void Death(float time=2.5f)
     {
@@ -104,7 +108,7 @@ public abstract class Actor : PoolingObject<eActorType>
     {
         switch (state)
         {
-            case eActorState.Battle:
+            case eActorState.Active:
                 ActiveComponent();
                 currentHP = statusComponent.GetStatus(eStatusType.MaxHP);
                 break;
