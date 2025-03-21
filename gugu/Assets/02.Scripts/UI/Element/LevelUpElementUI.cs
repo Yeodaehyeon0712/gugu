@@ -36,21 +36,37 @@ public class LevelUpElementUI : BaseUI
     #endregion
 
     #region ElementMethod
-    public void InitSkillElement(BaseSkill skill)
+    public void InitElement(long index, bool isSkill)
     {
-        var skillData = skill.Data;
-        //image_Icon.sprite=DataManager.AddressableSystem.//어드레서블 먼저 처리하기 .
-        text_Title.text = LocalizingManager.Instance.GetLocalizing(skillData.NameKey);
-        text_Description.text = LocalizingManager.Instance.GetLocalizing(skillData.ExplanationKey);
-        btn_LevelUp.onClick.AddListener(() => Player.InGameData.SelectSkill(skill.Index));
-    }
-    public void InitStatusElement()
-    {
+        var (titleKey, explanationKey, selectAction) = GetElementData(index, isSkill);
 
+        text_Title.text = LocalizingManager.Instance.GetLocalizing(titleKey);
+        text_Description.text = LocalizingManager.Instance.GetLocalizing(explanationKey);
+        btn_LevelUp.onClick.AddListener(() =>
+        {
+            selectAction.Invoke();
+            UIManager.Instance.LevelUpPopUpUI.Disable();
+        });
+
+        Enable();
+    }
+    private (int, int, System.Action) GetElementData(long index, bool isSkill)
+    {
+        if (isSkill)
+        {
+            var skillData = DataManager.SkillTable[index].Data;
+            return (skillData.NameKey, skillData.ExplanationKey, () => Player.InGameData.SelectSkill(index));
+        }
+        else
+        {
+            var equipData = DataManager.EquipmentTable[index];
+            return (equipData.NameKey, equipData.ExplanationKey, () => Player.InGameData.SelectEquipment(index));
+        }
     }
     void ClearElement()
     {
         btn_LevelUp.onClick.RemoveAllListeners();
     }
     #endregion
+    
 }

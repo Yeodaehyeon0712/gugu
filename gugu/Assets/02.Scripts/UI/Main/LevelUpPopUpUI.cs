@@ -39,29 +39,45 @@ public class LevelUpPopUpUI : PopUpUI
     #region Base UI Method
     public override void Enable()
     {
-        base.Enable();
         TimeManager.Instance.IsActiveTimeFlow = false;
         EnableLevelUpElement();
+        base.Enable();
     }
     public override void Disable()
     {
-        base.Disable();
         TimeManager.Instance.IsActiveTimeFlow = true;
         DisableLevelUpElement();
+        base.Disable();
     }
     #endregion
 
     #region LevelUp PopUp Method
     void EnableLevelUpElement()
     {
-        int elementCount = 1;
-        using (var enumerator = Player.InGameData.GetRandomSkillSet(elementCount).GetEnumerator())
+        var (skillCount, equipCount) = GenerateRandomPair(3);
+        var skillSet = Player.InGameData.GetRandomSkillSet(skillCount);
+        var equipSet = Player.InGameData.GetRandomEquipmentSet(equipCount);
+
+        int elementCount = 0;
+
+        foreach (var skillId in skillSet)
         {
-            for (int i = 0; i < elementCount && enumerator.MoveNext(); i++)
-            {
-                elements[i].InitSkillElement(DataManager.SkillTable[enumerator.Current]);
-            }
+            if (elementCount >= skillCount) break;
+            elements[elementCount++].InitElement(skillId, isSkill:true);
         }
+
+        foreach (var equip in equipSet)
+        {
+            if (elementCount >= equipCount) break;
+            elements[elementCount++].InitElement(equip, isSkill: false);
+        }
+    }
+    public (int skill, int equip) GenerateRandomPair(int targetSum)
+    {
+        int skillCount = Random.Range(0, targetSum + 1); 
+        int equipmentCount = targetSum - skillCount; 
+
+        return (skillCount, equipmentCount);
     }
     void DisableLevelUpElement()
     {
