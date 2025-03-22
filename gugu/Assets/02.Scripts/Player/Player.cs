@@ -5,8 +5,6 @@ using UnityEngine;
 public static class Player 
 {
     //Data
-    public static SnapShotDataProperty SnapShotData => snapShotDataProperty;
-    static SnapShotDataProperty snapShotDataProperty;
     public static IngameDataProperty InGameData => ingameDataProperty;
     static IngameDataProperty ingameDataProperty;
 
@@ -18,7 +16,6 @@ public static class Player
     #region Init Method
     public static void Initialize()
     {
-        snapShotDataProperty = SnapShotDataProperty.Instance.InitializeSnapShot();
         ingameDataProperty = new IngameDataProperty();
         IsLoad = true;
     }

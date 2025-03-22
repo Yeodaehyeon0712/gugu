@@ -8,13 +8,9 @@ public class SnapShotData
     public Dictionary<eStatusType, int> statusLevelDic=new Dictionary<eStatusType, int>();
 
 }
+//Have to Change Save In Server 
 public class SnapShotDataProperty : JsonSerializableData<SnapShotData, SnapShotDataProperty>
 {
-    public SnapShotDataProperty InitializeSnapShot()
-    {
-        base.Initialize();
-        return this;
-    }
     protected override void SetDefaultValue()
     {
         data = new SnapShotData();

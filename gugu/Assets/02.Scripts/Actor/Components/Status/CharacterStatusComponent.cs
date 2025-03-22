@@ -44,7 +44,7 @@ public class CharacterStatusComponent : StatusComponent
         var statusData = DataManager.StatusTable[type];
 
         float defaultValue = statusData.DefaultValue;
-        float enforceValue = statusData.GetValue(Player.SnapShotData.GetStatusLevel(type));
+        float enforceValue = statusData.GetValue(SnapShotDataProperty.Instance.GetStatusLevel(type));
         float equipmentValue = Player.InGameData.GetEquipmentValue(type);
 
         computedStatusDic[type] = statusData.CalculateType switch
