@@ -11,7 +11,7 @@ public class IngameData
     //Skill
     public List<long> AvailableSkillList;
     public HashSet<long> SelectedSkillSet;
-    public Dictionary<long, BaseSkill> OwnedSkillDic;//List로 바꿀지도 ?
+    public Dictionary<long, BaseSkill> OwnedSkillDic;
 
     //Equipment
     public List<long> AvailableEquipmentList;
@@ -63,7 +63,7 @@ public class IngameDataProperty
         foreach (var skill in skillDic.Values)
             data.AvailableSkillList.Add(skill.Index);
     }
-    public HashSet<long> GetRandomSkillSet(int count)//이건 고민 . 무한대로 뽑을 수도 있기에.
+    public HashSet<long> GetRandomSkillSet(int count)
     {
         data.SelectedSkillSet.Clear();
         int targetSkillCount = Mathf.Min(count, data.AvailableSkillList.Count);
@@ -117,7 +117,7 @@ public class IngameDataProperty
         foreach (var equipment in equipmentDic.Values)
             data.AvailableEquipmentList.Add(equipment.Index);
     }
-    public HashSet<long> GetRandomEquipmentSet(int count)//이건 고민 . 무한대로 뽑을 수도 있기에.
+    public HashSet<long> GetRandomEquipmentSet(int count)
     {
         data.SelectedEquipmentSet.Clear();
         int targetEquipmentCount = Mathf.Min(count, data.AvailableEquipmentList.Count);
@@ -160,6 +160,55 @@ public class IngameDataProperty
     {
         var key = DataManager.EquipmentTable.GetEquipmentByStatus(type);
         return data.OwnedEquipmentDic.TryGetValue(key, out long level)? DataManager.EquipmentTable[key].GetValue(level):1f;
+    }
+    #endregion
+    #region Temp
+    public int GetAvailableSkillCount()
+    {
+        var availableCount = 6;
+
+        foreach (var skill in data.OwnedSkillDic)
+        {
+            if (skill.Value.isMaxLevel)
+                availableCount--;
+        }
+
+        return availableCount;
+    }
+    public int GetAvailableEquipCount()
+    {
+        var availableCount = 6;
+
+        foreach (var equip in data.OwnedEquipmentDic)
+        {
+            if (equip.Value == 6)
+                availableCount--;
+        }
+        return availableCount;
+    }
+    public (int skill, int equip) GenerateRandomPair()
+    {
+        int skillCont = 0;
+        int equipCount = 0;
+
+        var availableSkillCount = GetAvailableSkillCount();
+        var availableEquipCount = GetAvailableEquipCount();
+
+        if (availableSkillCount + availableEquipCount > 4)
+        {
+            int minEquipCount = Mathf.Max(0, 4 - availableSkillCount);
+            int maxEquipCount = Mathf.Min(4, availableEquipCount);
+
+            equipCount = Random.Range(minEquipCount, maxEquipCount + 1);
+            skillCont = 4 - equipCount;
+        }
+        else
+        {
+            skillCont = availableSkillCount;
+            equipCount = availableEquipCount;
+        }
+
+        return (skillCont, equipCount);
     }
     #endregion
 }

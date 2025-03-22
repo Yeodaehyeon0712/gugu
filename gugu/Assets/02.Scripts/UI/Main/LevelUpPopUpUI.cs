@@ -54,7 +54,7 @@ public class LevelUpPopUpUI : PopUpUI
     #region LevelUp PopUp Method
     void EnableLevelUpElement()
     {
-        var (skillCount, equipCount) = GenerateRandomPair(3);
+        var (skillCount, equipCount) = Player.InGameData.GenerateRandomPair();
         var skillSet = Player.InGameData.GetRandomSkillSet(skillCount);
         var equipSet = Player.InGameData.GetRandomEquipmentSet(equipCount);
 
@@ -71,13 +71,6 @@ public class LevelUpPopUpUI : PopUpUI
             if (elementCount >= equipCount) break;
             elements[elementCount++].InitElement(equip, isSkill: false);
         }
-    }
-    public (int skill, int equip) GenerateRandomPair(int targetSum)
-    {
-        int skillCount = Random.Range(0, targetSum + 1); 
-        int equipmentCount = targetSum - skillCount; 
-
-        return (skillCount, equipmentCount);
     }
     void DisableLevelUpElement()
     {
