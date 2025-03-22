@@ -86,6 +86,11 @@ public class IngameDataProperty
     {
         var skill = DataManager.SkillTable[index];
         data.OwnedSkillDic.Add(index, skill.RegisterSkill(Player.PlayerCharacter));
+
+        if (data.OwnedSkillDic.Count == 6)
+        {
+            data.AvailableSkillList.RemoveAll(skill => data.OwnedSkillDic.ContainsKey(skill)==false);
+        }
     }
     void LevelUpSkill(long index)
     {
@@ -141,6 +146,11 @@ public class IngameDataProperty
     {
         var skill = DataManager.EquipmentTable[index];
         data.OwnedEquipmentDic.Add(index, 1);
+
+        if (data.OwnedEquipmentDic.Count == 6)
+        {
+            data.AvailableEquipmentList.RemoveAll(equipment => data.OwnedEquipmentDic.ContainsKey(equipment) == false);
+        }
     }
     void LevelUpEquipment(long index)
     {
