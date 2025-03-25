@@ -32,6 +32,14 @@ public class IngameData
         SelectedEquipmentSet = new HashSet<long>();
         OwnedEquipmentDic = new Dictionary<long, long>();//Composed with Index,Level
     }
+    public void CleanData()
+    {
+        KillCount = 0;
+        GoldCount = 0;
+        AvailableSkillList.Clear();
+        SelectedSkillSet.Clear();
+        OwnedSkillDic.Clear();
+    }
 }
 public class IngameDataProperty 
 {
@@ -41,17 +49,17 @@ public class IngameDataProperty
     #endregion
 
     #region Init Method
-    public void InitializeIngameData()
+    public void InitializeData()
     {
         data=new IngameData();
+        SetAvaiableSkillList();
+        SetAvaiableEquipmentList();
     }
     public void CleanData()
     {
-        data.KillCount = 0;
-        data.GoldCount = 0;
-        data.AvailableSkillList.Clear();
-        data.SelectedSkillSet.Clear();
-        data.OwnedSkillDic.Clear();
+        data.CleanData();
+        ResetEquipment();
+        ResetSkills();
     }
     #endregion
 

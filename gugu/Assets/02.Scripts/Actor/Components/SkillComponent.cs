@@ -14,13 +14,12 @@ public class SkillComponent : BaseComponent
     }
     protected override void OnComponentActive()
     {
-        Player.InGameData.SetAvaiableSkillList();
         Player.InGameData.SelectSkill(DataManager.CharacterTable[owner.ObjectID].DefaultSkillKey);
         OwnedSkillDic = Player.InGameData.Data.OwnedSkillDic;
     }
     protected override void OnComponentInactive()
     {
-        Player.InGameData.ResetSkills();
+        OwnedSkillDic = null;
     }
     protected override void OnComponentUpdate(float deltaTime)
     {
