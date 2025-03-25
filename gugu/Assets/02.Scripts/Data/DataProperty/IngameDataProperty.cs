@@ -168,10 +168,15 @@ public class IngameDataProperty
     }
     public float GetEquipmentValue(eStatusType type)
     {
-        var key = DataManager.EquipmentTable.GetEquipmentByStatus(type);
-        return data.OwnedEquipmentDic.TryGetValue(key, out long level)? DataManager.EquipmentTable[key].GetValue(level):1f;
+        var table = DataManager.EquipmentTable;
+        var key = table.GetEquipmentByStatus(type);
+        var defaultValue = table[key].CalculateType == eCalculateType.Flat ? 0 : 1;
+
+        return data.OwnedEquipmentDic.TryGetValue(key, out long level) ?
+            table[key].GetValue(level) : defaultValue;
     }
     #endregion
+
     #region Temp
     public int GetAvailableSkillCount()
     {
