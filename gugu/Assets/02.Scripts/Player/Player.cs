@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public static class Player 
 {
-
     #region Fields
     public static IngameDataProperty InGameData => ingameDataProperty;
     static IngameDataProperty ingameDataProperty;

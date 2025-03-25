@@ -68,32 +68,28 @@ public class IngameDataProperty
     #endregion
 
     #region Skill Method
-    public void SetAvaiableSkillList()
+    void SetAvaiableSkillList()
     {
         var skillDic = DataManager.SkillTable.GetSkillDic;
 
         foreach (var skill in skillDic.Values)
             data.AvailableSkillList.Add(skill.Index);
     }
-    public int GetAvailableSkillCount()
+    int GetAvailableSkillCount()
     {
-        var availableCount = 6;
-        var availableSkillListCount = data.AvailableSkillList.Count;
-
+        var availableSlotCount = 6;
         foreach (var skill in data.OwnedSkillDic)
         {
             if (skill.Value.isMaxLevel)
-                availableCount--;
+                availableSlotCount--;
         }
-
-        return availableCount > availableSkillListCount ? availableSkillListCount : availableCount;
+        return Mathf.Min(availableSlotCount, data.AvailableSkillList.Count);
     }
     public HashSet<long> GetRandomSkillSet(int count)
     {
         data.SelectedSkillSet.Clear();
-        int targetSkillCount = Mathf.Min(count, data.AvailableSkillList.Count);
 
-        while (data.SelectedSkillSet.Count < targetSkillCount)
+        while (data.SelectedSkillSet.Count < count)
         {
             int randomIndex = Random.Range(0, data.AvailableSkillList.Count);
             data.SelectedSkillSet.Add(data.AvailableSkillList[randomIndex]);
@@ -126,7 +122,7 @@ public class IngameDataProperty
         if (skill.isMaxLevel)
             data.AvailableSkillList.Remove(skill.Index);
     }
-    public void ResetSkills()
+    void ResetSkills()
     {
         foreach (var item in data.OwnedSkillDic)
         {
@@ -140,19 +136,28 @@ public class IngameDataProperty
     #endregion
 
     #region Equipment Method
-    public void SetAvaiableEquipmentList()
+    void SetAvaiableEquipmentList()
     {
         var equipmentDic = DataManager.EquipmentTable.GetEquipmentDic;
 
         foreach (var equipment in equipmentDic.Values)
             data.AvailableEquipmentList.Add(equipment.Index);
     }
+    int GetAvailableEquipCount()
+    {
+        var availableSlotCount = 6;
+        foreach (var equip in data.OwnedEquipmentDic)
+        {
+            if (equip.Value == 6)
+                availableSlotCount--;
+        }
+        return Mathf.Min(availableSlotCount, data.AvailableEquipmentList.Count);
+    }
     public HashSet<long> GetRandomEquipmentSet(int count)
     {
         data.SelectedEquipmentSet.Clear();
-        int targetEquipmentCount = Mathf.Min(count, data.AvailableEquipmentList.Count);
 
-        while (data.SelectedEquipmentSet.Count < targetEquipmentCount)
+        while (data.SelectedEquipmentSet.Count < count)
         {
             int randomIndex = Random.Range(0, data.AvailableEquipmentList.Count);
             data.SelectedEquipmentSet.Add(data.AvailableEquipmentList[randomIndex]);
@@ -183,9 +188,9 @@ public class IngameDataProperty
         data.OwnedEquipmentDic[index]= level++;
 
         if(level>=6)
-            data.AvailableSkillList.Remove(index);
+            data.AvailableEquipmentList.Remove(index);
     }
-    public void ResetEquipment()
+    void ResetEquipment()
     {
         data.OwnedEquipmentDic.Clear();
         data.AvailableEquipmentList.Clear();
@@ -207,19 +212,7 @@ public class IngameDataProperty
     }
     #endregion
 
-    #region Temp
-
-    public int GetAvailableEquipCount()
-    {
-        var availableCount = 6;
-
-        foreach (var equip in data.OwnedEquipmentDic)
-        {
-            if (equip.Value == 6)
-                availableCount--;
-        }
-        return availableCount;
-    }
+    #region Random Method
     public (int skill, int equip) GenerateRandomPair()
     {
         int skillCont = 0;

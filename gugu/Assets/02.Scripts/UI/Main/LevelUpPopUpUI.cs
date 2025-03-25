@@ -57,20 +57,13 @@ public class LevelUpPopUpUI : PopUpUI
         var (skillCount, equipCount) = Player.InGameData.GenerateRandomPair();
         var skillSet = Player.InGameData.GetRandomSkillSet(skillCount);
         var equipSet = Player.InGameData.GetRandomEquipmentSet(equipCount);
-
         int elementCount = 0;
 
-        foreach (var skillId in skillSet)
-        {
-            if (elementCount >= skillCount) break;
-            elements[elementCount++].InitElement(skillId, isSkill:true);
-        }
+        foreach (var skill in skillSet)
+            elements[elementCount++].InitElement(skill, isSkill:true);
 
         foreach (var equip in equipSet)
-        {
-            if (elementCount >= equipCount+skillCount) break;
             elements[elementCount++].InitElement(equip, isSkill: false);
-        }
     }
     void DisableLevelUpElement()
     {
