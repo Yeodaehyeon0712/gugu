@@ -38,17 +38,36 @@ public class LevelUpElementUI : BaseUI
     #region ElementMethod
     public void InitElement(long index, bool isSkill)
     {
-        var (titleKey, explanationKey, selectAction) = GetElementData(index, isSkill);
-
-        text_Title.text = LocalizingManager.Instance.GetLocalizing(titleKey);
-        text_Description.text = LocalizingManager.Instance.GetLocalizing(explanationKey);
+        if (isSkill)
+            SetSkillElemet(index);
+        else
+            SetEquipElemet(index);
+        
+        Enable();
+    }
+    void SetSkillElemet(long index)
+    {
+        var skillData = DataManager.SkillTable[index].Data;
+        text_Title.text = LocalizingManager.Instance.GetLocalizing(skillData.NameKey);
+        text_Description.text = LocalizingManager.Instance.GetLocalizing(skillData.ExplanationKey);
+        //image_Icon.sprite = AddressableSystem.GetIcon(skillData.IconPath);
         btn_LevelUp.onClick.AddListener(() =>
         {
-            selectAction.Invoke();
+            Player.InGameData.SelectSkill(index);
             UIManager.Instance.LevelUpPopUpUI.Disable();
         });
-
-        Enable();
+    }
+    void SetEquipElemet(long index)
+    {
+        var equipData = DataManager.EquipmentTable[index];
+        text_Title.text = LocalizingManager.Instance.GetLocalizing(equipData.NameKey);
+        text_Description.text = LocalizingManager.Instance.GetLocalizing(equipData.ExplanationKey);
+        image_Icon.sprite = AddressableSystem.GetIcon(equipData.IconPath);
+        btn_LevelUp.onClick.AddListener(() =>
+        {
+            Player.InGameData.SelectEquipment(index);
+            UIManager.Instance.LevelUpPopUpUI.Disable();
+        });
     }
     private (int, int, System.Action) GetElementData(long index, bool isSkill)
     {

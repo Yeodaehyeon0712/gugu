@@ -92,6 +92,7 @@ enum eAddressableState
     TableMemory,
     AnimatorMemory,
     BackgroundMemory,
+    IconMemory,
     Complete,
 }
 #endregion
