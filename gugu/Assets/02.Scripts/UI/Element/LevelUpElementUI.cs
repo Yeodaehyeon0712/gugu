@@ -48,21 +48,30 @@ public class LevelUpElementUI : BaseUI
     void SetSkillElemet(long index)
     {
         var skillData = DataManager.SkillTable[index].Data;
+        var skillLevel = Player.InGameData.Data.OwnedSkillDic.TryGetValue(index, out var skill)?skill.SkillLevel:1;
+
         text_Title.text = LocalizingManager.Instance.GetLocalizing(skillData.NameKey);
-        text_Description.text = LocalizingManager.Instance.GetLocalizing(skillData.ExplanationKey);
+        text_Description.text = skillData.GetExplanationString(skillLevel);
+        text_Level.text = $"Lv{skillLevel}";//로컬라이징 매니저로 변경 예정
         //image_Icon.sprite = AddressableSystem.GetIcon(skillData.IconPath);
+
         btn_LevelUp.onClick.AddListener(() =>
         {
             Player.InGameData.SelectSkill(index);
             UIManager.Instance.LevelUpPopUpUI.Disable();
         });
+
     }
     void SetEquipElemet(long index)
     {
         var equipData = DataManager.EquipmentTable[index];
+        var equipLevel = Player.InGameData.Data.OwnedEquipmentDic.TryGetValue(index, out var level) ? level : 1;
+
         text_Title.text = LocalizingManager.Instance.GetLocalizing(equipData.NameKey);
-        text_Description.text = LocalizingManager.Instance.GetLocalizing(equipData.ExplanationKey);
+        text_Description.text = LocalizingManager.Instance.GetLocalizing(equipData.ExplanationKey,equipData.GetValue(equipLevel));
+        text_Level.text= $"Lv{equipLevel}";//로컬라이징 매니저로 변경 예정
         image_Icon.sprite = AddressableSystem.GetIcon(equipData.IconPath);
+
         btn_LevelUp.onClick.AddListener(() =>
         {
             Player.InGameData.SelectEquipment(index);

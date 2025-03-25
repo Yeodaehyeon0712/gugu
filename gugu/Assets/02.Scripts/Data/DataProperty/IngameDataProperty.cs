@@ -185,7 +185,7 @@ public class IngameDataProperty
     void LevelUpEquipment(long index)
     {
         var level = data.OwnedEquipmentDic[index];
-        data.OwnedEquipmentDic[index]= level++;
+        data.OwnedEquipmentDic[index]= level+1;
 
         if(level>=6)
             data.AvailableEquipmentList.Remove(index);
