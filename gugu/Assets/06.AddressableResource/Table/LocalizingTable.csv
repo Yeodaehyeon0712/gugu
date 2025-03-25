@@ -42,25 +42,55 @@ Key,EN,KR
 1308,Area,공격 범위
 1309,CoolTime,쿨타임
 1310,Amount,투사체 수
-1311,Revival,부활
-1312,Magnet,자석
-1313,Luck,운
-1314,Growth,성장
-1315,Greed,탐욕
-1316,Curse,저주
-1321,Increases maximum HP by 10% per rank,랭크당 최대 체력이 10% 증가한다
-1322,Increases HP recovery by 0.1 per second per rank,랭크당 초당 체력 회복량이 0.1 증가한다
-1323,Reduces damage taken by 1 per rank,랭크당 피격 피해량이 1 줄어든다
-1324,Increases movement speed by 5% per rank,랭크당 이동 속도가 5% 빨라진다
-1325,Increases damage dealt by 5% per rank,랭크당 피해량이 5% 증가한다
-1326,Increases projectile speed by 10% per rank,랭크당 투사체가 10% 빨라진다
-1327,Extends weapon effect duration by 15% per rank,랭크당 무기의 효과 지속 시간이 15% 연장된다
-1328,Increases attack range by 5% per rank,랭크당 공격 범위가 5% 증가한다
-1329,Reduces weapon cooldown by 2.5% per rank,랭크당 무기 쿨타임이 2.5% 감소한다
-1330,Fires 1 additional projectile,투사체를 1개 더 발사한다
-1331,Revives once at 50% HP,50%의 체력으로 1회 부활한다
-1332,Increases item pickup range by 25% per rank,랭크당 아이템 획득 범위가 25% 증가한다
-1333,Increases luck by 10% per rank,랭크당 행운이 10% 증가한다
-1334,Grants an additional 3% experience per rank,랭크당 3%의 추가 경험치를 획득한다
-1335,Grants an additional 10% gold per rank,랭크당 10%의 추가 골드를 획득한다
-1336,"Increases enemy speed, HP, quantity, and spawn rate by 10% per rank","랭크당 10%씩 적들의 속도, 체력, 개체수, 스폰율이 증가한다"
+1311,Magnet,자석
+1312,Luck,운
+1313,Growth,성장
+1314,Greed,탐욕
+1315,Curse,저주
+1316,Revival,부활
+1351,Increases maximum HP by 10% per rank,랭크당 최대 체력이 10% 증가한다
+1352,Increases HP recovery by 0.1 per second per rank,랭크당 초당 체력 회복량이 0.1 증가한다
+1353,Reduces damage taken by 1 per rank,랭크당 피격 피해량이 1 줄어든다
+1354,Increases movement speed by 5% per rank,랭크당 이동 속도가 5% 빨라진다
+1355,Increases damage dealt by 5% per rank,랭크당 피해량이 5% 증가한다
+1356,Increases projectile speed by 10% per rank,랭크당 투사체가 10% 빨라진다
+1357,Extends weapon effect duration by 15% per rank,랭크당 무기의 효과 지속 시간이 15% 연장된다
+1358,Increases attack range by 5% per rank,랭크당 공격 범위가 5% 증가한다
+1359,Reduces weapon cooldown by 2.5% per rank,랭크당 무기 쿨타임이 2.5% 감소한다
+1360,Fires 1 additional projectile,투사체를 1개 더 발사한다
+1361,Increases item pickup range by 25% per rank,랭크당 아이템 획득 범위가 25% 증가한다
+1362,Increases luck by 10% per rank,랭크당 행운이 10% 증가한다
+1363,Grants an additional 3% experience per rank,랭크당 3%의 추가 경험치를 획득한다
+1364,Grants an additional 10% gold per rank,랭크당 10%의 추가 골드를 획득한다
+1365,"Increases enemy speed, HP, quantity, and spawn rate by 10% per rank","랭크당 10%씩 적들의 속도, 체력, 개체수, 스폰율이 증가한다"
+1366,Revives once at 50% HP,50%의 체력으로 1회 부활한다
+1401,Hollow Heart,빈 심장
+1402,Pummarola,푸마롤라
+1403,Armor,방어구
+1404,Wings,날개
+1405,Spinach,시금치
+1406,Bracer,완갑
+1407,Spellbinder,주문결속기
+1408,Candelabrador,촛대사자
+1409,Empty Tome,빈 서적
+1410,Duplicator,복제기
+1411,Attractorb,자석구
+1412,Clover,클로버
+1413,Crown,왕관
+1414,Stone Mask,석가면
+1415,Skull O'Maniac,해골 오매니악
+1451,Hollow Heart,레벨당 최대 체력이 현재 수치의 {0}%만큼 증가한다. (최대 레벨 5)
+1452,Pummarola,레벨당 회복이 {0} 증가한다. (최대 레벨 5)
+1453,Armor,레벨당 방어력이 {0} 증가한다. (최대 레벨 5)
+1454,Wings,레벨당 이동속도가 {0}% 상승한다. (최대 레벨 5)
+1455,Spinach,레벨당 공격력이 {0}% 증가한다. (최대 레벨 5)
+1456,Bracer,레벨당 투사체 속도가 {0}% 증가한다. (최대 레벨 5)
+1457,Spellbinder,레벨당 지속시간이 {0}% 증가한다. (최대 레벨 5)
+1458,Candelabrador,레벨당 공격범위가 {0}% 증가한다. (최대 레벨 5)
+1459,Empty Tome,레벨당 쿨타임이 {0}% 감소한다. (최대 레벨 5)
+1460,Duplicator,레벨당 투사체 수가 {0}개 증가한다. (최대 레벨 2)
+1461,Attractorb,레벨당 아이템 획득 범위가 {0}% 증가한다. (최대 레벨 5)
+1462,Clover,레벨당 행운이 {0}% 증가한다. (최대 레벨 5)
+1463,Crown,레벨당 경험치 획득량이 {0}% 증가한다. (최대 레벨 5)
+1464,Stone Mask,레벨당 골드 획득량이 {0}% 증가한다. (최대 레벨 5)
+1465,Skull O'Maniac,레벨당 저주가 {0}%씩 증가한다. (최대 레벨 5)
