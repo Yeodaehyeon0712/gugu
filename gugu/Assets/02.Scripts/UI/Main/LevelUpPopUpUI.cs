@@ -68,7 +68,7 @@ public class LevelUpPopUpUI : PopUpUI
 
         foreach (var equip in equipSet)
         {
-            if (elementCount >= equipCount) break;
+            if (elementCount >= equipCount+skillCount) break;
             elements[elementCount++].InitElement(equip, isSkill: false);
         }
     }
