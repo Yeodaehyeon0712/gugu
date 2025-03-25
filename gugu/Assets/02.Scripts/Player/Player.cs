@@ -46,7 +46,7 @@ public static class Player
         //SpawnArea
         ActorManager.Instance.RegisterSpawnAreaParent(null);
         //UI
-        UIManager.Instance.FieldUI.FindFieldUI<FieldUI_HPBar>(eFieldUI.HPBar).Disable();//To Do ::Hp Bar can be more than 1 
+        UIManager.Instance.FieldUI.Clear(eFieldUI.HPBar);//To Do ::Find More Good Way
     }
     #endregion
 

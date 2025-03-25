@@ -6,6 +6,7 @@ public class FieldUI : MonoBehaviour
 {
     #region Fields
     Dictionary<eFieldUI, MemoryPool<BaseFieldUI>> memoryPoolDic=new Dictionary<eFieldUI, MemoryPool<BaseFieldUI>>(2);
+    protected Dictionary<eFieldUI,List< BaseFieldUI>> spawnedObjectDic = new Dictionary<eFieldUI, List<BaseFieldUI>>();
     #endregion
 
     #region Init Method
@@ -13,6 +14,7 @@ public class FieldUI : MonoBehaviour
     {
         memoryPoolDic.Add(eFieldUI.HPBar, new MemoryPool<BaseFieldUI>(10));
         memoryPoolDic.Add(eFieldUI.DamageText, new MemoryPool<BaseFieldUI>(20));
+        spawnedObjectDic.Add(eFieldUI.HPBar, new List<BaseFieldUI>());
         transform.SetParent(CameraManager.Instance.GetCamera(eCameraType.MainCamera).transform);
     }
     #endregion
@@ -26,6 +28,7 @@ public class FieldUI : MonoBehaviour
 
         ui = Instantiate(Resources.Load<T>("UI/FieldUI/" + type.ToString()), transform);
         ui.Init(memoryPoolDic[type].Register);
+        spawnedObjectDic[type].Add(ui);
         return ui;
     }
     public void SetHPBar(Actor target)
@@ -36,6 +39,14 @@ public class FieldUI : MonoBehaviour
     {
 
         //FindFieldUI<FieldUI_DamageText>(EFieldUIType.DamageText).Enabled2(pos, damage, isCritical, type);
+    }
+    public void Clear(eFieldUI type)
+    {
+        foreach (var a in spawnedObjectDic[type])
+        {
+            a.Disable();
+        }
+        spawnedObjectDic.Clear();
     }
     #endregion
 }
