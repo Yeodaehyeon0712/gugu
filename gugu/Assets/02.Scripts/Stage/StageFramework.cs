@@ -104,8 +104,9 @@ public abstract class StageFramework
 
         //BG
         BackgroundManager.Instance.HideBackground();
+        //UI
+        UIManager.Instance.GameUI.CloseUIByFlag(eUI.Controller | eUI.BattleState);
 
-        
     }
     public async UniTask ExitStage(UnityEngine.Events.UnityAction afterAction, float time)
     {

@@ -82,4 +82,8 @@ public class ActorManager : TSingletonMono<ActorManager>
         }
     }
     #endregion
+    public void Clear()
+    {
+        actorFactory.Clear();
+    }
 }

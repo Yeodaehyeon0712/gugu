@@ -44,7 +44,7 @@ public class PausePopUpUI : PopUpUI
         btn_Continue.onClick.AddListener(() => Disable());
         text_Continue = btn_Continue.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
         btn_Exit = panel_Bottom.Find("Btn_Exit").GetComponent<Button>();
-        btn_Exit.onClick.AddListener(() => StageManager.Instance.StopStage());
+        btn_Exit.onClick.AddListener(StopGame);
         text_Exit = btn_Exit.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
     }
     protected override void OnRefresh()
@@ -66,6 +66,11 @@ public class PausePopUpUI : PopUpUI
     {
         base.Disable();
         TimeManager.Instance.IsActiveTimeFlow = true;
+    }
+    void StopGame()
+    {
+        StageManager.Instance.StopStage();
+        Disable();
     }
     #endregion
 

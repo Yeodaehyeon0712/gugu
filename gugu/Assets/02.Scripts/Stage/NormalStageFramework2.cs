@@ -76,12 +76,13 @@ public class NormalStageFramework2 : StageFramework
     }
     protected override void OnCleanFramework()
     {
-        base.OnCleanFramework();
+        ActorManager.Instance.Clear();
         TimeManager.Instance.RemoveTimer = timer;
         timer = null;
         subWaveCount = 1;
         elapsedTime = 0;
 
+        base.OnCleanFramework();
         //액터 모두 삭제 or ... UI ... 머 기타 등등 ..
     }
 }

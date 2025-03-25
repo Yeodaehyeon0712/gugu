@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Factory<T,TType> where T : PoolingObject<TType> where TType:System.Enum
@@ -86,10 +87,15 @@ public abstract class Factory<T,TType> where T : PoolingObject<TType> where TTyp
     }
     public void Clear()
     {
-        foreach (var obj in spawnedObjectDic)
+        //foreach (var obj in spawnedObjectDic)
+        //{
+        //    obj.Value.Clean(0);
+        //}
+        foreach (var obj in spawnedObjectDic.ToList()) // µñ¼Å³Ê¸® º¹»çº»À» ¼øÈ¸
         {
             obj.Value.Clean(0);
         }
+
         spawnedObjectDic.Clear();
     }
     #endregion
