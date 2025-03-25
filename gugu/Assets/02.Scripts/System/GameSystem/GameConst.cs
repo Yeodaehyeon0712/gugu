@@ -18,7 +18,7 @@ public class GameConst
     #region Status
     public static uint MaxStatusLevel=6;
     public static uint MaxSkillLevel = 6;
-
+    public static int LevelUpSlotCount = 4;
     #endregion
 
     #region Background

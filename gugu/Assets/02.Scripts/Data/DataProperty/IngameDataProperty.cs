@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 public class IngameData
 {
     #region Fields
@@ -49,9 +50,12 @@ public class IngameDataProperty
     #endregion
 
     #region Init Method
-    public void InitializeData()
+    public IngameDataProperty()
     {
         data=new IngameData();
+    }
+    public void InitializeData()
+    {
         SetAvaiableSkillList();
         SetAvaiableEquipmentList();
     }
@@ -70,6 +74,19 @@ public class IngameDataProperty
 
         foreach (var skill in skillDic.Values)
             data.AvailableSkillList.Add(skill.Index);
+    }
+    public int GetAvailableSkillCount()
+    {
+        var availableCount = 6;
+        var availableSkillListCount = data.AvailableSkillList.Count;
+
+        foreach (var skill in data.OwnedSkillDic)
+        {
+            if (skill.Value.isMaxLevel)
+                availableCount--;
+        }
+
+        return availableCount > availableSkillListCount ? availableSkillListCount : availableCount;
     }
     public HashSet<long> GetRandomSkillSet(int count)
     {
@@ -176,6 +193,11 @@ public class IngameDataProperty
     }
     public float GetEquipmentValue(eStatusType type)
     {
+        if(type==eStatusType.Revival)
+        {
+            Debug.Log("error");
+            return 0;
+        }
         var table = DataManager.EquipmentTable;
         var key = table.GetEquipmentByStatus(type);
         var defaultValue = table[key].CalculateType == eCalculateType.Flat ? 0 : 1;
@@ -186,18 +208,7 @@ public class IngameDataProperty
     #endregion
 
     #region Temp
-    public int GetAvailableSkillCount()
-    {
-        var availableCount = 6;
 
-        foreach (var skill in data.OwnedSkillDic)
-        {
-            if (skill.Value.isMaxLevel)
-                availableCount--;
-        }
-
-        return availableCount;
-    }
     public int GetAvailableEquipCount()
     {
         var availableCount = 6;
@@ -213,17 +224,17 @@ public class IngameDataProperty
     {
         int skillCont = 0;
         int equipCount = 0;
-
+        
         var availableSkillCount = GetAvailableSkillCount();
         var availableEquipCount = GetAvailableEquipCount();
 
-        if (availableSkillCount + availableEquipCount > 4)
+        if (availableSkillCount + availableEquipCount > GameConst.LevelUpSlotCount)
         {
-            int minEquipCount = Mathf.Max(0, 4 - availableSkillCount);
-            int maxEquipCount = Mathf.Min(4, availableEquipCount);
+            int minEquipCount = System.Math.Max(0, GameConst.LevelUpSlotCount - availableSkillCount);
+            int maxEquipCount = System.Math.Min(GameConst.LevelUpSlotCount, availableEquipCount);
 
             equipCount = Random.Range(minEquipCount, maxEquipCount + 1);
-            skillCont = 4 - equipCount;
+            skillCont = GameConst.LevelUpSlotCount - equipCount;
         }
         else
         {
