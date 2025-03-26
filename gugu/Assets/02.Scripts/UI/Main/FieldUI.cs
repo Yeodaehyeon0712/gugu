@@ -40,11 +40,12 @@ public class FieldUI : MonoBehaviour
 
         //FindFieldUI<FieldUI_DamageText>(EFieldUIType.DamageText).Enabled2(pos, damage, isCritical, type);
     }
-    public void Clear(eFieldUI type)
+    public void Clear()
     {
-        foreach (var a in spawnedObjectDic[type])
+        foreach (var fieldUIList in spawnedObjectDic.Values)
         {
-            a.Disable();
+            foreach(var fieldUI in fieldUIList)
+                fieldUI.Disable();
         }
         spawnedObjectDic.Clear();
     }

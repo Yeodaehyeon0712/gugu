@@ -44,7 +44,7 @@ public static class Player
         //SpawnArea
         ActorManager.Instance.RegisterSpawnAreaParent(null);
         //UI
-        //UIManager.Instance.FieldUI.Clear(eFieldUI.HPBar);//To Do ::Find More Good Way
+        UIManager.Instance.FieldUI.Clear();//To Do ::Find More Good Way
     }
     #endregion
 
