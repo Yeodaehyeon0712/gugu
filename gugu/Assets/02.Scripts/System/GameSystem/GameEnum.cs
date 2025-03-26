@@ -209,6 +209,7 @@ public enum eUI
     AlramPopUp = 1 << 3,
     SettingPopUp=1<<4,
     LevelUpPopUp=1<<5,
+    ResultPopUp = 1 << 6,
 }
 public enum eMovableUIDir
 {
