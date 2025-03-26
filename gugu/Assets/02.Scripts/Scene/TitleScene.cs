@@ -75,6 +75,6 @@ public class TitleScene : BaseScene
         if (isTestMode)
             SceneManager.Instance.AsyncSceneChange<TestScene>().Forget();
         else
-            SceneManager.Instance.AsyncSceneChange<MainScene>().Forget();
+            SceneManager.Instance.AsyncSceneChange<LobbyScene>().Forget();
     }
 }
