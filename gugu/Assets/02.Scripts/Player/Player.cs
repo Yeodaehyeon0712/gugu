@@ -35,8 +35,6 @@ public static class Player
     }
     public static void UnRegisterPlayer()
     {
-        //Player
-        PlayerCharacter.Death(0f);// To Do :: if Die Already ? 
         PlayerCharacter = null;
         ingameDataProperty.CleanData();
         CleanLevel();
@@ -46,7 +44,7 @@ public static class Player
         //SpawnArea
         ActorManager.Instance.RegisterSpawnAreaParent(null);
         //UI
-        UIManager.Instance.FieldUI.Clear(eFieldUI.HPBar);//To Do ::Find More Good Way
+        //UIManager.Instance.FieldUI.Clear(eFieldUI.HPBar);//To Do ::Find More Good Way
     }
     #endregion
 

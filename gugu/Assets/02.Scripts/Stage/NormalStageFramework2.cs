@@ -12,6 +12,7 @@ public class NormalStageFramework2 : StageFramework
     Timer timer;
     #endregion
 
+    #region Process Method
     protected override async UniTask ProcessFrameworkAsync(long stageIndex, CancellationToken token)
     {
         timer = new Timer(0, true, onUpdate:(time) => UIManager.Instance.BattleStateUI.SetTimerText(time));
@@ -74,15 +75,17 @@ public class NormalStageFramework2 : StageFramework
         float targetTime = subWaveTime * subWaveCount;
         subWaveTimer.StartTimer(targetTime, startTime);      
     }
+    #endregion
+
+    #region Framework Method
     protected override void OnCleanFramework()
     {
-        ActorManager.Instance.Clear();
         TimeManager.Instance.RemoveTimer = timer;
         timer = null;
         subWaveCount = 1;
         elapsedTime = 0;
 
         base.OnCleanFramework();
-        //액터 모두 삭제 or ... UI ... 머 기타 등등 ..
     }
+    #endregion
 }

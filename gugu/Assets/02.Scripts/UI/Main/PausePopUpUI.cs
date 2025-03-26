@@ -69,7 +69,7 @@ public class PausePopUpUI : PopUpUI
     }
     void StopGame()
     {
-        StageManager.Instance.StopStage();
+        StageManager.Instance.StopStage(skipResult:true);
         Disable();
     }
     #endregion

@@ -66,49 +66,59 @@ public abstract class StageFramework
             }
             finally
             {
-                if(frameworkCTS.IsCancellationRequested==false)
-                    ShowResultUI();
+                if (frameworkCTS.IsCancellationRequested == false)
+                    UIManager.Instance.ResultPopUpUI.Enable();
             }
         }
     }
     protected abstract UniTask ProcessFrameworkAsync(long stageIndex, CancellationToken token);
-    public void ShowResultUI()
-    {
-        TimeManager.Instance.IsActiveTimeFlow = false;
-        //UIManager.Instance.
-    }
     #endregion
 
     #region Stage Stop Method
-    public void StopFramework()
+    public void StopFramework(bool skipResult)
     {
         if (frameworkState == eStageFrameworkState.InProgress)
             frameworkCTS.Cancel();
 
-        CleanFrameworkAsync().Forget();
+        StopFrameworkAsync(skipResult).Forget();
     }
-
-
-
-    public async UniTask CleanFrameworkAsync()
+    async UniTask StopFrameworkAsync(bool skipResult)
     {
         await UniTask.WaitUntil(() => frameworkState != eStageFrameworkState.InProgress);
-        CurrentFrameworkState = eStageFrameworkState.Clean;
-        OnCleanFramework();//await 처리 가능성 있음
-        await ExitStage(() => Debug.Log("asd"), 3);
+        OnStopFramework();
+
+        if (skipResult)
+            CleanFramework();
+        else
+            UIManager.Instance.ResultPopUpUI.Enable();
     }
-    protected virtual void OnCleanFramework()
+    //Remove Dynamic Things
+    protected virtual void OnStopFramework()
     {
+        CurrentFrameworkState = eStageFrameworkState.Defeat;
         //Player
         Player.UnRegisterPlayer();
+        ActorManager.Instance.Clear();
+    }
+    #endregion
 
+    #region Stage Clean Method
+    public void CleanFramework()
+    {
+        CurrentFrameworkState = eStageFrameworkState.Clean;
+        OnCleanFramework();
+        //스테이지 나가기 까지 처리
+    }
+    //Remove Static Things
+    protected virtual void OnCleanFramework()
+    {
         //BG
         BackgroundManager.Instance.HideBackground();
         //UI
         UIManager.Instance.GameUI.CloseUIByFlag(eUI.Controller | eUI.BattleState);
-
+        Debug.Log("클린 완료");
     }
-    public async UniTask ExitStage(UnityEngine.Events.UnityAction afterAction, float time)
+    async UniTask ExitStage(UnityEngine.Events.UnityAction afterAction, float time)
     {
         await UniTask.WaitForSeconds(time);
         //씬으로 나가는 것 .
@@ -116,7 +126,3 @@ public abstract class StageFramework
     }
     #endregion
 }
-//To DO : Clean 하였을때 모든 요소들이 사라지게 처리한다 .
-//이후 씬을 이동하여 메인창으로 이동한다 .
-
-//To Do : 각 상태별로 상태를 추적한다 . OnStateChange를 ..

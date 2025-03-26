@@ -65,9 +65,9 @@ public class StageManager : TSingletonMono<StageManager>
         }
     }
     //Stop Method
-    public void StopStage()
+    public void StopStage(bool skipResult)
     {
-        stageFrameworkDic[_currStage].StopFramework();
+        stageFrameworkDic[_currStage].StopFramework(skipResult);
     }
     public void ExitStage()
     {
