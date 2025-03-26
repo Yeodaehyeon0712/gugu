@@ -210,6 +210,7 @@ public enum eUI
     SettingPopUp=1<<4,
     LevelUpPopUp=1<<5,
     ResultPopUp = 1 << 6,
+    MenuButton=1<<7,
 }
 public enum eMovableUIDir
 {
@@ -228,5 +229,13 @@ public enum eFieldUI
 {
     HPBar,
     DamageText,
+}
+public enum eLobbyUI
+{
+    Store,
+    Temp1,
+    Battle,
+    Temp2,
+    Enforce,
 }
 #endregion

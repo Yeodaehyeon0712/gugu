@@ -11,6 +11,9 @@ public class UIManager : TSingletonMono<UIManager>
     public FieldUI FieldUI => fieldUI;
     FieldUI fieldUI;
 
+    //Lobby Scene UI
+    public MenuButtonUI MenuButtonUI => _gameUI.MenuButton;
+
     //Battle Scene UI
     public ControllerUI ControllerUI => _gameUI.Controller;
     public BattleStateUI BattleStateUI => _gameUI.BattleState;

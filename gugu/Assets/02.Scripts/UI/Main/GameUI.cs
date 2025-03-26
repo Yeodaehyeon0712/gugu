@@ -7,6 +7,9 @@ public class GameUI : MonoBehaviour
     #region Fields
     Dictionary<eUI, BaseUI> uiDic = new Dictionary<eUI,BaseUI>();
 
+    //Lobby SceneUI
+    public MenuButtonUI MenuButton;
+
     //Battle Scene UI
     public ControllerUI Controller;
     public BattleStateUI BattleState;
@@ -25,6 +28,11 @@ public class GameUI : MonoBehaviour
     {
         Transform safeArea = transform.Find("SafeArea");
         InitializeSafeArea(safeArea);
+
+        //Lobby Scene
+        var groupLobbySceneUI = safeArea.Find("Group_LobbySceneUI");
+        MenuButton = groupLobbySceneUI.Find("MenuButtonUI").GetComponent<MenuButtonUI>();
+        uiDic.Add(eUI.MenuButton, MenuButton.Initialize());
 
         //Battle Scene UI
         var groupBattleSceneUI = safeArea.Find("Group_BattleSceneUI");
