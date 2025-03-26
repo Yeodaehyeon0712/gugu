@@ -70,6 +70,12 @@ public class Character : Actor
         if (CheckTargetLayer(collision.gameObject.layer)==false) return;
 
         CheckCollisionState(isCollisonEnter: false);
-    }   
+    }
     #endregion
+
+    public override void Death(float time = 2.5F)
+    {
+        base.Death(time);
+        Timer.SetTimer(time,true,()=> StageManager.Instance.StopStage(skipResult: false));
+    }
 }
