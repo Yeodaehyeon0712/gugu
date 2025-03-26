@@ -69,9 +69,9 @@ public class StageManager : TSingletonMono<StageManager>
     {
         stageFrameworkDic[_currStage].StopFramework(skipResult);
     }
-    public void ExitStage()
+    public void ClearStage()
     {
-
+        stageFrameworkDic[_currStage].CleanFramework();
     }
     #endregion
 
@@ -79,6 +79,10 @@ public class StageManager : TSingletonMono<StageManager>
     public T GetFramework<T>(eStageType type)where T:StageFramework
     {
         return stageFrameworkDic[type] as T;
+    }
+    public eStageFrameworkState GetCurrentFrameworkState()
+    {
+        return stageFrameworkDic[_currStage].CurrentFrameworkState;
     }
     #endregion
 }

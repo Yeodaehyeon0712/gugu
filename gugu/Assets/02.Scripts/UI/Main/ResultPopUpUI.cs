@@ -30,6 +30,7 @@ public class ResultPopUpUI : PopUpUI
 
         var panel_Bottom= transform.Find("Panel_Bottom");
         btn_Confirm = panel_Bottom.Find("Btn_Confirm").GetComponent<Button>();
+        btn_Confirm.onClick.AddListener(Confirm);
         text_ConfirmBtnTitle = btn_Confirm.transform.Find("Text_Description").GetComponent<TextMeshProUGUI>();
     }
 
@@ -46,11 +47,19 @@ public class ResultPopUpUI : PopUpUI
         base.Enable();
         SetResult();
     }
+
     void SetResult()
     {
+        var result = StageManager.Instance.GetCurrentFrameworkState();
+        Debug.Log("e" + result.ToString());
         //StageManager.Instance.GetFramework<e>
         //StageManager.Instance.StopStage();
         //text_Result=Pla
         //text_SurvivalTime=Player.S
+    }
+    public void Confirm()
+    {
+        Disable();
+        StageManager.Instance.ClearStage();
     }
 }
