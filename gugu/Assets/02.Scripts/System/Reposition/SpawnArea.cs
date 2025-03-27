@@ -16,6 +16,7 @@ public class SpawnArea : MonoBehaviour
     {
         //Parent Must be have a rigidBody
         transform.SetParent(parent);
+        transform.position = Vector3.zero;
     }
     public Vector3 GetRandomPosition()
     {
