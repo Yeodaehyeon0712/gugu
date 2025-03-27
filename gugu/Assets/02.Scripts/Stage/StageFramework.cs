@@ -116,13 +116,12 @@ public abstract class StageFramework
         BackgroundManager.Instance.HideBackground();
         //UI
         UIManager.Instance.GameUI.CloseUIByFlag(eUI.Controller | eUI.BattleState);
-        Debug.Log("클린 완료");
+        ExitStage(1f).Forget();
     }
-    async UniTask ExitStage(UnityEngine.Events.UnityAction afterAction, float time)
+    async UniTask ExitStage(float time)
     {
         await UniTask.WaitForSeconds(time);
-        //씬으로 나가는 것 .
-        afterAction?.Invoke();
+        SceneManager.Instance.AsyncSceneChange<LobbyScene>().Forget();
     }
     #endregion
 }

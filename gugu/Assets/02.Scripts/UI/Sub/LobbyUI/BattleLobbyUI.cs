@@ -7,24 +7,28 @@ public class BattleLobbyUI : BaseUI
 {
     #region Fields
     Button btn_Start;
-    public bool isMove = false;
     #endregion
+
+    #region Inut Method
     protected override void InitReference()
     {
         var panel_Bottom = transform.Find("Panel_Bottom");
         btn_Start = panel_Bottom.Find("Btn_Start").GetComponent<Button>();
-        btn_Start.onClick.AddListener(Go);
+        btn_Start.onClick.AddListener(StartStage);
     }
 
     protected override void OnRefresh()
     {
 
     }
-    public void Go()
+    #endregion
+    public void OnEnable()
     {
-        if (isMove == true) return;
-        isMove = true;
-        SceneManager.Instance.AsyncSceneChange<MainScene>().Forget();
+        btn_Start.enabled = true;
     }
-
+    public void StartStage()
+    {
+        SceneManager.Instance.AsyncSceneChange<MainScene>().Forget();
+        btn_Start.enabled = false;
+    }
 }
