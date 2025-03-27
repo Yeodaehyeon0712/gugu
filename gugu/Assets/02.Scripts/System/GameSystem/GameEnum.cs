@@ -211,6 +211,7 @@ public enum eUI
     LevelUpPopUp=1<<5,
     ResultPopUp = 1 << 6,
     MenuButton=1<<7,
+    Lobby=1<<8,
 }
 public enum eMovableUIDir
 {

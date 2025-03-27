@@ -13,6 +13,7 @@ public class UIManager : TSingletonMono<UIManager>
 
     //Lobby Scene UI
     public MenuButtonUI MenuButtonUI => _gameUI.MenuButton;
+    public LobbyUI LobbyUI => _gameUI.Lobby;
 
     //Battle Scene UI
     public ControllerUI ControllerUI => _gameUI.Controller;

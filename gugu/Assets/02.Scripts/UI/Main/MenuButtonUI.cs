@@ -19,11 +19,17 @@ public class MenuButtonUI :BaseUI
             buttonDic[currentMenu].FocusOut();
             currentMenu = value;
             buttonDic[currentMenu].FocusOn();
+            UIManager.Instance.LobbyUI.CurrentLobby = currentMenu;
         }
     }
     #endregion
 
     #region Init Method
+    public override void Enable()
+    {
+        base.Enable();
+        CurrentMenu = eLobbyUI.Battle;
+    }
     protected override void InitReference()
     {
         var panel_btn = transform.Find("Panel_Button");
@@ -42,8 +48,6 @@ public class MenuButtonUI :BaseUI
 
         var btn_Enforce = panel_btn.Find("Btn_Enforce").GetComponent<MenuButtonUIElement>();
         buttonDic.Add(eLobbyUI.Enforce, btn_Enforce.InitElement(() => CurrentMenu = eLobbyUI.Enforce));
-
-        CurrentMenu = eLobbyUI.Battle;
     }
     protected override void OnRefresh()
     {

@@ -9,6 +9,7 @@ public class GameUI : MonoBehaviour
 
     //Lobby SceneUI
     public MenuButtonUI MenuButton;
+    public LobbyUI Lobby;
 
     //Battle Scene UI
     public ControllerUI Controller;
@@ -33,6 +34,8 @@ public class GameUI : MonoBehaviour
         var groupLobbySceneUI = safeArea.Find("Group_LobbySceneUI");
         MenuButton = groupLobbySceneUI.Find("MenuButtonUI").GetComponent<MenuButtonUI>();
         uiDic.Add(eUI.MenuButton, MenuButton.Initialize());
+        Lobby= groupLobbySceneUI.Find("LobbyUI").GetComponent<LobbyUI>();
+        uiDic.Add(eUI.Lobby, Lobby.Initialize());
 
         //Battle Scene UI
         var groupBattleSceneUI = safeArea.Find("Group_BattleSceneUI");
