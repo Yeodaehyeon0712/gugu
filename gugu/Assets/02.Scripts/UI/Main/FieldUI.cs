@@ -5,16 +5,17 @@ using UnityEngine;
 public class FieldUI : MonoBehaviour
 {
     #region Fields
-    Dictionary<eFieldUI, MemoryPool<BaseFieldUI>> memoryPoolDic=new Dictionary<eFieldUI, MemoryPool<BaseFieldUI>>(2);
-    protected Dictionary<eFieldUI,List< BaseFieldUI>> spawnedObjectDic = new Dictionary<eFieldUI, List<BaseFieldUI>>();
+    Dictionary<eFieldUI, MemoryPool<BaseFieldUI>> memoryPoolDic=new Dictionary<eFieldUI, MemoryPool<BaseFieldUI>>();
+    protected List<BaseFieldUI> spawndObjectList = new List<BaseFieldUI>();
     #endregion
 
     #region Init Method
     public void Initialize()
     {
-        memoryPoolDic.Add(eFieldUI.HPBar, new MemoryPool<BaseFieldUI>(10));
-        memoryPoolDic.Add(eFieldUI.DamageText, new MemoryPool<BaseFieldUI>(20));
-        spawnedObjectDic.Add(eFieldUI.HPBar, new List<BaseFieldUI>());
+        foreach(eFieldUI fieldUI in System.Enum.GetValues(typeof(eFieldUI)))
+        {
+            memoryPoolDic.Add(fieldUI, new MemoryPool<BaseFieldUI>(20));
+        }
         transform.SetParent(CameraManager.Instance.GetCamera(eCameraType.MainCamera).transform);
     }
     #endregion
@@ -28,7 +29,7 @@ public class FieldUI : MonoBehaviour
 
         ui = Instantiate(Resources.Load<T>("UI/FieldUI/" + type.ToString()), transform);
         ui.Init(memoryPoolDic[type].Register);
-        spawnedObjectDic[type].Add(ui);
+        spawndObjectList.Add(ui);
         return ui;
     }
     public void SetHPBar(Actor target)
@@ -42,12 +43,11 @@ public class FieldUI : MonoBehaviour
     }
     public void Clear()
     {
-        foreach (var fieldUIList in spawnedObjectDic.Values)
+        foreach (var fieldUI in spawndObjectList)
         {
-            foreach(var fieldUI in fieldUIList)
-                fieldUI.Disable();
+            fieldUI.Disable();
         }
-        spawnedObjectDic.Clear();
+        spawndObjectList.Clear();
     }
     #endregion
 }
