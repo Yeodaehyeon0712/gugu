@@ -44,14 +44,14 @@ public class MenuButtonUIElement :BaseUI
     public void FocusOn()
     {
         btn_Select.SetImage(true);
-        rect_btnRect.DOSizeDelta(targetValue, 0.5f);
-        rect_icon.DOScale(2, 0.5f);
+        rect_btnRect.DOSizeDelta(targetValue, 0.25f);
+        rect_icon.DOScale(2, 0.25f);
     }
     public void FocusOut()
     {
         btn_Select.SetImage(false);
-        rect_btnRect.DOSizeDelta(originalValue, 0.5f);
-        rect_icon.DOScale(1, 0.5f);
+        rect_btnRect.DOSizeDelta(originalValue, 0.25f);
+        rect_icon.DOScale(1, 0.25f);
     }
     #endregion
 }
