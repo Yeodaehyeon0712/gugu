@@ -70,6 +70,7 @@ public static class Player
     }
     static void LevelUp()
     {
+        currentExp = 0;
         currentLevel++;
         SetNextLevelExp();
         UIManager.Instance.LevelUpPopUpUI.Enable();
@@ -77,7 +78,7 @@ public static class Player
     static void SetNextLevelExp()
     {
         var nextLevel = currentLevel + 1;
-        nextLevelExp = 10 + 5*(nextLevel - 1);
+        nextLevelExp = 10 + 10*(nextLevel - 1);
     }
     #endregion
 }
