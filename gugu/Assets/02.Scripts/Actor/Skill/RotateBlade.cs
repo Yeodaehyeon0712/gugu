@@ -55,9 +55,10 @@ public class RotateBlade : BaseSkill
     {
         foreach(var a in bladeList)
         {
-            a.Disable();
+            a.Clean(0);
         }
-        //GameObject.Destroy(bladeParent);
+        bladeList.Clear();
+        GameObject.Destroy(bladeParent.gameObject);
     }
     protected override void OnUse()
     {

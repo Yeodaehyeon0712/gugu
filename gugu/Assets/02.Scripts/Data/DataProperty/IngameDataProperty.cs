@@ -37,9 +37,9 @@ public class IngameData
     {
         KillCount = 0;
         GoldCount = 0;
-        AvailableSkillList.Clear();
-        SelectedSkillSet.Clear();
-        OwnedSkillDic.Clear();
+        //AvailableSkillList.Clear();
+        //SelectedSkillSet.Clear();
+        //OwnedSkillDic.Clear();
     }
 }
 public class IngameDataProperty 
