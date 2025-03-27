@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class TestScene : BaseScene
 {
-    public override void StartScene()
+    #region Scene Method
+    protected override void OnStartScene()
     {
-        
     }
 
+    protected override void OnStopScene()
+    {
+    }
+    #endregion
 }

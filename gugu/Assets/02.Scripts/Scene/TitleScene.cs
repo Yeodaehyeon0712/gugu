@@ -12,16 +12,21 @@ public class TitleScene : BaseScene
     Button button_NextScene;
     //나중에 퍼센테이지로 변경할것 .
     TextMeshProUGUI text_Description;
-    
-    public override void StartScene()
+
+    #region Scene Method
+    protected override void OnStartScene()
     {
-        DontDestroyOnLoad(gameObject);
         button_NextScene = transform.GetComponentInChildren<Button>();
         button_NextScene.onClick.AddListener(() => SceneChange());
         button_NextScene.gameObject.SetActive(false);
         text_Description = transform.Find("TitleUI/Panel_Progress/Text_Progress").GetComponent<TextMeshProUGUI>();
         InitManager().Forget();
     }
+    protected override void OnStopScene()
+    {
+        
+    }
+    #endregion
     async UniTask InitManager()
     {
         text_Description.text = "Waiting ... ";

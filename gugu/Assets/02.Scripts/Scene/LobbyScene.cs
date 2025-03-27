@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class LobbyScene : BaseScene
 {
-    public override void StartScene()
+    #region Scene Method
+    protected override void OnStartScene()
     {
         UIManager.Instance.MenuButtonUI.Enable();
         UIManager.Instance.LobbyUI.Enable();
-
     }
-    public override void StopScene()
+    protected override void OnStopScene()
     {
         UIManager.Instance.MenuButtonUI.Disable();
         UIManager.Instance.LobbyUI.Disable();
-        base.StopScene();
     }
-
+    #endregion
 }

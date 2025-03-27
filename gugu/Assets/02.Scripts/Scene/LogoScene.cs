@@ -16,14 +16,21 @@ public class LogoScene : BaseScene
     }
     async UniTask InitializeApplicationSystem()
     {
-        SceneManager.Instance.Initialize();
+        SceneManager.Instance.InitSceneManager(this);
         await UniTask.WaitUntil(() => SceneManager.Instance.IsLoad);
         GameConst.Initialize();
         StartScene();
     }
-    public override void StartScene()
+
+    #region Scene Method
+    protected override void OnStartScene()
     {
-        DontDestroyOnLoad(gameObject);
         _logo.DOFade(1f, 2f).SetEase(_fadeCurve).OnComplete(() => SceneManager.Instance.AsyncSceneChange<TitleScene>().Forget());
     }
+
+    protected override void OnStopScene()
+    {
+        
+    }
+    #endregion
 }

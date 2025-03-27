@@ -3,9 +3,17 @@ using UnityEngine;
 
 public abstract class BaseScene : MonoBehaviour
 {
-    public abstract void StartScene();
-    public virtual void StopScene()
+    protected abstract void OnStartScene();
+    protected abstract void OnStopScene();
+
+    public void StartScene()
     {
+        OnStartScene();
+        DontDestroyOnLoad(this);
+    }
+    public void StopScene()
+    {
+        OnStopScene();
         DestroyImmediate(gameObject);
     }
 }

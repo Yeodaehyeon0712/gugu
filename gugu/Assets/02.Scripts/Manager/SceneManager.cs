@@ -7,6 +7,11 @@ public class SceneManager : TSingletonMono<SceneManager>
 {
     BaseScene prevScene;
     BaseScene currentScene;
+    public void InitSceneManager(BaseScene currentScene)
+    {
+        this.currentScene = currentScene;
+        Initialize();
+    }
     protected override void OnInitialize()
     {
         IsLoad = true;
@@ -29,7 +34,7 @@ public class SceneManager : TSingletonMono<SceneManager>
             var loadScene = GameObject.Find(typeof(T).Name).GetComponent<T>();
             currentScene = loadScene;
             currentScene.StartScene();
-            prevScene?.StopScene();
+            prevScene.StopScene();
         }
     }
 }
