@@ -212,6 +212,7 @@ public enum eUI
     ResultPopUp = 1 << 6,
     MenuButton=1<<7,
     Lobby=1<<8,
+    PlayerInfo=1<<9,
 }
 public enum eMovableUIDir
 {

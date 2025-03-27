@@ -7,13 +7,11 @@ public class LobbyScene : BaseScene
     #region Scene Method
     protected override void OnStartScene()
     {
-        UIManager.Instance.MenuButtonUI.Enable();
-        UIManager.Instance.LobbyUI.Enable();
+        UIManager.Instance.GameUI.OpenUIByFlag(eUI.MenuButton | eUI.Lobby | eUI.PlayerInfo);
     }
     protected override void OnStopScene()
     {
-        UIManager.Instance.MenuButtonUI.Disable();
-        UIManager.Instance.LobbyUI.Disable();
+        UIManager.Instance.GameUI.CloseUIByFlag(eUI.MenuButton | eUI.Lobby | eUI.PlayerInfo);
     }
     #endregion
 }
