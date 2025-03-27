@@ -10,5 +10,11 @@ public class LobbyScene : BaseScene
         UIManager.Instance.LobbyUI.Enable();
 
     }
+    public override void StopScene()
+    {
+        UIManager.Instance.MenuButtonUI.Disable();
+        UIManager.Instance.LobbyUI.Disable();
+        base.StopScene();
+    }
 
 }
