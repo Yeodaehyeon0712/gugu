@@ -46,4 +46,16 @@ public class BattleStateUI : BaseUI
 
         text_Timer.text = $"{min}:{second:D2}";  // 0이 붙도록 포맷
     }
+    public void SetSkillCount(int killCount)
+    {
+        text_KillCount.text = killCount.ToString();
+    }
+    public void SetLevelPercentage(float percentage)
+    {
+        slider_Exp.value = percentage;
+    }
+    public void SetLevel(int level)
+    {
+        text_Level.text = $"Lv . {level}";
+    }
 }

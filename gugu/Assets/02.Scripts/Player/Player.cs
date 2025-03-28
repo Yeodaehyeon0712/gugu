@@ -7,16 +7,41 @@ public static class Player
     public static Character PlayerCharacter;
 
     //Level
-    public static float Level => currentLevel;
-    static float currentLevel;
+    static int currentLevel;
+    static int CurrentLevel
+    {
+        get => currentLevel;
+        set
+        {
+            currentLevel = value;
+            battleStateUI.SetLevel(currentLevel);
+
+        }
+    }
+    //Exp
     static float currentExp;
+    static float CurrentExp
+    {
+        get => currentExp;
+        set
+        {
+            currentExp = value;
+            var per = UnityEngine.Mathf.Clamp01(currentExp / nextLevelExp);
+            battleStateUI.SetLevelPercentage(per);
+        }
+    }
+
     static float nextLevelExp;
+
+    //UI Instance
+    static BattleStateUI battleStateUI;
     #endregion
 
     #region Init Method
     public static void Initialize()
     {
         ingameDataProperty = new IngameDataProperty();
+        battleStateUI = UIManager.Instance.BattleStateUI;//If Player is initialized before UIManager, a problem can occur.
         IsLoad = true;
     }
     public static void RegisterPlayer(Character actor)
@@ -32,6 +57,7 @@ public static class Player
         ActorManager.Instance.RegisterSpawnAreaParent(PlayerCharacter.transform);
         //UI
         UIManager.Instance.FieldUI.SetHPBar(PlayerCharacter);
+
     }
     public static void UnRegisterPlayer()
     {
@@ -45,14 +71,14 @@ public static class Player
         ActorManager.Instance.RegisterSpawnAreaParent(null);
         //UI
         UIManager.Instance.FieldUI.Clear();//To Do ::Find More Good Way
+
     }
     #endregion
 
     #region LevelUp Method
     static void InitLevel()
     {
-        currentLevel = 1;
-        currentExp = 0;
+        CurrentLevel = 1;
         SetNextLevelExp();
     }
     static void CleanLevel()
@@ -64,21 +90,22 @@ public static class Player
     // To Do : 연속 레벨업 고려하기
     public static void GetExp(float exp)
     {
-        currentExp += exp;
+        CurrentExp += exp;
+
         if (currentExp >= nextLevelExp)
             LevelUp();
     }
     static void LevelUp()
     {
-        currentExp = 0;
-        currentLevel++;
-        SetNextLevelExp();
+        CurrentLevel++;
         UIManager.Instance.LevelUpPopUpUI.Enable();
+        SetNextLevelExp();
     }
     static void SetNextLevelExp()
     {
         var nextLevel = currentLevel + 1;
         nextLevelExp = 10 + 10*(nextLevel - 1);
+        CurrentExp = 0;
     }
     #endregion
 }
