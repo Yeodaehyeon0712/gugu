@@ -19,7 +19,7 @@ public class PlayerInfoUI : BaseUI
     #region Init Method
     protected override void InitReference()
     {
-        btn_Setting = transform.Find("Btn_Stting").GetComponent<Button>();
+        btn_Setting = transform.Find("Btn_Setting").GetComponent<Button>();
         btn_Setting.onClick.AddListener(() => UIManager.Instance.SettingPopUpUI.Enable());
         var panel_PlayerInfo = transform.Find("Panel_PlayerInfo");
         image_PlayerAvatar = panel_PlayerInfo.Find("Image_PlayerAvatar").GetComponent<Image>();
