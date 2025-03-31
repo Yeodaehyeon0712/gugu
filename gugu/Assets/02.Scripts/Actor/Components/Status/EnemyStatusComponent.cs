@@ -30,10 +30,9 @@ public class EnemyStatusComponent : StatusComponent
 
     public override void SetDefaultStatus()
     {
-        //RecomputeStatus
+        status = DataManager.EnemyTable[owner.ObjectID].EnemyStatus;
     }
     public override void RecomputeStatus(eStatusType type)
     {
-        status = DataManager.EnemyTable[owner.ObjectID].EnemyStatus;
     }
 }
