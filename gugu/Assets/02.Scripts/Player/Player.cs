@@ -50,14 +50,16 @@ public static class Player
         PlayerCharacter = actor;
         ingameDataProperty.InitializeData();
         InitLevel();
-
+    }
+    public static void ActivePlayer()
+    {
+        PlayerCharacter.ActiveActor();
+        //UI
+        UIManager.Instance.FieldUI.SetHPBar(PlayerCharacter);
         //Camera
         CameraManager.Instance.RegisterFollowTarget(PlayerCharacter.transform);
         //Spawn Area
         ActorManager.Instance.RegisterSpawnAreaParent(PlayerCharacter.transform);
-        //UI
-        UIManager.Instance.FieldUI.SetHPBar(PlayerCharacter);
-
     }
     public static void UnRegisterPlayer()
     {
