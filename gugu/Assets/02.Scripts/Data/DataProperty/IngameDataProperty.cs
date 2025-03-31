@@ -5,7 +5,12 @@ using UnityEngine;
 public class IngameData
 {
     #region Fields
-    //Count
+    //Level
+    public int CurrentLevel;
+    public float CurrentExp;
+    public int NextLevelExp;
+
+    //Record
     public int KillCount;
     public int GoldCount;
 
@@ -22,12 +27,20 @@ public class IngameData
 
     public IngameData()
     {
+        //Level
+        CurrentLevel = 1;
+        CurrentExp = 0;
+        NextLevelExp = 0;
+
+        //Record
         KillCount = 0;
         GoldCount = 0;
+
         //Skill
         AvailableSkillList = new List<long>();
         SelectedSkillSet = new HashSet<long>();
         OwnedSkillDic = new Dictionary<long, BaseSkill>();
+
         //Equipment
         AvailableEquipmentList = new List<long>();
         SelectedEquipmentSet = new HashSet<long>();
@@ -35,11 +48,24 @@ public class IngameData
     }
     public void CleanData()
     {
+        //Level
+        CurrentLevel = 1;
+        CurrentExp = 0;
+        NextLevelExp = 0;
+
+        //Record
         KillCount = 0;
         GoldCount = 0;
-        //AvailableSkillList.Clear();
-        //SelectedSkillSet.Clear();
-        //OwnedSkillDic.Clear();
+
+        //Skill
+        AvailableSkillList.Clear();
+        SelectedSkillSet.Clear();
+        OwnedSkillDic.Clear();
+
+        //Equipment
+        AvailableEquipmentList.Clear();
+        SelectedEquipmentSet.Clear();
+        OwnedEquipmentDic.Clear();
     }
 }
 public class IngameDataProperty 
@@ -47,29 +73,51 @@ public class IngameDataProperty
     #region Fields
     public IngameData Data => data;
     IngameData data;
+    public float CurrentExp
+    {
+        get => data.CurrentExp;
+        set
+        {
+            data.CurrentExp = value;
+            var per = Mathf.Clamp01(data.CurrentExp / data.NextLevelExp);
+            battleStateUI.SetLevelPercentage(per);
+        }
+    }
+    public int CurrentLevel
+    {
+        get => data.CurrentLevel;
+        set
+        {
+            data.CurrentLevel = value;
+            battleStateUI.SetLevel(data.CurrentLevel);
+        }
+    }
+    BattleStateUI battleStateUI;
     #endregion
 
     #region Init Method
     public IngameDataProperty()
     {
         data=new IngameData();
+        battleStateUI = UIManager.Instance.BattleStateUI;
     }
     public void InitializeData()
     {
-        SetAvaiableSkillList();
-        SetAvaiableEquipmentList();
+        InitSkillData();
+        InitEquipmentData();
+        InitLevelData();
     }
     public void CleanData()
     {
-        data.CleanData();
-        ResetEquipment();
         ResetSkills();
+        data.CleanData();
     }
     #endregion
 
     #region Skill Method
-    void SetAvaiableSkillList()
+    void InitSkillData()
     {
+        //SetAvaiableSkillList
         var skillDic = DataManager.SkillTable.GetSkillDic;
 
         foreach (var skill in skillDic.Values)
@@ -128,16 +176,13 @@ public class IngameDataProperty
         {
             item.Value.UnregisterSkill();
         }
-
-        data.OwnedSkillDic.Clear();
-        data.AvailableSkillList.Clear();
-        data.SelectedSkillSet.Clear();
     }
     #endregion
 
     #region Equipment Method
-    void SetAvaiableEquipmentList()
+    void InitEquipmentData()
     {
+        //SetAvaiableEquipmentList()
         var equipmentDic = DataManager.EquipmentTable.GetEquipmentDic;
 
         foreach (var equipment in equipmentDic.Values)
@@ -192,12 +237,6 @@ public class IngameDataProperty
         if (data.OwnedEquipmentDic[index] >= 6)
             data.AvailableEquipmentList.Remove(index);
     }
-    void ResetEquipment()
-    {
-        data.OwnedEquipmentDic.Clear();
-        data.AvailableEquipmentList.Clear();
-        data.SelectedEquipmentSet.Clear();
-    }
     public float GetEquipmentValue(eStatusType type)
     {
         if(type==eStatusType.Revival)
@@ -236,6 +275,34 @@ public class IngameDataProperty
         }
 
         return (skillCont, equipCount);
+    }
+    #endregion
+
+    #region Level Method
+    void InitLevelData()
+    {
+        CurrentLevel = 1;
+        SetNextLevelExp();
+    }
+    public void GetExp(float exp)
+    {
+        CurrentExp += exp;
+
+        if (CurrentExp >= data.NextLevelExp)
+            LevelUp();
+    }
+    //To DO : 연속 레벨업 고려하기
+    void LevelUp()
+    {
+        CurrentLevel++;
+        UIManager.Instance.LevelUpPopUpUI.Enable();
+        SetNextLevelExp();
+    }
+    void SetNextLevelExp()
+    {
+        var nextLevel = CurrentLevel + 1;
+        data.NextLevelExp = 10 + 10 * (nextLevel - 1);
+        CurrentExp = 0;
     }
     #endregion
 }

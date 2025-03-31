@@ -35,7 +35,7 @@ public class BaseItem : PoolingObject<eItemType>
         switch (type)
         {
             case eItemType.Gem:
-                Player.GetExp(itemData.GetValue());
+                Player.InGameData.GetExp(itemData.GetValue());
                 break;
             case eItemType.Heart:
                 break;
