@@ -15,4 +15,5 @@ public abstract class StatusComponent : BaseComponent
     }
     public abstract void SetDefaultStatus();
     public abstract float GetStatus(eStatusType type);
+    public abstract void RecomputeStatus(eStatusType type);
 }

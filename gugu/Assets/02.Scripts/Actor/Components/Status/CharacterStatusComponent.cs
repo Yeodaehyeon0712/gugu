@@ -17,29 +17,11 @@ public class CharacterStatusComponent : StatusComponent
     {
         foreach (eStatusType type in System.Enum.GetValues(typeof(eStatusType)))
         {
-            RecomputeStat(type);
+            RecomputeStatus(type);
         }
     }
-    public void LevelUpItem(eStatusType type)
-    {
-        //if (itemLevelDic.TryGetValue(type, out var level))
-        //{
-        //    itemLevelDic[type] = (long)Mathf.Min(level + 1, GameConst.MaxStatusLevel);
-        //}
-        //else
-        //    itemLevelDic.Add(type, 1);
-
-        RecomputeStat(type);
-    }
-
-    public override float GetStatus(eStatusType type)
-    {
-        if (computedStatusDic.TryGetValue(type, out var value))
-            return value;
-        else
-            return DataManager.StatusTable[type].DefaultValue;
-    }
-    public void RecomputeStat(eStatusType type)
+    public override float GetStatus(eStatusType type)=> computedStatusDic[type];
+    public override void RecomputeStatus(eStatusType type)
     {
         var statusData = DataManager.StatusTable[type];
 

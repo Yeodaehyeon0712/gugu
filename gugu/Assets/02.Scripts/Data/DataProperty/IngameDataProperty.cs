@@ -184,10 +184,12 @@ public class IngameDataProperty
     }
     void LevelUpEquipment(long index)
     {
-        var level = data.OwnedEquipmentDic[index];
-        data.OwnedEquipmentDic[index]= level+1;
+        data.OwnedEquipmentDic[index]+=1;
 
-        if(level>=6)
+        var targetStatus = DataManager.EquipmentTable[index].TargetStatus;
+        Player.PlayerCharacter.Status.RecomputeStatus(targetStatus);
+
+        if (data.OwnedEquipmentDic[index] >= 6)
             data.AvailableEquipmentList.Remove(index);
     }
     void ResetEquipment()
@@ -205,10 +207,8 @@ public class IngameDataProperty
         }
         var table = DataManager.EquipmentTable;
         var key = table.GetEquipmentByStatus(type);
-        var defaultValue = table[key].CalculateType == eCalculateType.Flat ? 0 : 1;
 
-        return data.OwnedEquipmentDic.TryGetValue(key, out long level) ?
-            table[key].GetValue(level) : defaultValue;
+        return table[key].GetValue(data.OwnedEquipmentDic.TryGetValue(key, out long level) ? level : 0);
     }
     #endregion
 
