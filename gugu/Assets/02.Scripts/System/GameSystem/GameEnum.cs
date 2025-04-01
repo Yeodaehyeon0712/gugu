@@ -41,7 +41,7 @@ public enum eStatusType
     Armor,
     MoveSpeed,
     Might,
-    AttackSpeed,
+    ProjectileSpeed,
     Duration,
     Area,
     CoolTime,
