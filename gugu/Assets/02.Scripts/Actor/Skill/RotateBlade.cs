@@ -24,7 +24,7 @@ public class RotateBlade : BaseSkill
         while (bladeList.Count < bladeCount)
         {
             var blade = await EffectManager.Instance.SpawnEffect(eEffectType.Crash,1, Vector3.zero, bladeParent);
-            var damage = 100 * skillData.GetCoefficient(level);//이건 다시 해야해
+            var damage = owner.Status.GetStatus(eStatusType.Might) * skillData.GetCoefficient(level);
             blade.SetOverlapEvent(eActorType.Enemy,owner.WorldID,damage,true);
             bladeList.Add(blade);
         }
