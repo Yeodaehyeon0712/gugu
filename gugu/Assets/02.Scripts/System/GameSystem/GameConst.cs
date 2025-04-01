@@ -52,6 +52,7 @@ public class GameConst
     public static Dictionary<string, eEffectChainCondition> EffectChainType;
     public static Dictionary<string, eStatusType> StatusType;
     public static Dictionary<string, eCalculateType> CalculateType;
+    public static Dictionary<string, eModifierType> ModifierType;
     public static Dictionary<string, eItemType> ItemType;
 
 
@@ -60,6 +61,7 @@ public class GameConst
         OnGenerateEnumContainer(ref EffectChainType);
         OnGenerateEnumContainer(ref StatusType);
         OnGenerateEnumContainer(ref CalculateType);
+        OnGenerateEnumContainer(ref ModifierType);
         OnGenerateEnumContainer(ref ItemType);
     }
     public static void ClearEnumConverter()

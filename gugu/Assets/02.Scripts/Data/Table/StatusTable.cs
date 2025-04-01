@@ -6,6 +6,7 @@ namespace Data
         public readonly eStatusType StatusType;
         public readonly float DefaultValue;
         public readonly eCalculateType CalculateType;
+        public readonly eModifierType ModifierType;
         readonly FloatFormulaCalculator valueFormula;
         readonly IntFormulaCalculator goldFormula;
         public readonly string IconPath;
@@ -16,6 +17,7 @@ namespace Data
             StatusType = GameConst.StatusType[dataPair["Name"]];
             DefaultValue = float.Parse(dataPair["DefaultValue"]);
             CalculateType = GameConst.CalculateType[dataPair["CalculateType"]];
+            ModifierType = GameConst.ModifierType[dataPair["ModifierType"]];
             valueFormula = new FloatFormulaCalculator(dataPair["ValueCalculator"]);
             goldFormula = new IntFormulaCalculator(dataPair["GoldCalculator"]);
             IconPath = dataPair["IconPath"];

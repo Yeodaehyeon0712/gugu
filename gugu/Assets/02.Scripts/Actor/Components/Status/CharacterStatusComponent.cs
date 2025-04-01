@@ -29,11 +29,14 @@ public class CharacterStatusComponent : StatusComponent
         float enforceValue = statusData.GetValue(SnapShotDataProperty.Instance.GetStatusLevel(type));
         float equipmentValue = Player.InGameData.GetEquipmentValue(type);
 
+        float totalEnfoce = enforceValue + equipmentValue;
+        float modifier = (statusData.ModifierType == eModifierType.Increase) ? 1f : -1f;
+
         computedStatusDic[type] = statusData.CalculateType switch
         {
-            eCalculateType.Flat => defaultValue + enforceValue + equipmentValue,
-            eCalculateType.Percentage => defaultValue * (1 + (0.01f * (enforceValue+equipmentValue))),
-            _ => defaultValue
+            eCalculateType.Flat => (defaultValue + totalEnfoce) * modifier,
+            eCalculateType.Percentage => defaultValue * (1f + (totalEnfoce*0.01f*modifier)),
+            _ =>defaultValue,
         };
     }
     #endregion

@@ -58,6 +58,11 @@ public enum eCalculateType
     Flat,
     Percentage
 }
+public enum eModifierType
+{
+    Increase,
+    Decrease
+}
 public enum eAttachmentTarget
 {
     OverHead,    
