@@ -20,13 +20,7 @@ namespace Data
             NameKey = int.Parse(dataPair["NameKey"]);
             ExplanationKey = int.Parse(dataPair["ExplanationKey"]);
         }
-        public float GetValue(long level)
-        {
-            if (level == 0)
-                return CalculateType == eCalculateType.Flat ? 0 : 1;
-
-            return valueFormula.GetValue(level);
-        }
+        public float GetValue(long level)=> valueFormula.GetValue(level);
     }
 }
 public class EquipmentTable : TableBase
