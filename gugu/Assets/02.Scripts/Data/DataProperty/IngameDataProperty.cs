@@ -285,7 +285,7 @@ public class IngameDataProperty
     }
     public void GetExp(float exp)
     {
-        CurrentExp += exp;
+        CurrentExp += exp* owner.Status.GetStatus(eStatusType.Greed);
 
         if (CurrentExp >= data.NextLevelExp)
             LevelUp();
