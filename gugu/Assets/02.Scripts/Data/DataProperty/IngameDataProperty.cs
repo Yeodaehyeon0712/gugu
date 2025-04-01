@@ -209,30 +209,26 @@ public class IngameDataProperty
         }
         return data.SelectedEquipmentSet;
     }
-    public void SelectEquipment
-        (long index)
+    public void SelectEquipment(long index)
     {
         if (data.OwnedEquipmentDic.ContainsKey(index) == false)
             RegisterEquipment(index);
         else
             LevelUpEquipment(index);
+
+        var targetStatus = DataManager.EquipmentTable[index].TargetStatus;
+        Player.PlayerCharacter.Status.RecomputeStatus(targetStatus);
     }
     void RegisterEquipment(long index)
     {
-        var skill = DataManager.EquipmentTable[index];
         data.OwnedEquipmentDic.Add(index, 1);
 
         if (data.OwnedEquipmentDic.Count == 6)
-        {
             data.AvailableEquipmentList.RemoveAll(equipment => data.OwnedEquipmentDic.ContainsKey(equipment) == false);
-        }
     }
     void LevelUpEquipment(long index)
     {
         data.OwnedEquipmentDic[index]+=1;
-
-        var targetStatus = DataManager.EquipmentTable[index].TargetStatus;
-        Player.PlayerCharacter.Status.RecomputeStatus(targetStatus);
 
         if (data.OwnedEquipmentDic[index] >= 6)
             data.AvailableEquipmentList.Remove(index);
