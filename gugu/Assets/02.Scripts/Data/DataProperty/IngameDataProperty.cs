@@ -93,16 +93,18 @@ public class IngameDataProperty
         }
     }
     BattleStateUI battleStateUI;
+    Character owner;
     #endregion
 
     #region Init Method
     public IngameDataProperty()
     {
         data=new IngameData();
-        battleStateUI = UIManager.Instance.BattleStateUI;
     }
     public void InitializeData()
     {
+        battleStateUI = UIManager.Instance.BattleStateUI;
+        owner = Player.PlayerCharacter;
         InitSkillData();
         InitEquipmentData();
         InitLevelData();
@@ -111,6 +113,8 @@ public class IngameDataProperty
     {
         ResetSkills();
         data.CleanData();
+        battleStateUI = null;
+        owner = null;
     }
     #endregion
 
@@ -154,7 +158,7 @@ public class IngameDataProperty
     void RegisterSkill(long index)
     {
         var skill = DataManager.SkillTable[index];
-        data.OwnedSkillDic.Add(index, skill.RegisterSkill(Player.PlayerCharacter));
+        data.OwnedSkillDic.Add(index, skill.RegisterSkill(owner));
 
         if (data.OwnedSkillDic.Count == 6)
         {
@@ -216,8 +220,7 @@ public class IngameDataProperty
         else
             LevelUpEquipment(index);
 
-        var targetStatus = DataManager.EquipmentTable[index].TargetStatus;
-        Player.PlayerCharacter.Status.RecomputeStatus(targetStatus);
+        owner.Status.RecomputeStatus(DataManager.EquipmentTable[index].TargetStatus);
     }
     void RegisterEquipment(long index)
     {
