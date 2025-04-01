@@ -34,7 +34,7 @@ public class Character : Actor
         if (CheckTargetLayer(collision.gameObject.layer)==false) return;
 
         var enemy = collision.gameObject.GetComponentInParent<Enemy>();
-        var damage = enemy.Status.GetStatus(eStatusType.Might);
+        var damage = CalculateDamage(enemy);
 
         Hit(TimeManager.DeltaTime * damage);
     }
@@ -87,6 +87,12 @@ public class Character : Actor
             currentHP = Mathf.Min(recoveryVal, Status.GetStatus(eStatusType.MaxHP));
             recoveryTime = 0f;
         }
+    }
+    float CalculateDamage(Enemy enemy)
+    {
+        float damage = enemy.Status.GetStatus(eStatusType.Might);
+        float armor = Status.GetStatus(eStatusType.Armor);
+        return Mathf.Max(damage - armor, 0);
     }
     #endregion
 }
