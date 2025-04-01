@@ -57,7 +57,7 @@ public abstract class BaseSkill
 
         if (state == eSkillState.Using)
         {
-            if (elapsedTime >= skillData.DurationTime)
+            if (elapsedTime >= skillData.DurationTime*owner.Status.GetStatus(eStatusType.Duration))
             {
                 StopSkill();
             }
