@@ -6,9 +6,10 @@ public class CharacterStatusComponent : StatusComponent
 {
     #region Fields
     Dictionary<eStatusType, float> computedStatusDic = new Dictionary<eStatusType, float>();
+    protected Dictionary<eStatusType, System.Action<float>> recomputeActionDic = new Dictionary<eStatusType, System.Action<float>>();
     #endregion
 
-    #region Status Method
+    #region Component Method
     public CharacterStatusComponent(Actor owner) : base(owner)
     {
 
@@ -38,6 +39,19 @@ public class CharacterStatusComponent : StatusComponent
             eCalculateType.Percentage => defaultValue * (1f + (totalEnfoce*0.01f*modifier)),
             _ =>defaultValue,
         };
+        ExecuteRecomputeAction(type,computedStatusDic[type]);
+    }
+    public override void RegisterRecomputeAction(eStatusType type, System.Action<float> action)
+    {
+        if (recomputeActionDic.ContainsKey(type) == false)
+            recomputeActionDic[type] = action;
+        else
+            recomputeActionDic[type] += action;
+    }
+    void ExecuteRecomputeAction(eStatusType type, float value)
+    {
+        if (recomputeActionDic.TryGetValue(type, out var action) && action != null)
+            action.Invoke(value);
     }
     #endregion
 }

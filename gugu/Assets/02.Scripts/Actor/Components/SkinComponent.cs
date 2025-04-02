@@ -45,6 +45,7 @@ public class SkinComponent : BaseComponent
     {
         collisionCollider.enabled = true;
         triggerCollider.radius = defaultColliderRadius;
+        owner.Status.RegisterRecomputeAction(eStatusType.Magnet, scaleFactor => ScaleTriggerColliderSize(scaleFactor));
     }
     protected override void OnComponentInactive()
     {

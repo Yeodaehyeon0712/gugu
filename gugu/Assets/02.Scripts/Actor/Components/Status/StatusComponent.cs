@@ -16,4 +16,5 @@ public abstract class StatusComponent : BaseComponent
     public abstract void SetDefaultStatus();
     public abstract float GetStatus(eStatusType type);
     public abstract void RecomputeStatus(eStatusType type);
+    public virtual void RegisterRecomputeAction(eStatusType type, System.Action<float> action) { }
 }
