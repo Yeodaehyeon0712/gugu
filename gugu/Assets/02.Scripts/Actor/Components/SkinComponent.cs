@@ -7,7 +7,9 @@ public class SkinComponent : BaseComponent
     #region Fields
     SpriteRenderer renderer;//아마 안쓸듯 ..
     Animator animator;
-    CircleCollider2D collider;
+    CircleCollider2D collisionCollider;
+    CircleCollider2D triggerCollider;
+    float defaultColliderRadius;
 
     //Animator Hash
     int speedHash;
@@ -25,7 +27,9 @@ public class SkinComponent : BaseComponent
         renderer = skin.GetComponent<SpriteRenderer>();
         animator = skin.GetComponent<Animator>();
         animator.runtimeAnimatorController = controller;
-        collider = skin.GetComponent<CircleCollider2D>();
+        collisionCollider = skin.GetComponent<CircleCollider2D>();
+        triggerCollider = owner.transform.Find("TriggerCollider").GetComponent<CircleCollider2D>();
+        defaultColliderRadius = triggerCollider.radius;
 
         speedHash = Animator.StringToHash("Speed");
         animatorHashDic.Add(eCharacterAnimState.Move, speedHash);
@@ -39,12 +43,12 @@ public class SkinComponent : BaseComponent
     }
     protected override void OnComponentActive()
     {
-        collider.enabled = true;
+        collisionCollider.enabled = true;
+        triggerCollider.radius = defaultColliderRadius;
     }
-
     protected override void OnComponentInactive()
     {
-        collider.enabled = false;
+        collisionCollider.enabled = false;
         SetAnimationTrigger(eCharacterAnimState.Death);
     }
 
@@ -64,6 +68,13 @@ public class SkinComponent : BaseComponent
     public void SetSkinColor(Color color)
     {
         renderer.color = color;
+    }
+    #endregion
+
+    #region TriggerColliderMethod
+    public void ScaleTriggerColliderSize(float scaleFactor)
+    {
+        triggerCollider.radius *= scaleFactor;
     }
     #endregion
 }
